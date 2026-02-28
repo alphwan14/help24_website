@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Help24 Flutter Design System — CSS variables */
+:root {
+  /* Primary / Accent */
+  --primary: #6366f1;
+  --secondary: #22d3ee;
+  /* Semantic */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  /* Type badges */
+  --type-request: #2196f3;
+  --type-offer: #4caf50;
+  --type-job: #9c27b0;
+  /* Dark theme */
+  --bg-dark: #0a0a0a;
+  --surface: #141414;
+  --card: #1c1c1e;
+  --border: #2c2c30;
+  /* Light theme */
+  --bg-light: #f8f9fa;
+  --surface-light: #ffffff;
+  --border-light: #e5e7eb;
+  /* Text dark */
+  --text-primary: #f9fafb;
+  --text-secondary: #9ca3af;
+  --text-tertiary: #6b7280;
+  /* Text light */
+  --text-primary-light: #111827;
+  --text-secondary-light: #6b7280;
+  --text-tertiary-light: #9ca3af;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.bg-radial-glow {
+  background: radial-gradient(
+      ellipse 80% 50% at 50% -20%,
+      rgba(99, 102, 241, 0.12),
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 60% 40% at 100% 0%,
+      rgba(34, 211, 238, 0.06),
+      transparent 50%
+    );
+}

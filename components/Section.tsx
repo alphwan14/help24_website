@@ -16,7 +16,7 @@ export function Section({
   return (
     <section id={id} className={`py-section ${className}`}>
       <div
-        className={`mx-auto px-4 sm:px-6 lg:px-8 ${narrow ? "max-w-3xl" : "max-w-6xl"} ${containerClassName}`}
+        className={`mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 ${narrow ? "max-w-3xl" : ""} ${containerClassName}`}
       >
         {children}
       </div>
@@ -24,10 +24,14 @@ export function Section({
   );
 }
 
-/** Section label above titles — 12px / 500 (label medium), primary color */
-export function SectionLabel({ children }: { children: React.ReactNode }) {
+interface SectionLabelProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export function SectionLabel({ children, className = "" }: SectionLabelProps) {
   return (
-    <p className="mb-4 text-label-md font-medium uppercase tracking-wider text-primary">
+    <p className={`mb-4 text-label-md font-medium uppercase tracking-wider text-primary ${className}`}>
       {children}
     </p>
   );

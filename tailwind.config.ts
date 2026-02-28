@@ -6,34 +6,39 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: [
+    // Force design-system colors to be generated (avoid purge making site look B&W)
+    "bg-primary", "text-primary", "border-primary",
+    "bg-secondary", "text-secondary", "border-secondary",
+    "bg-success", "text-success", "border-success",
+    "bg-warning", "text-warning", "border-warning",
+    "bg-error", "text-error", "border-error",
+    "bg-bg-dark", "bg-surface", "bg-card", "border-border",
+    "text-text-primary", "text-text-secondary", "text-text-tertiary",
+    "bg-primary/10", "bg-primary/20", "bg-secondary/20", "bg-success/20", "bg-error/15", "bg-warning/15",
+  ],
   theme: {
     extend: {
       colors: {
-        // Primary / Accent
+        // Help24 design system (hex so opacity modifiers like bg-primary/10 work)
         primary: "#6366F1",
         secondary: "#22D3EE",
-        // Semantic
         success: "#10B981",
         warning: "#F59E0B",
         error: "#EF4444",
-        // Type badges
         "type-request": "#2196F3",
         "type-offer": "#4CAF50",
         "type-job": "#9C27B0",
-        // Dark theme
         "bg-dark": "#0A0A0A",
         surface: "#141414",
         card: "#1C1C1E",
         border: "#2C2C30",
-        // Light theme (for future use)
         "bg-light": "#F8F9FA",
         "surface-light": "#FFFFFF",
         "border-light": "#E5E7EB",
-        // Text dark
         "text-primary": "#F9FAFB",
         "text-secondary": "#9CA3AF",
         "text-tertiary": "#6B7280",
-        // Text light
         "text-primary-light": "#111827",
         "text-secondary-light": "#6B7280",
         "text-tertiary-light": "#9CA3AF",

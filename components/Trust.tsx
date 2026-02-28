@@ -25,14 +25,14 @@ export function Trust() {
           We built Help24 so that both sides of the marketplace can rely on clear rules and secure tools.
         </p>
       </div>
-      <div className="mt-16 grid gap-card-gap md:grid-cols-3">
+      <div className="mt-12 grid gap-4 md:grid-cols-3 lg:mt-16 lg:gap-card-gap">
         {trustItems.map((item, i) => (
           <div
             key={i}
             className="flex items-start gap-4 rounded-card border border-border bg-card p-4 shadow-card"
           >
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-badge bg-success/20 text-success">
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2} aria-hidden>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>

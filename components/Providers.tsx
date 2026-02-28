@@ -16,6 +16,13 @@ const benefits = [
   },
 ];
 
+const providerTypes = [
+  { icon: "Fundi", label: "Plumbers & repair" },
+  { icon: "Cleaner", label: "Cleaning" },
+  { icon: "Mover", label: "Moving" },
+  { icon: "Other", label: "Other services" },
+];
+
 export function Providers() {
   return (
     <Section id="providers">
@@ -23,17 +30,29 @@ export function Providers() {
         <SectionLabel>For providers</SectionLabel>
         <h2 className="text-h2 font-semibold text-text-primary">Grow your business on Help24</h2>
         <p className="mt-4 text-body-lg text-text-secondary">
-          Whether you&apos;re a fundi, cleaner, mover, or offer any other service — get more jobs, build your reputation, and get paid securely.
+          Whether you&apos;re a fundi, cleaner, mover, or offer any other service — join as we grow and get in front of customers when they need you.
         </p>
       </div>
-      <div className="mt-16 grid gap-card-gap md:grid-cols-3">
+
+      <div className="mt-8 flex flex-wrap justify-center gap-2 sm:mt-10 sm:gap-3">
+        {providerTypes.map((type, i) => (
+          <span
+            key={i}
+            className="rounded-badge border border-border bg-card px-3 py-2 text-body-sm font-medium text-text-primary"
+          >
+            {type.label}
+          </span>
+        ))}
+      </div>
+
+      <div className="mt-12 grid gap-4 md:grid-cols-3 lg:mt-16 lg:gap-card-gap">
         {benefits.map((item, i) => (
           <div
             key={i}
             className="rounded-card border border-border bg-card p-4 shadow-card"
           >
             <div className="flex h-11 w-11 items-center justify-center rounded-badge bg-secondary/20 text-secondary">
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.75}>
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.75} aria-hidden>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
             </div>
@@ -42,10 +61,14 @@ export function Providers() {
           </div>
         ))}
       </div>
-      <div className="mt-12 text-center">
+
+      <div className="mt-10 text-center sm:mt-12">
         <ButtonLink href="#early-access" variant="secondary">
           Join as a provider
         </ButtonLink>
+        <p className="mt-3 text-body-sm text-text-tertiary">
+          Join the waitlist. We&apos;re onboarding providers as the platform grows.
+        </p>
       </div>
     </Section>
   );

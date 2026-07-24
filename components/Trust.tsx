@@ -6,8 +6,8 @@ const trustItems = [
     description: "Your money is held securely until the job is complete. No pay-first, no runaround.",
   },
   {
-    title: "Verified users",
-    description: "Identity checks and verified profiles so you know who you&apos;re dealing with.",
+    title: "Verified profiles",
+    description: "Ratings, reviews and completed-job history so you know who you're dealing with.",
   },
   {
     title: "Transparent pricing",

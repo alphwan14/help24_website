@@ -14,23 +14,22 @@ export function Hero() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
               </span>
-              Early access — join as we grow
+              Now live across Kenya
             </div>
 
             <h1 className="text-3xl font-bold leading-tight text-text-primary sm:text-4xl md:text-5xl lg:text-6xl">
               Get anything done,{" "}
-<span className="h24-hero-gradient">
-              anytime, anywhere.
-            </span>
+              <span className="h24-hero-gradient">anytime, anywhere.</span>
             </h1>
 
             <p className="mt-4 max-w-xl text-body-lg text-text-secondary sm:mt-6">
-              From urgent help to everyday tasks — connect with trusted service providers when you need them. We&apos;re building the platform with early users like you.
+              From urgent repairs to everyday tasks — connect with trusted local
+              providers, agree a price, and pay securely. All in one app.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3 sm:mt-10">
-              <ButtonLink href="#early-access">Get Early Access</ButtonLink>
-              <ButtonLink variant="secondary" href="#providers">
+              <ButtonLink href="/download">Download the app</ButtonLink>
+              <ButtonLink variant="secondary" href="/become-a-provider">
                 Become a Provider
               </ButtonLink>
             </div>

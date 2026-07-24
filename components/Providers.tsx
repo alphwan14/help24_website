@@ -30,7 +30,8 @@ export function Providers() {
         <SectionLabel>For providers</SectionLabel>
         <h2 className="text-h2 font-semibold text-text-primary">Grow your business on Help24</h2>
         <p className="mt-4 text-body-lg text-text-secondary">
-          Whether you&apos;re a fundi, cleaner, mover, or offer any other service — join as we grow and get in front of customers when they need you.
+          Whether you&apos;re a fundi, cleaner, mover, or offer any other service —
+          reach customers who are looking for you right now and get paid securely.
         </p>
       </div>
 
@@ -63,11 +64,11 @@ export function Providers() {
       </div>
 
       <div className="mt-10 text-center sm:mt-12">
-        <ButtonLink href="#early-access" variant="secondary">
-          Join as a provider
+        <ButtonLink href="/become-a-provider" variant="secondary">
+          Become a provider
         </ButtonLink>
         <p className="mt-3 text-body-sm text-text-tertiary">
-          Join the waitlist. We&apos;re onboarding providers as the platform grows.
+          Create your profile in minutes and start receiving work.
         </p>
       </div>
     </Section>

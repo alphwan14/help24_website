@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ButtonLink } from "./Button";
+import { HEADER_NAV } from "@/lib/site";
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -10,6 +11,7 @@ export function Header() {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -17,34 +19,37 @@ export function Header() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "border-b border-border bg-bg-dark/95 backdrop-blur-xl" : "bg-bg-dark/80 backdrop-blur-sm"
+        scrolled
+          ? "border-b border-border bg-bg-dark/95 backdrop-blur-xl"
+          : "bg-bg-dark/80 backdrop-blur-sm"
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-        <Link href="/" className="shrink-0 text-section-title font-semibold text-text-primary">
+        <Link
+          href="/"
+          className="shrink-0 text-section-title font-semibold text-text-primary"
+          aria-label="Help24 home"
+        >
           Help<span className="text-primary">24</span>
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex lg:gap-8">
-          <Link href="#problem" className="text-body text-text-secondary hover:text-text-primary transition-colors">
-            Problem
-          </Link>
-          <Link href="#solution" className="text-body text-text-secondary hover:text-text-primary transition-colors">
-            Solution
-          </Link>
-          <Link href="#how-it-works" className="text-body text-text-secondary hover:text-text-primary transition-colors">
-            How it works
-          </Link>
-          <Link href="#providers" className="text-body text-text-secondary hover:text-text-primary transition-colors">
-            For providers
-          </Link>
+          {HEADER_NAV.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="text-body text-text-secondary hover:text-text-primary transition-colors"
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
 
         <div className="hidden shrink-0 items-center gap-2 md:flex">
-          <ButtonLink variant="ghost" href="#early-access">
+          <ButtonLink variant="ghost" href="/become-a-provider">
             Become a Provider
           </ButtonLink>
-          <ButtonLink href="#early-access">Get Early Access</ButtonLink>
+          <ButtonLink href="/download">Download</ButtonLink>
         </div>
 
         <button
@@ -69,13 +74,39 @@ export function Header() {
         aria-hidden={!open}
       >
         <nav className="flex flex-col gap-0 px-4 py-4">
-          <Link href="#problem" className="py-3 text-body text-text-secondary hover:text-text-primary" onClick={() => setOpen(false)}>Problem</Link>
-          <Link href="#solution" className="py-3 text-body text-text-secondary hover:text-text-primary" onClick={() => setOpen(false)}>Solution</Link>
-          <Link href="#how-it-works" className="py-3 text-body text-text-secondary hover:text-text-primary" onClick={() => setOpen(false)}>How it works</Link>
-          <Link href="#providers" className="py-3 text-body text-text-secondary hover:text-text-primary" onClick={() => setOpen(false)}>For providers</Link>
+          {HEADER_NAV.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="py-3 text-body text-text-secondary hover:text-text-primary"
+              onClick={() => setOpen(false)}
+            >
+              {item.label}
+            </Link>
+          ))}
+          <Link
+            href="/support"
+            className="py-3 text-body text-text-secondary hover:text-text-primary"
+            onClick={() => setOpen(false)}
+          >
+            Contact Support
+          </Link>
           <div className="mt-2 flex flex-col gap-2 border-t border-border pt-4">
-            <ButtonLink variant="ghost" className="w-full justify-center" href="#early-access" onClick={() => setOpen(false)}>Become a Provider</ButtonLink>
-            <ButtonLink className="w-full justify-center" href="#early-access" onClick={() => setOpen(false)}>Get Early Access</ButtonLink>
+            <ButtonLink
+              variant="ghost"
+              className="w-full justify-center"
+              href="/become-a-provider"
+              onClick={() => setOpen(false)}
+            >
+              Become a Provider
+            </ButtonLink>
+            <ButtonLink
+              className="w-full justify-center"
+              href="/download"
+              onClick={() => setOpen(false)}
+            >
+              Download
+            </ButtonLink>
           </div>
         </nav>
       </div>

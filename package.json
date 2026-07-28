@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate:qr": "node scripts/generate-qr.mjs",
+    "generate:og-icon": "node scripts/generate-og-icon.mjs"
   },
   "dependencies": {
     "next": "14.2.18",
@@ -21,6 +23,8 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.18",
     "postcss": "^8.4.49",
+    "qrcode": "^1.5.4",
+    "sharp": "^0.35.3",
     "tailwindcss": "^3.4.15",
     "typescript": "^5"
   }

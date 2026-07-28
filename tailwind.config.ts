@@ -8,7 +8,7 @@ const config: Config = {
   ],
   safelist: [
     // Force design-system colors to be generated (avoid purge making site look B&W)
-    "bg-primary", "text-primary", "border-primary",
+    "bg-primary", "text-primary", "border-primary", "text-primary-bright",
     "bg-secondary", "text-secondary", "border-secondary",
     "bg-success", "text-success", "border-success",
     "bg-warning", "text-warning", "border-warning",
@@ -21,7 +21,27 @@ const config: Config = {
     extend: {
       colors: {
         // Help24 design system (hex so opacity modifiers like bg-primary/10 work)
-        primary: "#6366F1",
+        /**
+         * The brand indigo. Was #6366F1, which carried white text at 4.467:1 —
+         * just under the 4.5 threshold WCAG AA requires — so every filled
+         * primary button on the site was marginally non-compliant.
+         *
+         * #6265F0 is the PERCEPTUALLY CLOSEST colour that clears it: ΔE 0.39
+         * from the original in CIELAB, which is below the just-noticeable
+         * difference, and 4.527:1 against white. Nothing looks different; the
+         * buttons are now compliant.
+         */
+        primary: "#6265F0",
+        /**
+         * The same indigo, lightened for use as TEXT on the dark surfaces.
+         *
+         * Fill and text pull in opposite directions and one colour cannot serve
+         * both: darkening `primary` to carry white text makes it WORSE as text
+         * on #0A0A0A (4.43 → 4.37). This variant goes the other way — #818CF8
+         * scores 6.3:1 on the dark background and still reads as the same
+         * colour. Use it for links and labels; use `primary` for fills.
+         */
+        "primary-bright": "#818CF8",
         secondary: "#22D3EE",
         success: "#10B981",
         warning: "#F59E0B",

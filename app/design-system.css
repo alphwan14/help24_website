@@ -13,7 +13,7 @@
 .bg-card\/50 { background-color: rgb(28 28 30 / 0.5) !important; }
 .bg-card\/70 { background-color: rgb(28 28 30 / 0.7) !important; }
 
-.bg-primary { background-color: #6366f1 !important; }
+.bg-primary { background-color: #6265f0 !important; }
 .bg-secondary { background-color: #22d3ee !important; }
 .bg-success { background-color: #10b981 !important; }
 .bg-warning { background-color: #f59e0b !important; }
@@ -32,7 +32,7 @@
 .text-text-secondary { color: #9ca3af !important; }
 .text-text-tertiary { color: #6b7280 !important; }
 
-.text-primary { color: #6366f1 !important; }
+.text-primary { color: #6265f0 !important; }
 .text-secondary { color: #22d3ee !important; }
 .text-success { color: #10b981 !important; }
 .text-warning { color: #f59e0b !important; }
@@ -40,13 +40,13 @@
 
 /* ---- Borders ---- */
 .border-border { border-color: #2c2c30 !important; }
-.border-primary { border-color: #6366f1 !important; }
+.border-primary { border-color: #6265f0 !important; }
 .border-primary\/20 { border-color: rgb(99 102 241 / 0.2) !important; }
 .border-primary\/50 { border-color: rgb(99 102 241 / 0.5) !important; }
 
 /* ---- Hero headline gradient (guaranteed to show) ---- */
 .h24-hero-gradient {
-  background: linear-gradient(to right, #6366f1, #6366f1 50%, #22d3ee);
+  background: linear-gradient(to right, #6265f0, #6265f0 50%, #22d3ee);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

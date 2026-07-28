@@ -4,7 +4,7 @@
 
 /* Help24 Flutter Design System — single source of truth for colors */
 :root {
-  --primary: #6366f1;
+  --primary: #6265f0;
   --secondary: #22d3ee;
   --success: #10b981;
   --warning: #f59e0b;
@@ -78,6 +78,68 @@
 *:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
+}
+
+/* ── Platform-aware download page ──────────────────────────────────────────
+ *
+ * The /download page adapts to the visitor's device without JavaScript owning
+ * the layout. A tiny inline script stamps `data-platform` on <html> BEFORE the
+ * body paints; these rules do the rest.
+ *
+ * Why CSS and not React state: a `useEffect` runs after hydration, so the
+ * wrong variant paints first and then swaps — a visible flash on the one page
+ * that has to feel instant. And the default (no script, no JS at all) shows
+ * EVERYTHING, which is the correct fallback: an Android user seeing a QR panel
+ * is untidy, an Android user seeing nothing is broken.
+ */
+/* Shown by default (including with JS off); hidden once we know it's a phone.
+ * A QR code that opens the page you are already reading is noise. */
+[data-platform="android"] .only-desktop,
+[data-platform="ios"] .only-desktop {
+  display: none;
+}
+
+/* Hidden by default; revealed only for iOS, where the Android APK is useless
+ * and saying so immediately beats letting someone tap it and fail. */
+.only-ios {
+  display: none;
+}
+
+[data-platform="ios"] .only-ios {
+  display: block;
+}
+
+/* Steps are numbered by CSS so the markup stays a plain ordered list. */
+.install-steps {
+  counter-reset: install-step;
+}
+
+.install-steps > li {
+  counter-increment: install-step;
+}
+
+.install-steps > li .step-number::before {
+  content: counter(install-step);
+}
+
+/* Native <details> disclosure: rotate the marker, hide the default triangle. */
+.disclosure > summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+
+.disclosure[open] > summary .disclosure-chevron {
+  transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .disclosure-chevron {
+    transition: none;
+  }
 }
 
 ::selection {

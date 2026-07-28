@@ -1,0 +1,353 @@
+/**
+ * THE ONE FILE YOU EDIT TO SHIP A RELEASE.
+ *
+ * Everything the /download page states about the app — version, size, checksum,
+ * what's new, which platforms exist — is read from here. No component hardcodes
+ * a version string, a URL or a byte count, so publishing v1.0.1 is an edit to
+ * this file and nothing else.
+ *
+ * WHY THE NUMBERS ARE NOT ROUNDED BY HAND
+ * ---------------------------------------
+ * `apkSizeBytes` and `sha256` are the artifact's real values, and the display
+ * strings are DERIVED from them (see `formatBytes`). A hand-written "68 MB"
+ * next to a machine-read checksum is how a download page ends up quietly
+ * lying about one of the two — and the checksum is the half people verify.
+ *
+ * Regenerate both from the artifact itself:
+ *
+ *   sha256sum  build/app/outputs/flutter-apk/app-release.apk
+ *   stat -c %s build/app/outputs/flutter-apk/app-release.apk
+ *
+ * or read them straight off the published release, which is what they were
+ * taken from here:
+ *
+ *   gh release view v1.0.0 --json assets
+ */
+
+/** Where a release artifact lives. Isolated so a new tag is a one-line change. */
+const GITHUB_RELEASES = "https://github.com/alphwan14/help24/releases/download";
+
+/**
+ * The direct APK link. Points at the GitHub release asset today; when Help24
+ * serves its own artifact (or lands on Google Play) this is the only constant
+ * that moves.
+ *
+ * Deliberately NOT the URL behind the QR code — see `QR_TARGET_URL`.
+ */
+export const APK_DOWNLOAD_URL = `${GITHUB_RELEASES}/v1.0.0/app-release.apk`;
+
+/**
+ * What the QR code points at: this page, never the artifact.
+ *
+ * A QR pointing straight at v1.0.0's APK would have to be reprinted for every
+ * release, and any copy already in the wild — a poster, a shop window, a
+ * WhatsApp forward — would go on serving an old build forever. Pointing at the
+ * page makes the QR permanent and the release detail dynamic.
+ *
+ * This is also the URL shown to humans next to the code.
+ */
+export const QR_TARGET_URL = "https://help24.co.ke/download";
+
+/**
+ * The query marker that makes a scan attributable.
+ *
+ * A QR scan is an ordinary page view: the camera opens a browser and nothing
+ * distinguishes it from someone typing the address. Attribution therefore has
+ * to be carried IN the link — there is no other mechanism. The parameter is
+ * version-independent, so the code still never needs reprinting, and the
+ * canonical URL stays param-free so search engines see one page.
+ */
+export const QR_SCAN_PARAM = "src=qr";
+
+/** Exactly what the printed code encodes. */
+export const QR_ENCODED_URL = `${QR_TARGET_URL}?${QR_SCAN_PARAM}`;
+
+export interface AndroidRelease {
+  /** Marketing version, exactly as `versionName` in the APK manifest. */
+  version: string;
+  /** Android `versionCode`. Surfaced for support, not for users. */
+  versionCode: number;
+  /** ISO date the release was published. Rendered in the reader's locale. */
+  releaseDate: string;
+  apkUrl: string;
+  /** Exact size of the artifact, in bytes. Display strings derive from this. */
+  apkSizeBytes: number;
+  /** Lowercase hex SHA-256 of the APK, for anyone who wants to verify it. */
+  sha256: string;
+  /** Minimum Android release, as a person would say it. */
+  minimumAndroid: string;
+  /** The API level behind `minimumAndroid`, for the spec-minded. */
+  minimumSdk: number;
+  /** ABIs bundled in the APK — a universal build carries several. */
+  architectures: string[];
+  /** Short, honest, user-facing. Not a changelog. */
+  releaseNotes: string[];
+}
+
+/**
+ * v1.0.0 — the first production build.
+ *
+ * Every value below was read from the artifact
+ * (`aapt2 dump badging`, `sha256sum`) and cross-checked against the digest
+ * GitHub computed on upload. They match.
+ */
+export const ANDROID_RELEASE: AndroidRelease = {
+  version: "1.0.0",
+  versionCode: 1,
+  releaseDate: "2026-07-28",
+  apkUrl: APK_DOWNLOAD_URL,
+  apkSizeBytes: 71_348_368,
+  sha256: "1d421891d43b31a68d40d1664dfef66a914d8f0831c13330a4c7033b0f2ee266",
+  minimumAndroid: "Android 7.0",
+  minimumSdk: 24,
+  architectures: ["arm64-v8a", "armeabi-v7a", "x86_64"],
+  releaseNotes: [
+    "Smarter recommendations — the Discover feed ranks by distance, profession and urgency",
+    "A calm feed that no longer reorders itself while you read it",
+    "More accurate location, so nearby really means nearby",
+    "Faster messaging and better offline behaviour",
+    "Performance, security and reliability improvements throughout",
+  ],
+};
+
+/**
+ * A distribution channel. The page renders one card per entry, so adding
+ * Google Play, the App Store or Huawei AppGallery later is an object here —
+ * no component changes, no layout surgery.
+ */
+export interface Platform {
+  id: string;
+  /** Shown on the card. */
+  name: string;
+  /** One line: who this is for. */
+  tagline: string;
+  /** Icon name from `components/Icon`. */
+  icon: string;
+  /** Null until the channel exists — the card then renders as "Coming soon". */
+  url: string | null;
+  available: boolean;
+  /** Label for the action when `available`. */
+  ctaLabel: string;
+  /** Analytics id for the click event. */
+  trackId: string;
+}
+
+export const PLATFORMS: Platform[] = [
+  {
+    id: "android-apk",
+    name: "Android",
+    tagline: `Direct download · ${ANDROID_RELEASE.minimumAndroid} and above`,
+    icon: "android",
+    url: ANDROID_RELEASE.apkUrl,
+    available: true,
+    ctaLabel: "Download for Android",
+    trackId: "android_apk",
+  },
+  {
+    id: "google-play",
+    name: "Google Play",
+    tagline: "Automatic updates, once we're listed",
+    icon: "play",
+    url: null,
+    available: false,
+    ctaLabel: "Get it on Google Play",
+    trackId: "google_play",
+  },
+  {
+    id: "app-store",
+    name: "App Store",
+    tagline: "iPhone and iPad — in development",
+    icon: "apple",
+    url: null,
+    available: false,
+    ctaLabel: "Download on the App Store",
+    trackId: "app_store",
+  },
+];
+
+/** The channel the big button uses. */
+export const PRIMARY_PLATFORM = PLATFORMS[0];
+
+/** Channels other than the primary one, for the "More platforms" grid. */
+export const SECONDARY_PLATFORMS = PLATFORMS.filter(
+  (p) => p.id !== PRIMARY_PLATFORM.id,
+);
+
+export interface InstallStep {
+  title: string;
+  body: string;
+}
+
+/**
+ * Three steps. Not four.
+ *
+ * Sideloading only genuinely surprises people once — at the "unknown sources"
+ * prompt — so that is the only step that gets an explanation rather than an
+ * instruction.
+ */
+export const INSTALL_STEPS: InstallStep[] = [
+  {
+    title: "Download the APK",
+    body: "Tap the button above. Your browser may ask you to confirm the download.",
+  },
+  {
+    title: "Allow the install",
+    body: "Android asks permission the first time you install outside the Play Store. Tap Settings, turn on the switch, then go back.",
+  },
+  {
+    title: "Open Help24 and sign in",
+    body: "Create an account with your phone number or email, and you're ready to go.",
+  },
+];
+
+/**
+ * The three facts that decide whether the APK will run on the phone in the
+ * reader's hand, shown next to the button rather than buried in a spec table.
+ *
+ * Derived, not written down: same source as the version card, so the two can
+ * never disagree.
+ */
+export function compatibility(
+  release: AndroidRelease = ANDROID_RELEASE,
+): { icon: string; label: string; value: string }[] {
+  return [
+    {
+      icon: "android",
+      label: "Works on",
+      value: `${release.minimumAndroid}+`,
+    },
+    {
+      icon: "chip",
+      label: "Architecture",
+      // "Universal" is the honest summary: this APK carries every ABI Android
+      // ships on, so there is no variant for the reader to choose between.
+      value: "Universal",
+    },
+    {
+      icon: "download",
+      label: "Download size",
+      value: formatBytes(release.apkSizeBytes),
+    },
+  ];
+}
+
+/**
+ * The official distribution channels, in the order a user should trust them.
+ *
+ * Stated explicitly because sideloading teaches people to accept APKs from
+ * wherever, and a marketplace app handling M-Pesa payments is exactly the kind
+ * of thing that attracts repackaged, trojanised copies. Naming the only two
+ * legitimate sources gives someone a way to check.
+ */
+export const OFFICIAL_SOURCES = [
+  {
+    label: `${new URL(QR_TARGET_URL).host}/download`,
+    href: QR_TARGET_URL,
+    detail: "This page — always the current release",
+  },
+  {
+    label: "github.com/alphwan14/help24/releases",
+    href: "https://github.com/alphwan14/help24/releases",
+    detail: "The signed artifacts themselves, with checksums",
+  },
+] as const;
+
+export interface FaqItem {
+  q: string;
+  a: string;
+}
+
+/**
+ * The three questions people actually ask before installing an APK.
+ *
+ * Not a help centre — the full one lives at /help. These are only the
+ * objections that stop someone completing THIS page: is it safe, will it
+ * update itself, and what will it cost me.
+ */
+export const DOWNLOAD_FAQ: FaqItem[] = [
+  {
+    q: "How do I install the APK?",
+    a: "Tap Download for Android, then open the file when it finishes. Because Help24 isn't on Google Play yet, Android will ask you once for permission to install from this source — tap Settings, turn the switch on, then go back. The install takes a few seconds and Help24 appears in your app drawer like any other app.",
+  },
+  {
+    q: "How do I get updates?",
+    a: "Help24 tells you in the app when a new version is available, and you download it from this page the same way. Installing over the top keeps your account, messages and saved items — you never need to uninstall first. Once we're on Google Play, updates become automatic.",
+  },
+  {
+    q: "Is Help24 free?",
+    a: "Yes. The app is free to download and free to use — posting a request, browsing offers, messaging and applying for jobs all cost nothing. Help24 charges a service fee only when money actually moves through a completed job, and you always see that amount before you agree to anything.",
+  },
+  {
+    q: "Is it safe to install an app from outside the Play Store?",
+    a: "It is when you know where it came from. This APK is built and signed by Help24, published from our own repository, and its SHA-256 checksum is listed on this page so you can verify the exact file you downloaded. Only ever install Help24 from help24.co.ke or our official GitHub releases.",
+  },
+  {
+    q: "Which phones does it work on?",
+    a: `Any phone running ${ANDROID_RELEASE.minimumAndroid} or later — that covers the large majority of Android devices in use. The download includes support for every processor type Android runs on, so there is no variant to choose between. An iPhone version is in development.`,
+  },
+];
+
+export interface TrustPoint {
+  icon: string;
+  title: string;
+  body: string;
+}
+
+export const TRUST_POINTS: TrustPoint[] = [
+  {
+    icon: "badge",
+    title: "Built and signed by Help24",
+    body: "This is the official build, published by us. Nobody else can sign an update for it.",
+  },
+  {
+    icon: "shield",
+    title: "The only official download",
+    body: `Help24 is distributed from ${new URL(QR_TARGET_URL).host} and nowhere else.`,
+  },
+  {
+    icon: "no-ads",
+    title: "No ads, no bundled software",
+    body: "The APK contains the app and nothing else — no third-party installers, no toolbars.",
+  },
+  {
+    icon: "lock",
+    title: "Verifiable",
+    body: "Check the SHA-256 below against your download to prove the file arrived intact.",
+  },
+];
+
+/**
+ * Bytes → a size a person recognises.
+ *
+ * Binary units (MiB semantics under an "MB" label), because that is what
+ * Android's own installer and every file manager on the device will show —
+ * matching them matters more here than matching the SI definition, since the
+ * whole point is that the number agrees with what the user sees next.
+ */
+export function formatBytes(bytes: number): string {
+  const mb = bytes / 1024 / 1024;
+  return `${mb.toFixed(1)} MB`;
+}
+
+/** ISO date → "28 July 2026". Fixed locale so server and client agree. */
+export function formatReleaseDate(iso: string): string {
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
+
+/** The rows of the version card, derived so nothing is written down twice. */
+export function releaseSpecs(
+  release: AndroidRelease = ANDROID_RELEASE,
+): { label: string; value: string }[] {
+  return [
+    { label: "Version", value: `v${release.version}` },
+    { label: "Released", value: formatReleaseDate(release.releaseDate) },
+    { label: "Size", value: formatBytes(release.apkSizeBytes) },
+    { label: "Requires", value: `${release.minimumAndroid} or later` },
+    { label: "Architecture", value: release.architectures.join(", ") },
+  ];
+}

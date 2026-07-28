@@ -30,7 +30,7 @@ export function Header() {
           className="shrink-0 text-section-title font-semibold text-text-primary"
           aria-label="Help24 home"
         >
-          Help<span className="text-primary">24</span>
+          Help<span className="text-primary-bright">24</span>
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex lg:gap-8">

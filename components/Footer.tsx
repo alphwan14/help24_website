@@ -29,7 +29,7 @@ export function Footer() {
         <div className="grid gap-10 sm:gap-12 lg:grid-cols-5 lg:gap-16">
           <div className="lg:col-span-2">
             <Link href="/" className="text-h5 font-semibold text-text-primary">
-              Help<span className="text-primary">24</span>
+              Help<span className="text-primary-bright">24</span>
             </Link>
             <p className="mt-3 max-w-xs text-body-sm text-text-tertiary">
               {SITE.tagline}. Agree a price, pay securely, get it done.

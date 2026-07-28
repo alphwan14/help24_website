@@ -41,7 +41,13 @@ import { SITE } from "@/lib/site";
  * --------------------
  * Every fact — version, size, checksum, minimum Android, ABIs, release notes —
  * comes from `lib/release.ts`. There is no version string anywhere in this
- * file. Shipping v1.0.1 is an edit to that config and nothing else.
+ * file.
+ *
+ * And nothing in that config is typed by hand either: `npm run sync:release`
+ * reads the published artifact and writes `lib/generated/release-artifact.ts`,
+ * so the page cannot advertise a checksum or a byte count that disagrees with
+ * the file the button actually serves. Shipping a release is that command plus
+ * the release notes.
  */
 
 export const metadata = pageMetadata({

@@ -7,35 +7,53 @@ mention of GitHub.
 
 ## Shipping a new release
 
-**Edit one file: [`lib/release.ts`](../../lib/release.ts).** Nothing else.
+**You do not type any release metadata.** It is read from the APK.
 
-1. Build and publish the artifact, then read its real numbers off it — never
-   type them from memory:
+1. Publish the GitHub release with the APK attached.
+
+2. Run the sync:
 
    ```bash
-   # from mobile-app/
-   flutter build apk --release
-   sha256sum  build/app/outputs/flutter-apk/app-release.apk
-   stat -c %s build/app/outputs/flutter-apk/app-release.apk
-
-   # or, once uploaded, straight from the release
-   gh release view v1.0.1 --json assets
+   npm run sync:release              # newest published release
+   npm run sync:release -- --tag v1.0.1
    ```
 
-2. In `lib/release.ts`, update `APK_DOWNLOAD_URL` (the tag) and the
-   `ANDROID_RELEASE` fields: `version`, `versionCode`, `releaseDate`,
-   `apkSizeBytes`, `sha256`, `releaseNotes`. Update `minimumAndroid` /
-   `minimumSdk` / `architectures` only if the build config changed.
+   This downloads the release asset, hashes it, reads its manifest with
+   `aapt2`, and writes `lib/generated/release-artifact.ts`: version,
+   versionCode, application id, publication date, asset URL, exact byte count,
+   SHA-256, `minSdkVersion`, `targetSdkVersion`, the human name for the minimum
+   Android, and the ABIs actually present in the APK.
 
-3. Deploy. The hero, the compatibility row, the version card, the checksum, the
+   It refuses to write if the measured size or digest disagrees with what
+   GitHub reports, or if the tag and the manifest's `versionName` disagree.
+
+3. Write the user-facing notes in `ANDROID_RELEASE.releaseNotes` in
+   [`lib/release.ts`](../../lib/release.ts). That is the only hand-written part
+   of a release, because it is the only part that is a judgement rather than a
+   fact.
+
+4. Deploy. The hero, the compatibility row, the version card, the checksum, the
    FAQ, the social card and both blocks of structured data
    (`SoftwareApplication` + `FAQPage`) all re-read from that object.
+
+> **Requires** the Android SDK build-tools (for `aapt2`) and an authenticated
+> `gh`. Deliberately not a build step: Vercel's builders have neither, so a
+> build that reached for them would fail on the deployment target while passing
+> locally. The generated file is committed and reviewed like any other diff.
+
+### Why this is generated and not typed
+
+`apkSizeBytes` and `sha256` used to be pasted in from a terminal. A download
+page that states a checksum has no way to notice when the paste goes stale — it
+renders confidently either way, and the checksum is the half people actually
+verify. v1.0.0's APK was re-published and the page went on advertising the
+previous artifact's digest and byte count until someone checked by hand.
 
 ### What else lives in that file
 
 | Export | Drives |
 |---|---|
-| `ANDROID_RELEASE` | Every fact about the build |
+| `ANDROID_RELEASE` | Every fact about the build (spread from the generated artifact + the notes) |
 | `PLATFORMS` | The platform cards (add stores here) |
 | `INSTALL_STEPS` | The three-step guide |
 | `compatibility()` | The row under the download button |

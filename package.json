@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "generate:qr": "node scripts/generate-qr.mjs",
-    "generate:og-icon": "node scripts/generate-og-icon.mjs"
+    "generate:og-icon": "node scripts/generate-og-icon.mjs",
+    "sync:release": "node scripts/sync-release.mjs"
   },
   "dependencies": {
     "next": "14.2.18",

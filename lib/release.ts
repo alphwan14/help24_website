@@ -1,46 +1,49 @@
+import { RELEASE_ARTIFACT } from "@/lib/generated/release-artifact";
+
 /**
- * THE ONE FILE YOU EDIT TO SHIP A RELEASE.
+ * THE ONE FILE YOU EDIT TO SHIP A RELEASE — and it no longer contains a single
+ * number.
  *
- * Everything the /download page states about the app — version, size, checksum,
- * what's new, which platforms exist — is read from here. No component hardcodes
- * a version string, a URL or a byte count, so publishing v1.0.1 is an edit to
- * this file and nothing else.
+ * Everything the /download page states about the app comes from here, and this
+ * file gets it from two places that do not overlap:
  *
- * WHY THE NUMBERS ARE NOT ROUNDED BY HAND
- * ---------------------------------------
- * `apkSizeBytes` and `sha256` are the artifact's real values, and the display
- * strings are DERIVED from them (see `formatBytes`). A hand-written "68 MB"
- * next to a machine-read checksum is how a download page ends up quietly
- * lying about one of the two — and the checksum is the half people verify.
+ *   * the ARTIFACT — version, versionCode, size, checksum, minimum Android,
+ *     API level, ABIs, publication date. Read from the APK and the GitHub
+ *     release by `scripts/sync-release.mjs` into `lib/generated/`. Never typed.
+ *   * the EDITORIAL — release notes, platform copy, trust points, FAQ. Written
+ *     by a person, below.
  *
- * Regenerate both from the artifact itself:
+ * SHIPPING A RELEASE
+ * ------------------
+ *   1. publish the GitHub release with its APK attached
+ *   2. npm run sync:release
+ *   3. write the release notes in `ANDROID_RELEASE.releaseNotes`
  *
- *   sha256sum  build/app/outputs/flutter-apk/app-release.apk
- *   stat -c %s build/app/outputs/flutter-apk/app-release.apk
+ * Step 2 is the whole reason this split exists. `apkSizeBytes` and `sha256`
+ * used to be pasted in from a terminal, and a download page that states a
+ * checksum has no way to notice when the paste goes stale — it renders
+ * confidently either way, and the checksum is the half people actually verify.
+ * That is not hypothetical: v1.0.0's APK was re-published, and the page went on
+ * advertising the previous artifact's digest and byte count until the mismatch
+ * was found by hand.
  *
- * or read them straight off the published release, which is what they were
- * taken from here:
- *
- *   gh release view v1.0.0 --json assets
+ * The display strings are still DERIVED from the raw values (see `formatBytes`)
+ * rather than written down, for the same reason.
  */
 
-/** Where a release artifact lives. Isolated so a new tag is a one-line change. */
-const GITHUB_RELEASES = "https://github.com/alphwan14/help24/releases/download";
-
 /**
- * The direct APK link. Points at the GitHub release asset today; when Help24
- * serves its own artifact (or lands on Google Play) this is the only constant
- * that moves.
+ * The direct APK link — GitHub's own download URL for the asset on the release
+ * that `sync:release` last read.
  *
  * Deliberately NOT the URL behind the QR code — see `QR_TARGET_URL`.
  */
-export const APK_DOWNLOAD_URL = `${GITHUB_RELEASES}/v1.0.0/app-release.apk`;
+export const APK_DOWNLOAD_URL: string = RELEASE_ARTIFACT.apkUrl;
 
 /**
  * What the QR code points at: this page, never the artifact.
  *
- * A QR pointing straight at v1.0.0's APK would have to be reprinted for every
- * release, and any copy already in the wild — a poster, a shop window, a
+ * A QR pointing straight at a versioned APK would have to be reprinted for
+ * every release, and any copy already in the wild — a poster, a shop window, a
  * WhatsApp forward — would go on serving an old build forever. Pointing at the
  * page makes the QR permanent and the release detail dynamic.
  *
@@ -78,29 +81,33 @@ export interface AndroidRelease {
   minimumAndroid: string;
   /** The API level behind `minimumAndroid`, for the spec-minded. */
   minimumSdk: number;
-  /** ABIs bundled in the APK — a universal build carries several. */
-  architectures: string[];
+  /**
+   * ABIs bundled in the APK — a universal build carries several.
+   *
+   * `readonly` because it arrives from a generated `as const` object. Widening
+   * it to a mutable array here would mean copying, and a copy is a place for
+   * the two to disagree.
+   */
+  architectures: readonly string[];
   /** Short, honest, user-facing. Not a changelog. */
   releaseNotes: string[];
 }
 
 /**
- * v1.0.0 — the first production build.
+ * The shipped release.
  *
- * Every value below was read from the artifact
- * (`aapt2 dump badging`, `sha256sum`) and cross-checked against the digest
- * GitHub computed on upload. They match.
+ * The spread is every fact `sync:release` read from the APK and the GitHub
+ * release — version, versionCode, date, URL, size, checksum, minimum Android,
+ * API level, ABIs. It is spread rather than restated so that adding a field to
+ * the generated artifact makes it available here without an edit, and so that
+ * nothing in this file can contradict the binary.
+ *
+ * Only the notes are written by hand, because only the notes are a judgement
+ * about what mattered to users. Update them when you publish; everything else
+ * updates itself.
  */
 export const ANDROID_RELEASE: AndroidRelease = {
-  version: "1.0.0",
-  versionCode: 1,
-  releaseDate: "2026-07-28",
-  apkUrl: APK_DOWNLOAD_URL,
-  apkSizeBytes: 71_348_368,
-  sha256: "1d421891d43b31a68d40d1664dfef66a914d8f0831c13330a4c7033b0f2ee266",
-  minimumAndroid: "Android 7.0",
-  minimumSdk: 24,
-  architectures: ["arm64-v8a", "armeabi-v7a", "x86_64"],
+  ...RELEASE_ARTIFACT,
   releaseNotes: [
     "Smarter recommendations — the Discover feed ranks by distance, profession and urgency",
     "A calm feed that no longer reorders itself while you read it",

@@ -14,7 +14,10 @@ export function Section({
   narrow = false,
 }: SectionProps) {
   return (
-    <section id={id} className={`py-section ${className}`}>
+    // `scroll-mt` because the header is fixed: /safety and /for-providers both
+    // link to `/#escrow`, and without it the anchor lands with the section
+    // heading underneath the header bar.
+    <section id={id} className={`py-section ${id ? "scroll-mt-20 sm:scroll-mt-24" : ""} ${className}`}>
       <div
         className={`mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 ${narrow ? "max-w-3xl" : ""} ${containerClassName}`}
       >

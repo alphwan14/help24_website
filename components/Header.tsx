@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ButtonLink } from "./Button";
 import { HEADER_NAV } from "@/lib/site";
+import { LOGO_CORNER_RATIO } from "@/lib/tokens";
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -25,12 +27,35 @@ export function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-        <Link
-          href="/"
-          className="shrink-0 text-section-title font-semibold text-text-primary"
-          aria-label="Help24 home"
-        >
-          Help<span className="text-primary-bright">24</span>
+        {/*
+          The logo, not a wordmark — and the app's shape, not a crop of it.
+
+          This is the square artwork with its corners rounded at
+          LOGO_CORNER_RATIO, which is exactly what `splash_badge.png` puts on
+          screen when the app launches: white square, mark at 56% inside it,
+          corners at 20.5%. The whitespace around the mark is part of the
+          drawing; trimming to the mark's bounding box makes it look starved.
+
+          The tile is 44px rather than the 36px a wordmark would have needed,
+          because at 56% the mark itself is what has to be legible.
+
+          White and opaque, because the "24" and "HELP" are black — knocked out
+          of the page background they would simply not be there, and
+          recolouring them would stop it being the logo.
+
+          `alt` carries the accessible name, so the link is still "Help24" to a
+          screen reader with no visible wording.
+        */}
+        <Link href="/" className="flex shrink-0 items-center" title="Help24 home">
+          <Image
+            src="/help24-logo.png"
+            alt="Help24"
+            width={192}
+            height={192}
+            priority
+            className="h-11 w-11 bg-white sm:h-12 sm:w-12"
+            style={{ borderRadius: LOGO_CORNER_RATIO }}
+          />
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex lg:gap-8">

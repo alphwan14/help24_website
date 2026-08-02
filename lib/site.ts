@@ -20,6 +20,19 @@ export const SITE = {
   supportResponseHours: 24,
 } as const;
 
+/**
+ * Launch. Stated once, read by the hero badge and the waitlist section.
+ *
+ * There is no countdown on the site. A ticking clock is a pressure device, and
+ * the one number a visitor actually needs — the date — does not need animating.
+ */
+export const LAUNCH = {
+  /** Machine-readable, for <time datetime>. Nairobi is UTC+3. */
+  iso: "2026-10-19",
+  label: "19 October 2026",
+  short: "19 Oct 2026",
+} as const;
+
 export type NavLink = { label: string; href: string; external?: boolean };
 
 /** Primary header navigation. */

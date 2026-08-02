@@ -2,30 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Help24 Flutter Design System — single source of truth for colors */
-:root {
-  --primary: #6265f0;
-  --secondary: #22d3ee;
-  --success: #10b981;
-  --warning: #f59e0b;
-  --error: #ef4444;
-  --type-request: #2196f3;
-  --type-offer: #4caf50;
-  --type-job: #9c27b0;
-  --bg-dark: #0a0a0a;
-  --surface: #141414;
-  --card: #1c1c1e;
-  --border: #2c2c30;
-  --bg-light: #f8f9fa;
-  --surface-light: #ffffff;
-  --border-light: #e5e7eb;
-  --text-primary: #f9fafb;
-  --text-secondary: #9ca3af;
-  --text-tertiary: #6b7280;
-  --text-primary-light: #111827;
-  --text-secondary-light: #6b7280;
-  --text-tertiary-light: #9ca3af;
-}
+/**
+ * Colour custom properties are NOT declared here.
+ *
+ * They are generated from lib/tokens.ts and injected as a `:root` block by
+ * app/layout.tsx, which is what lets this project hold exactly one file
+ * containing hex literals. Everything below references `var(--token)`;
+ * translucent variants are derived with `color-mix` rather than by writing a
+ * second, hand-maintained rgba() copy of the same colour.
+ */
 
 @layer base {
   html {
@@ -37,46 +22,60 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
 }
 
 .bg-grid {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(color-mix(in srgb, var(--white) 3%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--white) 3%, transparent) 1px, transparent 1px);
   background-size: 64px 64px;
 }
 
 .bg-grid-pattern {
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, color-mix(in srgb, var(--white) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--white) 5%, transparent) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
 .bg-radial-glow {
-  background: radial-gradient(
+  background:
+    radial-gradient(
       ellipse 80% 50% at 50% -20%,
-      rgba(99, 102, 241, 0.12),
+      color-mix(in srgb, var(--primary) 12%, transparent),
       transparent 50%
     ),
     radial-gradient(
       ellipse 60% 40% at 100% 0%,
-      rgba(34, 211, 238, 0.06),
+      color-mix(in srgb, var(--secondary) 6%, transparent),
       transparent 50%
     );
 }
 
 @keyframes pulse-slow {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 0.3; }
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.3;
+  }
 }
 
 .animate-pulse-slow {
   animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+/* A ring that is actually visible on the near-black page: `--primary` measures
+ * 4.37:1 here, `--primary-bright` 6.3:1. Every interactive module on the
+ * homepage relies on this rather than drawing its own. */
 *:focus-visible {
-  outline: 2px solid var(--primary);
+  outline: 2px solid var(--primary-bright);
   outline-offset: 2px;
 }
 
@@ -144,7 +143,141 @@
 
 ::selection {
   background: var(--primary);
-  color: white;
+  color: var(--white);
 }
 
-/* Design system color utilities live in design-system.css (loaded after this file) */
+/* ── Live board ────────────────────────────────────────────────────────────
+ *
+ * The board drifts by animating a duplicated column, so the loop has no seam
+ * and no scroll listener. Duration is set per-instance from a CSS variable so
+ * the component controls pace without a second keyframe definition.
+ */
+.board-track {
+  animation: board-drift var(--board-duration, 48s) linear infinite;
+  will-change: transform;
+}
+
+.board-viewport:hover .board-track,
+.board-viewport:focus-within .board-track {
+  animation-play-state: paused;
+}
+
+/* The blanket guarantee.
+ *
+ * Every module also honours the preference deliberately — the board renders a
+ * still column, the escrow scrubber renders four static cards, the hero stops
+ * cycling its placeholder — and those are the versions that read properly.
+ * This rule is the backstop for anything added later that forgets, so a new
+ * animation cannot ship past the preference by omission. It is 0.01ms rather
+ * than 0 so animation `end` events still fire and nothing waits forever on a
+ * callback that never comes. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Reduced motion: the board still shows every card, it simply does not move.
+ * Nothing is hidden — the module degrades to a static list, not a stub. */
+@media (prefers-reduced-motion: reduce) {
+  .board-track {
+    animation: none;
+  }
+  .board-viewport {
+    overflow-y: auto;
+  }
+  .animate-pulse-slow {
+    animation: none;
+  }
+  .motion-safe-only {
+    display: none;
+  }
+}
+
+/* A card that just arrived from the composer. Announced by class so the
+ * keyframe stays in the Tailwind config with the rest of the motion. */
+@media (prefers-reduced-motion: reduce) {
+  .card-landing {
+    animation: none !important;
+  }
+}
+
+/* Range input — the composer's budget slider and the escrow scrubber. Native
+ * appearance is unstyleable across engines, so the track and thumb are drawn
+ * here from tokens. */
+.h24-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 28px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.h24-range::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--primary) 0%,
+    var(--primary) var(--fill, 0%),
+    var(--border) var(--fill, 0%),
+    var(--border) 100%
+  );
+}
+
+.h24-range::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--border);
+}
+
+.h24-range::-moz-range-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--primary);
+}
+
+.h24-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -7px;
+  height: 20px;
+  width: 20px;
+  border-radius: 999px;
+  background: var(--primary);
+  border: 2px solid var(--text-primary);
+}
+
+.h24-range::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  border: 2px solid var(--text-primary);
+  border-radius: 999px;
+  background: var(--primary);
+}
+
+.h24-range:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid var(--primary-bright);
+  outline-offset: 2px;
+}
+
+.h24-range:focus-visible::-moz-range-thumb {
+  outline: 2px solid var(--primary-bright);
+  outline-offset: 2px;
+}
+
+/* Hide the horizontal scrollbar on chip rails without hiding the overflow. */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

@@ -1,52 +1,73 @@
 /**
- * Help24 Design System — Color utilities
- * This file ensures design system colors always apply regardless of Tailwind build.
- * Do not remove. Single source of truth for brand colors.
+ * Help24 design system — colour utilities.
+ *
+ * This file exists as a purge safety net: it guarantees the brand colours land
+ * even if a Tailwind content scan misses a class. It no longer holds any colour
+ * VALUES — every rule below resolves through the custom properties generated
+ * from lib/tokens.ts, so there is one place to change a colour and one place
+ * that knows what the colour is.
+ *
+ * The translucent variants used to be hand-written rgba() triples copied from
+ * the OLD brand indigo (#6366F1) and were quietly a different colour from
+ * `bg-primary` after the accessibility fix moved it to #6265F0. Deriving them
+ * with color-mix removes that whole class of drift.
  */
 
 /* ---- Backgrounds ---- */
-.bg-bg-dark { background-color: #0a0a0a !important; }
-.bg-bg-dark\/80 { background-color: rgb(10 10 10 / 0.8) !important; }
-.bg-bg-dark\/95 { background-color: rgb(10 10 10 / 0.95) !important; }
-.bg-surface { background-color: #141414 !important; }
-.bg-card { background-color: #1c1c1e !important; }
-.bg-card\/50 { background-color: rgb(28 28 30 / 0.5) !important; }
-.bg-card\/70 { background-color: rgb(28 28 30 / 0.7) !important; }
+.bg-bg-dark { background-color: var(--bg-dark) !important; }
+.bg-bg-dark\/80 { background-color: color-mix(in srgb, var(--bg-dark) 80%, transparent) !important; }
+.bg-bg-dark\/95 { background-color: color-mix(in srgb, var(--bg-dark) 95%, transparent) !important; }
+.bg-surface { background-color: var(--surface) !important; }
+.bg-card { background-color: var(--card) !important; }
+.bg-card\/50 { background-color: color-mix(in srgb, var(--card) 50%, transparent) !important; }
+.bg-card\/70 { background-color: color-mix(in srgb, var(--card) 70%, transparent) !important; }
 
-.bg-primary { background-color: #6265f0 !important; }
-.bg-secondary { background-color: #22d3ee !important; }
-.bg-success { background-color: #10b981 !important; }
-.bg-warning { background-color: #f59e0b !important; }
-.bg-error { background-color: #ef4444 !important; }
+.bg-primary { background-color: var(--primary) !important; }
+.bg-secondary { background-color: var(--secondary) !important; }
+.bg-success { background-color: var(--success) !important; }
+.bg-money { background-color: var(--money) !important; }
+.bg-warning { background-color: var(--warning) !important; }
+.bg-error { background-color: var(--error) !important; }
 
 /* Backgrounds with opacity (match Tailwind class names) */
-.bg-primary\/10 { background-color: rgb(99 102 241 / 0.1) !important; }
-.bg-primary\/20 { background-color: rgb(99 102 241 / 0.2) !important; }
-.bg-secondary\/20 { background-color: rgb(34 211 238 / 0.2) !important; }
-.bg-success\/20 { background-color: rgb(16 185 129 / 0.2) !important; }
-.bg-error\/15 { background-color: rgb(239 68 68 / 0.15) !important; }
-.bg-warning\/15 { background-color: rgb(245 158 11 / 0.15) !important; }
+.bg-primary\/10 { background-color: color-mix(in srgb, var(--primary) 10%, transparent) !important; }
+.bg-primary\/20 { background-color: color-mix(in srgb, var(--primary) 20%, transparent) !important; }
+.bg-secondary\/20 { background-color: color-mix(in srgb, var(--secondary) 20%, transparent) !important; }
+.bg-success\/20 { background-color: color-mix(in srgb, var(--success) 20%, transparent) !important; }
+.bg-money\/10 { background-color: color-mix(in srgb, var(--money) 10%, transparent) !important; }
+.bg-money\/15 { background-color: color-mix(in srgb, var(--money) 15%, transparent) !important; }
+.bg-error\/15 { background-color: color-mix(in srgb, var(--error) 15%, transparent) !important; }
+.bg-warning\/15 { background-color: color-mix(in srgb, var(--warning) 15%, transparent) !important; }
 
 /* ---- Text ---- */
-.text-text-primary { color: #f9fafb !important; }
-.text-text-secondary { color: #9ca3af !important; }
-.text-text-tertiary { color: #6b7280 !important; }
+.text-text-primary { color: var(--text-primary) !important; }
+.text-text-secondary { color: var(--text-secondary) !important; }
+.text-text-tertiary { color: var(--text-tertiary) !important; }
 
-.text-primary { color: #6265f0 !important; }
-.text-secondary { color: #22d3ee !important; }
-.text-success { color: #10b981 !important; }
-.text-warning { color: #f59e0b !important; }
-.text-error { color: #ef4444 !important; }
+.text-primary { color: var(--primary) !important; }
+.text-primary-bright { color: var(--primary-bright) !important; }
+.text-secondary { color: var(--secondary) !important; }
+.text-success { color: var(--success) !important; }
+.text-money { color: var(--money) !important; }
+.text-warning { color: var(--warning) !important; }
+.text-error { color: var(--error) !important; }
 
 /* ---- Borders ---- */
-.border-border { border-color: #2c2c30 !important; }
-.border-primary { border-color: #6265f0 !important; }
-.border-primary\/20 { border-color: rgb(99 102 241 / 0.2) !important; }
-.border-primary\/50 { border-color: rgb(99 102 241 / 0.5) !important; }
+.border-border { border-color: var(--border) !important; }
+.border-primary { border-color: var(--primary) !important; }
+.border-primary\/20 { border-color: color-mix(in srgb, var(--primary) 20%, transparent) !important; }
+.border-primary\/50 { border-color: color-mix(in srgb, var(--primary) 50%, transparent) !important; }
 
-/* ---- Hero headline gradient (guaranteed to show) ---- */
+/**
+ * Hero headline gradient.
+ *
+ * Applied to ONE WORD, never a phrase or a line — a gradient running across a
+ * whole sentence stops reading as emphasis and starts reading as decoration.
+ * The ramp is short and ends in `--secondary` so the word still reads as a
+ * word at small sizes.
+ */
 .h24-hero-gradient {
-  background: linear-gradient(to right, #6265f0, #6265f0 50%, #22d3ee);
+  background: linear-gradient(100deg, var(--primary-bright), var(--secondary));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

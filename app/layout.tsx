@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import "./design-system.css";
 import { SITE } from "@/lib/site";
+import { PALETTE, tokensCss } from "@/lib/tokens";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -47,7 +48,7 @@ export const metadata: Metadata = {
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0A0A0A",
+  themeColor: PALETTE["bg-dark"],
 };
 
 const organizationLd = {
@@ -80,6 +81,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={poppins.variable}>
+      <head>
+        {/*
+          The design tokens, as CSS custom properties, generated from
+          lib/tokens.ts. Rendered on the server into <head> so the first paint
+          already has them — a stylesheet cannot import a TypeScript module,
+          and duplicating the palette into CSS is exactly the drift this
+          project is trying to remove.
+        */}
+        <style dangerouslySetInnerHTML={{ __html: tokensCss() }} />
+      </head>
       <body className="font-sans text-text-primary bg-bg-dark">
         <script
           type="application/ld+json"

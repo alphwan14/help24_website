@@ -2,6 +2,9 @@ import { ImageResponse } from "next/og";
 import { APP_ICON_DATA_URI } from "@/lib/generated/app-icon";
 import { ANDROID_RELEASE, formatBytes } from "@/lib/release";
 import { SITE } from "@/lib/site";
+// satori has no CSS custom properties, so this is the one renderer that needs
+// the token VALUES rather than `var(--…)`. They still come from lib/tokens.ts.
+import { PALETTE, withAlpha } from "@/lib/tokens";
 
 /**
  * The social card for /download.
@@ -48,11 +51,10 @@ export default async function Image() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "80px",
-          backgroundColor: "#0A0A0A",
+          backgroundColor: PALETTE["bg-dark"],
           // Mirrors the page's own radial glow so the card and the destination
           // read as the same surface.
-          backgroundImage:
-            "radial-gradient(ellipse 80% 60% at 20% 0%, rgba(99,102,241,0.22), transparent 60%), radial-gradient(ellipse 60% 50% at 100% 100%, rgba(34,211,238,0.12), transparent 60%)",
+          backgroundImage: `radial-gradient(ellipse 80% 60% at 20% 0%, ${withAlpha("primary", 0.22)}, transparent 60%), radial-gradient(ellipse 60% 50% at 100% 100%, ${withAlpha("secondary", 0.12)}, transparent 60%)`,
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "28px" }}>
@@ -75,13 +77,13 @@ export default async function Image() {
               style={{
                 fontSize: 64,
                 fontWeight: 700,
-                color: "#F9FAFB",
+                color: PALETTE["text-primary"],
                 letterSpacing: "-0.02em",
               }}
             >
               Download Help24
             </div>
-            <div style={{ fontSize: 30, color: "#9CA3AF", marginTop: 6 }}>
+            <div style={{ fontSize: 30, color: PALETTE["text-secondary"], marginTop: 6 }}>
               for Android
             </div>
           </div>
@@ -90,7 +92,7 @@ export default async function Image() {
         <div
           style={{
             fontSize: 32,
-            color: "#9CA3AF",
+            color: PALETTE["text-secondary"],
             marginTop: 44,
             maxWidth: 900,
             lineHeight: 1.4,
@@ -111,8 +113,8 @@ export default async function Image() {
           <div
             style={{
               display: "flex",
-              backgroundColor: "#6265F0",
-              color: "#FFFFFF",
+              backgroundColor: PALETTE.primary,
+              color: PALETTE.white,
               fontSize: 28,
               fontWeight: 600,
               padding: "18px 34px",
@@ -121,7 +123,7 @@ export default async function Image() {
           >
             Download for Android
           </div>
-          <div style={{ display: "flex", fontSize: 26, color: "#6B7280" }}>
+          <div style={{ display: "flex", fontSize: 26, color: PALETTE["text-tertiary"] }}>
             v{ANDROID_RELEASE.version} ·{" "}
             {formatBytes(ANDROID_RELEASE.apkSizeBytes)} ·{" "}
             {ANDROID_RELEASE.minimumAndroid}+
@@ -132,7 +134,7 @@ export default async function Image() {
           style={{
             display: "flex",
             fontSize: 24,
-            color: "#6B7280",
+            color: PALETTE["text-tertiary"],
             marginTop: "auto",
           }}
         >

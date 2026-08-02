@@ -29,6 +29,20 @@ const OUT = resolve(here, "..", "public", "download-qr.svg");
 // nobody notices until a printed flyer is already out in the world.
 const TARGET = "https://help24.co.ke/download?src=qr";
 
+/**
+ * The two colours, read out of lib/tokens.ts.
+ *
+ * Read as TEXT rather than imported, for the same reason TARGET above is a
+ * literal: this script runs on bare node, outside the TypeScript build. Same
+ * trick the release check below uses — one source of truth, no build step.
+ */
+function token(name) {
+  const tokensFile = readFileSync(resolve(here, "..", "lib", "tokens.ts"), "utf8");
+  const hit = tokensFile.match(new RegExp(`["']?${name}["']?\\s*:\\s*"(#[0-9a-fA-F]{6})"`));
+  if (!hit) throw new Error(`token "${name}" not found in lib/tokens.ts`);
+  return hit[1];
+}
+
 const source = readFileSync(resolve(here, "..", "lib", "release.ts"), "utf8");
 const base = source.match(/QR_TARGET_URL\s*=\s*"([^"]+)"/)?.[1];
 const param = source.match(/QR_SCAN_PARAM\s*=\s*"([^"]+)"/)?.[1];
@@ -50,7 +64,9 @@ const svg = await QRCode.toString(TARGET, {
   margin: 1,
   // Rendered on a light plate inside the card, because a QR inverted on a dark
   // background fails to scan on a meaningful number of older Android cameras.
-  color: { dark: "#0A0A0A", light: "#FFFFFF" },
+  // From lib/tokens.ts, like every other colour in this project — the QR is
+  // baked once at build time and cannot resolve a CSS custom property.
+  color: { dark: token("bg-dark"), light: token("white") },
 });
 
 mkdirSync(dirname(OUT), { recursive: true });

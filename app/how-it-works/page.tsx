@@ -1,6 +1,7 @@
+import Link from "next/link";
 import { SitePage } from "@/components/SitePage";
 import { PageHero } from "@/components/PageHero";
-import { ContentSection, Steps, FeatureGrid, CtaBand } from "@/components/content";
+import { ContentSection, Steps, CtaBand } from "@/components/content";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -10,6 +11,22 @@ export const metadata = pageMetadata({
   path: "/how-it-works",
 });
 
+/**
+ * WHAT WAS CUT FROM THIS PAGE, AND WHERE IT WENT.
+ *
+ * `providerSteps` — "Create your profile / Find work near you / Deliver and
+ * get paid" — was a near-verbatim copy of the three steps on /for-providers.
+ * One page owns that argument now, and this one links to it.
+ *
+ * `pillars` — payment protection, ratings, messaging, reporting — repeated
+ * claims the homepage now demonstrates rather than asserts: the escrow
+ * scrubber operates the first, and the walkthrough shows the middle two on the
+ * actual screens. Reporting lives on /safety, which is where someone with a
+ * problem is already heading.
+ *
+ * What is left is the one thing this page is for: the customer's path,
+ * described once.
+ */
 const customerSteps = [
   {
     title: "Post what you need",
@@ -17,49 +34,11 @@ const customerSteps = [
   },
   {
     title: "Compare and choose",
-    body: "Trusted providers respond with offers. Compare ratings, reviews and prices, then pick your match.",
+    body: "Providers near you respond with their own price and a message. Compare the offers, look at each profile, and pick one — nobody is assigned to you.",
   },
   {
     title: "Pay securely, get it done",
-    body: "Pay through the app with M-Pesa. Your money is protected until the work is complete.",
-  },
-];
-
-const providerSteps = [
-  {
-    title: "Create your profile",
-    body: "Add your profession, skills and a clear bio. A complete profile earns trust and more work.",
-  },
-  {
-    title: "Find work near you",
-    body: "Browse open requests and jobs, and apply with a message and your price.",
-  },
-  {
-    title: "Deliver and get paid",
-    body: "Do great work and get paid to your M-Pesa number when the job is done.",
-  },
-];
-
-const pillars = [
-  {
-    icon: "shield",
-    title: "Payment protection",
-    body: "Funds are held in escrow and released when the job is complete — safe for both sides.",
-  },
-  {
-    icon: "badge",
-    title: "Ratings & reviews",
-    body: "Every job builds a reputation, so quality rises to the top.",
-  },
-  {
-    icon: "chat",
-    title: "In-app messaging",
-    body: "Agree the details, share updates and keep a record — all in one place.",
-  },
-  {
-    icon: "safety",
-    title: "Reporting & support",
-    body: "Report issues in a tap and reach a real team when you need help.",
+    body: "Pay through the app with M-Pesa. Your money is held until you confirm the work is complete.",
   },
 ];
 
@@ -76,19 +55,27 @@ export default function HowItWorksPage() {
         <Steps steps={customerSteps} />
       </ContentSection>
 
-      <ContentSection
-        eyebrow="For providers"
-        title="Turn skills into income"
-        className="bg-surface"
-      >
-        <Steps steps={providerSteps} />
-      </ContentSection>
-
-      <ContentSection
-        title="Built to be trusted"
-        intro="Every job on Help24 runs on the same foundations."
-      >
-        <FeatureGrid items={pillars} />
+      <ContentSection title="The rest of it" className="bg-surface">
+        <div className="mx-auto max-w-prose space-y-4 text-body-lg text-text-secondary">
+          <p>
+            Offering a service instead?{" "}
+            <Link href="/for-providers" className="text-primary-bright hover:underline">
+              For providers
+            </Link>{" "}
+            covers how listings, offers and payouts work from that side.
+          </p>
+          <p>
+            Want to see what happens to the money?{" "}
+            <Link href="/#escrow" className="text-primary-bright hover:underline">
+              Drag through the four stages
+            </Link>{" "}
+            on the homepage, or read the detail — including disputes and refunds — on{" "}
+            <Link href="/safety" className="text-primary-bright hover:underline">
+              Safety &amp; Escrow
+            </Link>
+            .
+          </p>
+        </div>
       </ContentSection>
 
       <CtaBand

@@ -17,27 +17,31 @@ export const metadata = pageMetadata({
   path: "/safety",
 });
 
-const escrowSteps = [
+/**
+ * The three-step escrow explainer that used to sit here is gone.
+ *
+ * The homepage now has a scrubber a visitor drags through all four stages, and
+ * a static prose copy of the same thing on a second page is exactly the
+ * repetition this rebuild set out to remove. What is kept is what the homepage
+ * module does NOT cover, because it is not a demo — what happens when a job
+ * goes wrong.
+ */
+const disputeSteps = [
   {
-    title: "You pay into escrow",
-    body: "When you pay through Help24, your money is held securely instead of going straight to the provider.",
+    title: "Raise it before you release",
+    body: "If the work is not what you agreed, do not release the payment. Open a dispute from the job and the money stays where it is.",
   },
   {
-    title: "The work gets done",
-    body: "The provider completes the job, or agreed milestones, while the funds stay protected.",
+    title: "Both sides are heard",
+    body: "You and the provider each explain, in the same thread, with the messages and photos already attached to the job.",
   },
   {
-    title: "Funds are released",
-    body: "You release payment when you're satisfied. If something goes wrong, funds can be paused while it's resolved.",
+    title: "The money moves once, and only once",
+    body: "The held amount is either released to the provider or refunded to you. It is never split without both sides agreeing.",
   },
 ];
 
 const safeguards = [
-  {
-    icon: "shield",
-    title: "Payment protection",
-    body: "Escrow keeps your money safe until the work is complete — no pay-first, no runaround.",
-  },
   {
     icon: "badge",
     title: "Trusted reputations",
@@ -74,10 +78,17 @@ export default function SafetyPage() {
 
       <ContentSection
         eyebrow="Payment protection"
-        title="How escrow works"
-        intro="Your money is only released when the work is done."
+        title="If something goes wrong"
+        intro="Your money is only released when you say the work is done. This is what happens when you can't say that."
       >
-        <Steps steps={escrowSteps} />
+        <Steps steps={disputeSteps} />
+        <p className="mx-auto mt-8 max-w-prose text-body-lg text-text-secondary">
+          For the ordinary path — agreed, held, worked, released —{" "}
+          <Link href="/#escrow" className="text-primary-bright hover:underline">
+            drag through it on the homepage
+          </Link>
+          .
+        </p>
       </ContentSection>
 
       <ContentSection title="What keeps you safe" className="bg-surface">

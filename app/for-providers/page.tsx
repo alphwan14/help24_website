@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SitePage } from "@/components/SitePage";
 import { PageHero } from "@/components/PageHero";
 import {
@@ -16,26 +17,27 @@ export const metadata = pageMetadata({
   path: "/for-providers",
 });
 
+/**
+ * "Get paid securely" was here too, saying what the homepage escrow scrubber
+ * now does — a visitor can drag the money through all four stages themselves.
+ * Repeating it as a tile added a claim and removed nothing, so it is gone and
+ * the section below links to the working version instead.
+ */
 const benefits = [
   {
     icon: "search",
-    title: "Reach ready customers",
-    body: "Connect with people actively looking for your service — no cold calls or chasing referrals.",
+    title: "Customers come to you",
+    body: "People post what they need and you answer with your price. No cold calls, no chasing referrals, no paying for leads.",
   },
   {
     icon: "badge",
     title: "Build your reputation",
-    body: "Ratings and reviews follow your profile and help you win more work over time.",
-  },
-  {
-    icon: "wallet",
-    title: "Get paid securely",
-    body: "Payments are protected in escrow and released to your M-Pesa when the job is done.",
+    body: "Every completed, paid job adds to your rating. It is tied to real work, which is what makes it worth something.",
   },
   {
     icon: "sparkle",
     title: "Promote your services",
-    body: "Feature a listing with Promote Business to reach even more customers.",
+    body: "Feature a listing with Promote Business to put it in front of more customers.",
   },
 ];
 
@@ -67,11 +69,19 @@ export default function ForProvidersPage() {
       <PageHero
         eyebrow="For providers"
         title="Grow your business on Help24"
-        description="Put your skills in front of customers across Kenya, build a reputation that wins work, and get paid securely — all from your phone."
+        description="List what you do, answer the jobs that suit you, and get paid to M-Pesa when the work is done — all from your phone."
       />
 
-      <ContentSection title="Why providers choose Help24">
+      <ContentSection title="Why work through Help24">
         <FeatureGrid items={benefits} columns={2} />
+        <p className="mx-auto mt-8 max-w-prose text-body-lg text-text-secondary">
+          Payment is held by Help24 from the moment the customer accepts your price, so you know the
+          money exists before you travel.{" "}
+          <Link href="/#escrow" className="text-primary-bright hover:underline">
+            See what happens to it
+          </Link>
+          .
+        </p>
       </ContentSection>
 
       <ContentSection

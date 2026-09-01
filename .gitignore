@@ -24,10 +24,26 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env*.local
+#
+# `.env*.local` alone is the Next.js starter default, and it leaves a real hole:
+# a plain `.env` or `.env.production` is NOT matched by it, so the one file most
+# likely to hold a key would be committed by `git add .` without a word. The
+# parent repository ignores these globally, but this is a SEPARATE repository
+# with its own remote — none of that applies here.
+#
+# `.env.example` stays committable: it is the template, and it must carry
+# placeholders only.
+.env
+.env.*
+!.env.example
 
 # vercel
 .vercel
+
+# ide
+.idea/
+*.iml
+.vscode/
 
 # typescript
 *.tsbuildinfo

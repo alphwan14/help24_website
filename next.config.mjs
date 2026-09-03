@@ -1,5 +1,31 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  /**
+   * DEV AND PRODUCTION GET SEPARATE BUILD DIRECTORIES.
+   *
+   * THE BUG THIS FIXES. `next build` and `next dev` both wrote to `.next`,
+   * and they write incompatible things into it: a production build emits
+   * hashed chunks, the dev server emits its own and expects a manifest that
+   * matches. Run one after the other and the second finds the first's
+   * leftovers — which surfaces as
+   *
+   *     Error: Cannot find module './948.js'
+   *     Require stack: .next/server/webpack-runtime.js
+   *
+   * on a page that is perfectly fine. The usual advice is "delete .next", but
+   * that is a workaround somebody has to remember every single time they
+   * switch, and forgetting it looks exactly like a broken application.
+   *
+   * Giving each mode its own directory makes the situation impossible instead
+   * of recoverable. `next dev` sets NODE_ENV=development before it reads this
+   * file; `next build` and `next start` set production. So dev owns
+   * `.next-dev` and the production pipeline keeps `.next` — which also means
+   * Vercel, which only ever runs `next build`, is completely unaffected.
+   *
+   * Both are gitignored.
+   */
+  distDir: process.env.NODE_ENV === "development" ? ".next-dev" : ".next",
+
   async headers() {
     return [
       {

@@ -8,7 +8,11 @@
 /coverage
 
 # next.js
+# Two of them: `next dev` builds into .next-dev and the production pipeline
+# into .next, so neither can overwrite the other's chunks. See the note on
+# `distDir` in next.config.mjs for the error that used to cause.
 /.next/
+/.next-dev/
 /out/
 
 # production

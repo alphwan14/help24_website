@@ -56,7 +56,7 @@ export function PlatformCards() {
                 href={platform.url}
                 {...{ [TRACK_ATTR]: "download_click" }}
                 {...{ [`${TRACK_ATTR}-platform`]: platform.trackId }}
-                className="flex items-start gap-4 rounded-card border border-border bg-card p-4 shadow-card transition-all duration-200 hover:border-border/80 hover:shadow-card-glow"
+                className="flex items-start gap-4 rounded-card border border-border bg-card p-4 shadow-card transition-all duration-200 hover:border-border/80 hover:shadow-lift"
               >
                 {body}
               </a>

@@ -8,6 +8,7 @@ import {
   CheckList,
   CtaBand,
 } from "@/components/content";
+import { EscrowScrubber } from "@/components/home/EscrowScrubber";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -18,12 +19,15 @@ export const metadata = pageMetadata({
 });
 
 /**
- * The three-step escrow explainer that used to sit here is gone.
+ * The escrow scrubber lives here now.
  *
- * The homepage now has a scrubber a visitor drags through all four stages, and
- * a static prose copy of the same thing on a second page is exactly the
- * repetition this rebuild set out to remove. What is kept is what the homepage
- * module does NOT cover, because it is not a demo — what happens when a job
+ * It used to be on the homepage, where it was the fifth interactive module
+ * above the fold. The homepage kept the argument — money moves, money stops,
+ * money is released — as a thirty-second animation; this page keeps the
+ * version you can drag through stage by stage, next to the thing it is really
+ * for, which is somebody deciding whether to trust us with a payment.
+ *
+ * What follows the scrubber is what no demo covers: what happens when a job
  * goes wrong.
  */
 const disputeSteps = [
@@ -76,22 +80,21 @@ export default function SafetyPage() {
         description="Help24 is designed so both sides can rely on clear rules and secure tools. Here's how we keep you protected."
       />
 
+      {/* Drag through the four stages. The homepage's `#escrow` section is the
+          same story told in one pass; this is the one you operate. */}
+      <EscrowScrubber />
+
       <ContentSection
         eyebrow="Payment protection"
         title="If something goes wrong"
+        className="bg-surface"
         intro="Your money is only released when you say the work is done. This is what happens when you can't say that."
       >
         <Steps steps={disputeSteps} />
-        <p className="mx-auto mt-8 max-w-prose text-body-lg text-text-secondary">
-          For the ordinary path — agreed, held, worked, released —{" "}
-          <Link href="/#escrow" className="text-primary-bright hover:underline">
-            drag through it on the homepage
-          </Link>
-          .
-        </p>
+
       </ContentSection>
 
-      <ContentSection title="What keeps you safe" className="bg-surface">
+      <ContentSection title="What keeps you safe">
         <FeatureGrid items={safeguards} columns={2} />
       </ContentSection>
 

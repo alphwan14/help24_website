@@ -12,7 +12,7 @@ interface CardProps {
 
 const variants = {
   default: "border border-border bg-card shadow-card",
-  hover: "border border-border bg-card shadow-card hover:shadow-card-glow hover:border-border/80 transition-all duration-300 cursor-pointer",
+  hover: "border border-border bg-card shadow-card hover:shadow-lift hover:border-border/80 transition-all duration-300 cursor-pointer",
   gradient: "border border-border bg-card shadow-card relative overflow-hidden",
 };
 

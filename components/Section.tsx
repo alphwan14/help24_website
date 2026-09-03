@@ -35,10 +35,12 @@ interface SectionLabelProps {
 /**
  * The small uppercase eyebrow above a section heading.
  *
- * Uses `primary-bright`, not `primary`. This is 12px text on a near-black
- * background, where the brand indigo scores 4.37:1 — below AA. Darkening
- * `primary` so buttons could carry white text made this case slightly worse,
- * not better, which is exactly why the two are separate tokens.
+ * Uses `primary-bright`, not `primary`. This is 12px text, and the brand
+ * indigo is chosen to carry WHITE letters on ITSELF — which makes it too light
+ * to be letters on the page in the light theme and too dark in the dark one.
+ * `primary-bright` is the same brand colour resolved for the opposite job, per
+ * theme: 7.5:1 on paper, 6.6:1 on near-black. That is the whole reason the two
+ * are separate tokens rather than one colour with an opacity on it.
  */
 export function SectionLabel({ children, className = "" }: SectionLabelProps) {
   return (

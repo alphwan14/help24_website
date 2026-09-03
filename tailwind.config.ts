@@ -3,9 +3,26 @@ import { PALETTE, RADIUS, CARD_METRICS } from "./lib/tokens";
 
 /**
  * Colours, radii and card geometry are GENERATED from lib/tokens.ts — the one
- * file that holds a hex value in this project. Add a colour there, not here.
+ * file in this project that holds a hex value. Add a colour there, not here.
+ *
+ * WHY EVERY COLOUR IS A `var()` AND NOT THE HEX ITSELF.
+ *
+ * The site has two themes. If `bg-card` compiled to `#1C1C1E`, switching theme
+ * would mean shipping a second copy of every colour utility under a selector —
+ * the classic `.dark:bg-x` duplication, which doubles the stylesheet and puts
+ * two names on one idea. Pointing the utility at the custom property instead
+ * means `bg-card` compiles ONCE and simply resolves differently depending on
+ * which `:root` block is winning. Theme switching costs nothing at build time
+ * and nothing at runtime beyond a repaint.
+ *
+ * The `<alpha-value>` placeholder is what keeps `bg-primary/10` working, and
+ * it is the reason tokensCss() emits a bare `r g b` triple alongside each
+ * colour: Tailwind can substitute an alpha into `rgb(98 101 240 / 0.1)` but
+ * not into a hex and not into a var() holding a finished colour.
  */
-const colors = Object.fromEntries(Object.entries(PALETTE)) as Record<string, string>;
+const colors = Object.fromEntries(
+  Object.keys(PALETTE).map((name) => [name, `rgb(var(--${name}-rgb) / <alpha-value>)`]),
+) as Record<string, string>;
 
 const borderRadius = Object.fromEntries(
   Object.entries(RADIUS).map(([name, px]) => [name, `${px}px`]),
@@ -16,22 +33,6 @@ const config: Config = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
-  safelist: [
-    // Kept from the original config: these are the classes the older marketing
-    // pages apply, and a purge miss turned the site monochrome once already.
-    // The new modules colour themselves with `var(--token)` instead, so this
-    // list does not have to grow as tokens are added.
-    "bg-primary", "text-primary", "border-primary", "text-primary-bright",
-    "bg-secondary", "text-secondary", "border-secondary",
-    "bg-success", "text-success", "border-success",
-    "bg-warning", "text-warning", "border-warning",
-    "bg-error", "text-error", "border-error",
-    "bg-bg-dark", "bg-surface", "bg-card", "border-border",
-    "text-text-primary", "text-text-secondary", "text-text-tertiary",
-    "bg-primary/10", "bg-primary/20", "bg-secondary/20", "bg-success/20",
-    "bg-error/15", "bg-warning/15",
-    "text-money", "bg-money", "bg-money/10", "bg-money/15",
   ],
   theme: {
     extend: {
@@ -64,21 +65,42 @@ const config: Config = {
         "badge-type": ["11px", { lineHeight: "1.3" }],
         "badge-tag": ["10.5px", { lineHeight: "1.3" }],
       },
+      /* Elevation follows the theme for the same reason colour does — see
+         SHADOWS in lib/tokens.ts for why a dark shadow and a light one cannot
+         be the same value. */
       boxShadow: {
-        card: "0 1px 3px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.2)",
-        "card-glow": "0 0 0 1px rgba(255,255,255,0.04), 0 4px 24px rgba(0,0,0,0.2)",
-        "nav-bottom": "0 -4px 12px rgba(0,0,0,0.15)",
-        /* The feed card's own shadow — post_card.dart:124-129 */
-        feed: "0 2px 8px rgba(0,0,0,0.2)",
+        card: "var(--shadow-card)",
+        lift: "var(--shadow-lift)",
+        feed: "var(--shadow-feed)",
+        "nav-bottom": "0 -4px 12px rgb(var(--page-rgb) / 0.5)",
       },
       spacing: {
-        section: "clamp(4rem, 10vw, 7rem)",
+        section: "clamp(4.5rem, 11vw, 8rem)",
         "card-gap": `${CARD_METRICS.gap}px`,
         "card-pad": `${CARD_METRICS.padding}px`,
       },
       maxWidth: {
         prose: "42rem",
         "prose-lg": "48rem",
+      },
+      /**
+       * MOTION.
+       *
+       * Two easings do almost all the work on this site, and they are named so
+       * a component can say which one it means rather than pasting four
+       * magic numbers:
+       *
+       *   `spring`   overshoots slightly and settles. For anything ARRIVING —
+       *              a card dropping onto the board, an offer sliding in. It
+       *              is the closest a pure CSS curve gets to physics, and it
+       *              is why the drop interaction reads as weight rather than
+       *              as a fade.
+       *   `out`      decelerates and stops dead. For anything LEAVING or
+       *              moving between two states that both already exist.
+       */
+      transitionTimingFunction: {
+        spring: "cubic-bezier(0.22, 1.4, 0.36, 1)",
+        out: "cubic-bezier(0.2, 0.8, 0.2, 1)",
       },
       keyframes: {
         "board-drift": {
@@ -89,10 +111,36 @@ const config: Config = {
           from: { opacity: "0", transform: "translateY(16px) scale(0.97)" },
           to: { opacity: "1", transform: "translateY(0) scale(1)" },
         },
+        /* The signature drop: a request falling into the marketplace. */
+        drop: {
+          "0%": { opacity: "0", transform: "translateY(-38px) scale(0.94)" },
+          "60%": { opacity: "1" },
+          "100%": { opacity: "1", transform: "translateY(0) scale(1)" },
+        },
+        /* An offer arriving from the side of the board. */
+        "slide-in": {
+          from: { opacity: "0", transform: "translateY(14px) scale(0.97)" },
+          to: { opacity: "1", transform: "translateY(0) scale(1)" },
+        },
+        /* The search sweep under the hero card while providers are found. */
+        sweep: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(200%)" },
+        },
+        /* The locate pulse behind a pin. Opacity only past the first frame,
+           so it composites without touching layout. */
+        ping: {
+          "0%": { opacity: "0.5", transform: "scale(0.6)" },
+          "100%": { opacity: "0", transform: "scale(2.2)" },
+        },
       },
       animation: {
         "board-drift": "board-drift linear infinite",
         "card-land": "card-land 420ms cubic-bezier(0.2,0.8,0.2,1) both",
+        drop: "drop 620ms cubic-bezier(0.22,1.4,0.36,1) both",
+        "slide-in": "slide-in 460ms cubic-bezier(0.22,1.4,0.36,1) both",
+        sweep: "sweep 1.4s cubic-bezier(0.4,0,0.2,1) infinite",
+        ping: "ping 2.4s cubic-bezier(0,0,0.2,1) infinite",
       },
     },
   },

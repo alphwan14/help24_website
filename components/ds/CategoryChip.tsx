@@ -8,9 +8,9 @@
  * `--primary` tint. Measured, that is 3.0:1 — the tint lightens the background
  * enough to put the label well under AA, and a category is not decoration, it
  * is the word that tells you what the card is. The label and glyph therefore
- * use `--primary-bright`, the lighter variant this project already keeps for
- * exactly this problem (see lib/tokens.ts), which scores 4.6:1 on the same
- * tint. The FILL is untouched, so the chip still reads as the app's chip.
+ * use `--primary-bright`, the variant this project keeps for exactly this
+ * problem (see lib/tokens.ts): 4.6:1 on the tint in dark, 6.0:1 in light. The
+ * FILL is untouched, so the chip still reads as the app's chip.
  */
 "use client";
 

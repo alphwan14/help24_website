@@ -5,11 +5,12 @@
 /**
  * Colour custom properties are NOT declared here.
  *
- * They are generated from lib/tokens.ts and injected as a `:root` block by
- * app/layout.tsx, which is what lets this project hold exactly one file
- * containing hex literals. Everything below references `var(--token)`;
- * translucent variants are derived with `color-mix` rather than by writing a
- * second, hand-maintained rgba() copy of the same colour.
+ * They are generated from lib/tokens.ts and injected as three `:root` blocks
+ * by app/layout.tsx — light, light-with-dark-preference, and an explicit
+ * override — which is what lets this project hold exactly one file containing
+ * a hex literal. Everything below references `var(--token)` or
+ * `rgb(var(--token-rgb) / a)`, so every rule in this file is theme-aware
+ * without being written twice.
  */
 
 @layer base {
@@ -17,7 +18,7 @@
     scroll-behavior: smooth;
   }
   body {
-    background-color: var(--bg-dark);
+    background-color: var(--page);
     color: var(--text-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -27,56 +28,93 @@
       scroll-behavior: auto;
     }
   }
+  /**
+   * Colours change on a theme switch; nothing else should.
+   *
+   * Without this, flipping the toggle animates every `transition-colors`
+   * component on the page at its own duration and the whole site ripples for
+   * half a second. The class is stamped on <html> for exactly one frame by
+   * ThemeToggle.
+   */
+  html.theme-switching *,
+  html.theme-switching *::before,
+  html.theme-switching *::after {
+    transition: none !important;
+  }
 }
 
+/* ── Ground textures ───────────────────────────────────────────────────────
+ *
+ * Both are drawn from `--text-primary` rather than from white, so they invert
+ * with the theme automatically: faint light lines on dark, faint dark lines on
+ * paper. A grid hard-coded to white simply vanishes in light mode, which is
+ * how most retrofitted themes lose their texture.
+ */
 .bg-grid {
   background-image:
-    linear-gradient(color-mix(in srgb, var(--white) 3%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--white) 3%, transparent) 1px, transparent 1px);
+    linear-gradient(rgb(var(--text-primary-rgb) / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--text-primary-rgb) / 0.045) 1px, transparent 1px);
   background-size: 64px 64px;
 }
 
-.bg-grid-pattern {
+/**
+ * The hero's atmosphere.
+ *
+ * Not a "gradient blob" — it has no edge and no shape. It is a wide, very low
+ * ellipse of brand colour bled in from above the fold, so the top of the page
+ * is warmer than the bottom and the eye starts where the headline is. On light
+ * it has to be weaker (colour on paper reads much louder than colour on black)
+ * which is why the two strengths are separate rules rather than one opacity.
+ */
+.bg-atmosphere {
   background-image:
-    linear-gradient(to right, color-mix(in srgb, var(--white) 5%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in srgb, var(--white) 5%, transparent) 1px, transparent 1px);
-  background-size: 40px 40px;
+    radial-gradient(ellipse 90% 55% at 50% -15%, rgb(var(--primary-rgb) / 0.1), transparent 60%),
+    radial-gradient(ellipse 60% 45% at 92% 4%, rgb(var(--secondary-rgb) / 0.07), transparent 55%);
 }
 
-.bg-radial-glow {
-  background:
-    radial-gradient(
-      ellipse 80% 50% at 50% -20%,
-      color-mix(in srgb, var(--primary) 12%, transparent),
-      transparent 50%
-    ),
-    radial-gradient(
-      ellipse 60% 40% at 100% 0%,
-      color-mix(in srgb, var(--secondary) 6%, transparent),
-      transparent 50%
-    );
+:root[data-theme="dark"] .bg-atmosphere,
+:root:not([data-theme="light"]) .bg-atmosphere {
+  background-image:
+    radial-gradient(ellipse 90% 55% at 50% -15%, rgb(var(--primary-rgb) / 0.16), transparent 60%),
+    radial-gradient(ellipse 60% 45% at 92% 4%, rgb(var(--secondary-rgb) / 0.08), transparent 55%);
 }
 
-@keyframes pulse-slow {
-  0%,
-  100% {
-    opacity: 0.2;
-  }
-  50% {
-    opacity: 0.3;
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .bg-atmosphere {
+    background-image:
+      radial-gradient(ellipse 90% 55% at 50% -15%, rgb(var(--primary-rgb) / 0.1), transparent 60%),
+      radial-gradient(ellipse 60% 45% at 92% 4%, rgb(var(--secondary-rgb) / 0.07), transparent 55%);
   }
 }
 
-.animate-pulse-slow {
-  animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+/* A hairline that reads on both grounds. `--border` alone is nearly invisible
+   at the top of a light card and too strong at the top of a dark one. */
+.hairline-t {
+  border-top: 1px solid rgb(var(--border-rgb) / 0.9);
 }
 
-/* A ring that is actually visible on the near-black page: `--primary` measures
- * 4.37:1 here, `--primary-bright` 6.3:1. Every interactive module on the
- * homepage relies on this rather than drawing its own. */
+/* Fades a scrolling column into the page instead of cropping it. Used by the
+   living marketplace and the board. */
+.mask-fade-y {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 7%, black 92%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, black 7%, black 92%, transparent);
+}
+
+/* ── Focus ────────────────────────────────────────────────────────────────
+ *
+ * One ring for the whole site. `--primary-bright` is the token that is
+ * guaranteed to carry contrast against the page in BOTH themes — that is the
+ * entire reason it exists — so the ring never needs a theme-specific case.
+ */
 *:focus-visible {
   outline: 2px solid var(--primary-bright);
   outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--primary);
+  color: #fff;
 }
 
 /* ── Platform-aware download page ──────────────────────────────────────────
@@ -91,15 +129,11 @@
  * EVERYTHING, which is the correct fallback: an Android user seeing a QR panel
  * is untidy, an Android user seeing nothing is broken.
  */
-/* Shown by default (including with JS off); hidden once we know it's a phone.
- * A QR code that opens the page you are already reading is noise. */
 [data-platform="android"] .only-desktop,
 [data-platform="ios"] .only-desktop {
   display: none;
 }
 
-/* Hidden by default; revealed only for iOS, where the Android APK is useless
- * and saying so immediately beats letting someone tap it and fail. */
 .only-ios {
   display: none;
 }
@@ -141,16 +175,11 @@
   }
 }
 
-::selection {
-  background: var(--primary);
-  color: var(--white);
-}
-
-/* ── Live board ────────────────────────────────────────────────────────────
+/* ── Drifting column ───────────────────────────────────────────────────────
  *
- * The board drifts by animating a duplicated column, so the loop has no seam
- * and no scroll listener. Duration is set per-instance from a CSS variable so
- * the component controls pace without a second keyframe definition.
+ * A duplicated column animated to −50%, so the loop has no seam and no scroll
+ * listener. Duration comes in per-instance as a variable, which is why there
+ * is one keyframe rather than one per pace.
  */
 .board-track {
   animation: board-drift var(--board-duration, 48s) linear infinite;
@@ -162,15 +191,17 @@
   animation-play-state: paused;
 }
 
-/* The blanket guarantee.
+/* ── Reduced motion ────────────────────────────────────────────────────────
  *
- * Every module also honours the preference deliberately — the board renders a
- * still column, the escrow scrubber renders four static cards, the hero stops
- * cycling its placeholder — and those are the versions that read properly.
- * This rule is the backstop for anything added later that forgets, so a new
- * animation cannot ship past the preference by omission. It is 0.01ms rather
- * than 0 so animation `end` events still fire and nothing waits forever on a
- * callback that never comes. */
+ * The blanket guarantee. Every module also honours the preference deliberately
+ * — the marketplace stops drifting, the hero demo stops advancing and shows
+ * its whole sequence at once, the money flow renders as four static stops —
+ * and those are the versions that read properly. This rule is the backstop so
+ * an animation added later cannot ship past the preference by omission.
+ *
+ * 0.01ms rather than 0, so animation `end` events still fire and nothing waits
+ * forever on a callback that never comes.
+ */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -180,36 +211,25 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
 
-/* Reduced motion: the board still shows every card, it simply does not move.
- * Nothing is hidden — the module degrades to a static list, not a stub. */
-@media (prefers-reduced-motion: reduce) {
   .board-track {
     animation: none;
   }
   .board-viewport {
     overflow-y: auto;
   }
-  .animate-pulse-slow {
-    animation: none;
-  }
-  .motion-safe-only {
-    display: none;
-  }
-}
-
-/* A card that just arrived from the composer. Announced by class so the
- * keyframe stays in the Tailwind config with the rest of the motion. */
-@media (prefers-reduced-motion: reduce) {
-  .card-landing {
-    animation: none !important;
+  /* Anything whose only job is to move. Hidden rather than frozen, because a
+     stopped sweep or a stalled pulse is a smear, not a still. */
+  .motion-only {
+    display: none !important;
   }
 }
 
-/* Range input — the composer's budget slider and the escrow scrubber. Native
- * appearance is unstyleable across engines, so the track and thumb are drawn
- * here from tokens. */
+/* ── Range input ──────────────────────────────────────────────────────────
+ *
+ * The composer's budget slider. Native appearance is unstyleable across
+ * engines, so the track and thumb are drawn here from tokens.
+ */
 .h24-range {
   -webkit-appearance: none;
   appearance: none;
@@ -251,13 +271,14 @@
   width: 20px;
   border-radius: 999px;
   background: var(--primary);
-  border: 2px solid var(--text-primary);
+  border: 2px solid var(--card);
+  box-shadow: var(--shadow-card);
 }
 
 .h24-range::-moz-range-thumb {
   height: 20px;
   width: 20px;
-  border: 2px solid var(--text-primary);
+  border: 2px solid var(--card);
   border-radius: 999px;
   background: var(--primary);
 }

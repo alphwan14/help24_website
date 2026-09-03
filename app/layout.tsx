@@ -3,7 +3,8 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import "./design-system.css";
 import { SITE } from "@/lib/site";
-import { PALETTE, tokensCss } from "@/lib/tokens";
+import { LIGHT, PALETTE, tokensCss } from "@/lib/tokens";
+import { ThemeScript } from "@/components/theme/ThemeScript";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -48,7 +49,18 @@ export const metadata: Metadata = {
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: PALETTE["bg-dark"],
+  /**
+   * The browser chrome follows the theme too.
+   *
+   * A single themeColor would paint the Android address bar near-black behind
+   * a warm-paper page, which reads as a rendering fault rather than a choice.
+   * Two entries let the OS pick; an explicit override is handled by the fact
+   * that the bar recolours on scroll from the page background anyway.
+   */
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: LIGHT.page },
+    { media: "(prefers-color-scheme: dark)", color: PALETTE.page },
+  ],
 };
 
 const organizationLd = {
@@ -90,8 +102,15 @@ export default function RootLayout({
           project is trying to remove.
         */}
         <style dangerouslySetInnerHTML={{ __html: tokensCss() }} />
+        {/*
+          ORDER MATTERS: the tokens must already be in the cascade when this
+          runs, so that stamping `data-theme` resolves against blocks that
+          exist. See components/theme/ThemeScript.tsx for why it is inline and
+          synchronous rather than an effect.
+        */}
+        <ThemeScript />
       </head>
-      <body className="font-sans text-text-primary bg-bg-dark">
+      <body className="bg-page font-sans text-text-primary">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }}

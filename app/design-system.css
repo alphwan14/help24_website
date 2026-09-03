@@ -1,74 +1,43 @@
 /**
- * Help24 design system — colour utilities.
+ * Brand treatments that are not a single utility.
  *
- * This file exists as a purge safety net: it guarantees the brand colours land
- * even if a Tailwind content scan misses a class. It no longer holds any colour
- * VALUES — every rule below resolves through the custom properties generated
- * from lib/tokens.ts, so there is one place to change a colour and one place
- * that knows what the colour is.
+ * WHAT USED TO BE HERE, AND WHY IT IS GONE. This file was a purge safety net:
+ * roughly sixty `!important` rules re-declaring `.bg-card`, `.text-money`,
+ * `.border-border` and friends in case a Tailwind content scan missed them.
+ * That is no longer possible — every colour utility now compiles to
+ * `rgb(var(--token-rgb) / <alpha>)` (see tailwind.config.ts), so a colour is
+ * resolved at paint time by the theme rather than baked into a class at build
+ * time, and there is nothing left for a purge to get wrong.
  *
- * The translucent variants used to be hand-written rgba() triples copied from
- * the OLD brand indigo (#6366F1) and were quietly a different colour from
- * `bg-primary` after the accessibility fix moved it to #6265F0. Deriving them
- * with color-mix removes that whole class of drift.
+ * Deleting them also removed a live bug: `!important` outranks every hover,
+ * focus and state variant, so `hover:bg-card-hover` silently did nothing
+ * wherever the base class was one of the sixty.
  */
-
-/* ---- Backgrounds ---- */
-.bg-bg-dark { background-color: var(--bg-dark) !important; }
-.bg-bg-dark\/80 { background-color: color-mix(in srgb, var(--bg-dark) 80%, transparent) !important; }
-.bg-bg-dark\/95 { background-color: color-mix(in srgb, var(--bg-dark) 95%, transparent) !important; }
-.bg-surface { background-color: var(--surface) !important; }
-.bg-card { background-color: var(--card) !important; }
-.bg-card\/50 { background-color: color-mix(in srgb, var(--card) 50%, transparent) !important; }
-.bg-card\/70 { background-color: color-mix(in srgb, var(--card) 70%, transparent) !important; }
-
-.bg-primary { background-color: var(--primary) !important; }
-.bg-secondary { background-color: var(--secondary) !important; }
-.bg-success { background-color: var(--success) !important; }
-.bg-money { background-color: var(--money) !important; }
-.bg-warning { background-color: var(--warning) !important; }
-.bg-error { background-color: var(--error) !important; }
-
-/* Backgrounds with opacity (match Tailwind class names) */
-.bg-primary\/10 { background-color: color-mix(in srgb, var(--primary) 10%, transparent) !important; }
-.bg-primary\/20 { background-color: color-mix(in srgb, var(--primary) 20%, transparent) !important; }
-.bg-secondary\/20 { background-color: color-mix(in srgb, var(--secondary) 20%, transparent) !important; }
-.bg-success\/20 { background-color: color-mix(in srgb, var(--success) 20%, transparent) !important; }
-.bg-money\/10 { background-color: color-mix(in srgb, var(--money) 10%, transparent) !important; }
-.bg-money\/15 { background-color: color-mix(in srgb, var(--money) 15%, transparent) !important; }
-.bg-error\/15 { background-color: color-mix(in srgb, var(--error) 15%, transparent) !important; }
-.bg-warning\/15 { background-color: color-mix(in srgb, var(--warning) 15%, transparent) !important; }
-
-/* ---- Text ---- */
-.text-text-primary { color: var(--text-primary) !important; }
-.text-text-secondary { color: var(--text-secondary) !important; }
-.text-text-tertiary { color: var(--text-tertiary) !important; }
-
-.text-primary { color: var(--primary) !important; }
-.text-primary-bright { color: var(--primary-bright) !important; }
-.text-secondary { color: var(--secondary) !important; }
-.text-success { color: var(--success) !important; }
-.text-money { color: var(--money) !important; }
-.text-warning { color: var(--warning) !important; }
-.text-error { color: var(--error) !important; }
-
-/* ---- Borders ---- */
-.border-border { border-color: var(--border) !important; }
-.border-primary { border-color: var(--primary) !important; }
-.border-primary\/20 { border-color: color-mix(in srgb, var(--primary) 20%, transparent) !important; }
-.border-primary\/50 { border-color: color-mix(in srgb, var(--primary) 50%, transparent) !important; }
 
 /**
- * Hero headline gradient.
+ * The one-word headline gradient.
  *
- * Applied to ONE WORD, never a phrase or a line — a gradient running across a
- * whole sentence stops reading as emphasis and starts reading as decoration.
- * The ramp is short and ends in `--secondary` so the word still reads as a
- * word at small sizes.
+ * Applied to a SINGLE WORD, never a phrase and never a line — a gradient
+ * running across a whole sentence stops reading as emphasis and starts reading
+ * as decoration, which is the single thing that most made the old page look
+ * like a template.
+ *
+ * Both stops are theme tokens, so the ramp is indigo→cyan on dark and a deeper
+ * indigo→teal on light. Contrast is not a concern for the gradient itself
+ * because it only ever paints display-size type.
  */
-.h24-hero-gradient {
-  background: linear-gradient(100deg, var(--primary-bright), var(--secondary));
+.h24-gradient-word {
+  background-image: linear-gradient(
+    100deg,
+    rgb(var(--primary-bright-rgb)),
+    rgb(var(--secondary-rgb))
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  /* Descenders on a clipped background get cut by the line box on some
+     engines; a hair of padding and a matching negative margin gives them room
+     without moving the text. */
+  padding-right: 0.06em;
+  margin-right: -0.06em;
 }

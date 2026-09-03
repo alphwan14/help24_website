@@ -95,6 +95,17 @@ interface Props {
    * reader announces nothing. Mouse clicks still work.
    */
   inert?: boolean;
+  /**
+   * Draws the card's action as a shape rather than as a control.
+   *
+   * Used by the ambient marketplace stream, where the cards are a picture of
+   * the product drifting past and nothing on them is meant to be pressed. A
+   * button that is visible, focusable and does nothing is worse than no button
+   * — it is a promise the page cannot keep, and a keyboard user meets three of
+   * them per card. The styling is identical; only the element and the tab stop
+   * change.
+   */
+  presentational?: boolean;
   className?: string;
   /** Slot under the footer, e.g. the applicant list when expanded. */
   children?: ReactNode;
@@ -107,6 +118,7 @@ export function PostCard({
   onToggle,
   landing = false,
   inert = false,
+  presentational = false,
   className = "",
   children,
 }: Props) {
@@ -211,6 +223,7 @@ export function PostCard({
             viewer={post.owned ? "owner" : viewer}
             count={applicantCount}
             inert={inert}
+            presentational={presentational}
           />
         </span>
       </div>
@@ -249,14 +262,22 @@ function CardCta({
   viewer,
   count,
   inert,
+  presentational,
 }: {
   post: FeedPost;
   viewer: Viewer;
   count: number;
   inert: boolean;
+  presentational: boolean;
 }) {
   const stop = (e: React.MouseEvent) => e.stopPropagation();
   const tabIndex = inert ? -1 : undefined;
+  // A <span> keeps every visual property of the button and none of its
+  // affordances: no tab stop, no pointer cursor, no role announced.
+  const As = (presentational ? "span" : "button") as "button";
+  const control = presentational
+    ? ({} as Record<string, never>)
+    : ({ type: "button" as const, onClick: stop, tabIndex });
 
   if (viewer === "owner") {
     const isOffer = post.type === "offer";
@@ -267,10 +288,8 @@ function CardCta({
         ? COPY.owner.applications(count)
         : COPY.owner.manage;
     return (
-      <button
-        type="button"
-        onClick={stop}
-        tabIndex={tabIndex}
+      <As
+        {...control}
         className="inline-flex items-center gap-1.5 rounded-button border border-border px-3.5 py-2 text-card-title font-medium"
         style={{
           minHeight: CARD_METRICS.buttonMinHeight,
@@ -283,20 +302,18 @@ function CardCta({
       >
         <Glyph name={isOffer ? "storefront" : "people"} size={15} />
         {label}
-      </button>
+      </As>
     );
   }
 
   return (
-    <button
-      type="button"
-      onClick={stop}
-      tabIndex={tabIndex}
+    <As
+      {...control}
       className="inline-flex items-center rounded-full bg-primary px-4 py-2 text-card-title font-semibold text-white transition-opacity hover:opacity-95"
       style={{ minHeight: CARD_METRICS.buttonMinHeight }}
     >
       {COPY.cta[post.type]}
-    </button>
+    </As>
   );
 }
 

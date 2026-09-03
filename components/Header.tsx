@@ -1,50 +1,81 @@
+/**
+ * Site navigation.
+ *
+ * NAVIGATION SHOULD NOT BE THE LOUDEST THING ON A PAGE. This bar carries a
+ * mark, four quiet links, a theme control and one filled button — and at the
+ * top of the page it has no background of its own at all, so the hero starts
+ * at the top of the viewport rather than under a slab.
+ *
+ * THE PRIMARY ACTION IS NEVER BEHIND A MENU. On a phone "Get Help" sits in the
+ * bar itself, at full size, next to the hamburger. The links can hide; the
+ * errand cannot. That is the one rule this component exists to enforce.
+ *
+ * WHAT THE MENU DOES WHILE IT IS OPEN. It is a real dialog: Escape closes it,
+ * the page behind it does not scroll, and the links are removed from the tab
+ * order when it is shut. A menu that leaves twelve invisible tab stops behind
+ * it is the most common accessibility defect in this pattern.
+ */
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ButtonLink } from "./Button";
+import { usePathname } from "next/navigation";
 import { HEADER_NAV } from "@/lib/site";
 import { LOGO_CORNER_RATIO } from "@/lib/tokens";
+import { ThemeToggle } from "./theme/ThemeToggle";
+import { Glyph } from "./ds/glyphs";
 
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    handleScroll();
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    // `passive` because this listener never calls preventDefault, and saying so
+    // lets the browser keep scrolling on the compositor while it runs.
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // A navigation that leaves its own menu open is disorienting; closing on
+  // route change is the behaviour people expect without noticing it.
+  useEffect(() => setOpen(false), [pathname]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    // Locking the body is what stops the page behind the sheet from scrolling
+    // under a finger, which on iOS otherwise scrolls both.
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = previous;
+    };
+  }, [open]);
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "border-b border-border bg-bg-dark/95 backdrop-blur-xl"
-          : "bg-bg-dark/80 backdrop-blur-sm"
+      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
+        scrolled || open
+          ? "border-b border-border bg-page/85 backdrop-blur-xl"
+          : "border-b border-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4 sm:px-6 lg:px-8">
         {/*
           The logo, not a wordmark — and the app's shape, not a crop of it.
-
           This is the square artwork with its corners rounded at
-          LOGO_CORNER_RATIO, which is exactly what `splash_badge.png` puts on
-          screen when the app launches: white square, mark at 56% inside it,
-          corners at 20.5%. The whitespace around the mark is part of the
-          drawing; trimming to the mark's bounding box makes it look starved.
-
-          The tile is 44px rather than the 36px a wordmark would have needed,
-          because at 56% the mark itself is what has to be legible.
-
-          White and opaque, because the "24" and "HELP" are black — knocked out
-          of the page background they would simply not be there, and
-          recolouring them would stop it being the logo.
-
-          `alt` carries the accessible name, so the link is still "Help24" to a
-          screen reader with no visible wording.
+          LOGO_CORNER_RATIO, exactly what `splash_badge.png` puts on screen when
+          the app launches. It stays white and opaque in both themes because the
+          mark inside it is black; knocked out of a dark page it would simply
+          not be there, and recolouring it would stop it being the logo.
         */}
         <Link href="/" className="flex shrink-0 items-center" title="Help24 home">
           <Image
@@ -53,85 +84,93 @@ export function Header() {
             width={192}
             height={192}
             priority
-            className="h-11 w-11 bg-white sm:h-12 sm:w-12"
+            className="h-10 w-10 bg-white ring-1 ring-border"
             style={{ borderRadius: LOGO_CORNER_RATIO }}
           />
         </Link>
 
-        <nav className="hidden items-center gap-6 md:flex lg:gap-8">
+        <nav className="ml-2 hidden items-center gap-6 md:flex" aria-label="Main">
           {HEADER_NAV.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="text-body text-text-secondary hover:text-text-primary transition-colors"
+              aria-current={pathname === item.href ? "page" : undefined}
+              className={`text-body transition-colors ${
+                pathname === item.href
+                  ? "font-medium text-text-primary"
+                  : "text-text-secondary hover:text-text-primary"
+              }`}
             >
               {item.label}
             </Link>
           ))}
         </nav>
 
-        <div className="hidden shrink-0 items-center gap-2 md:flex">
-          <ButtonLink variant="ghost" href="/become-a-provider">
-            Become a Provider
-          </ButtonLink>
-          <ButtonLink href="/download">Download</ButtonLink>
-        </div>
+        <div className="ml-auto flex items-center gap-2">
+          <ThemeToggle className="hidden sm:inline-flex" />
 
-        <button
-          type="button"
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-button border border-border bg-card text-text-primary md:hidden"
-          onClick={() => setOpen(!open)}
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-        >
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            {open ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
+          <Link
+            href="/for-providers"
+            className="hidden rounded-button px-3 py-2 text-body font-medium text-text-secondary transition-colors hover:text-text-primary lg:inline-flex"
+          >
+            Become a Provider
+          </Link>
+
+          {/* Always visible, every screen size. See the file header. */}
+          <Link
+            href="/download"
+            className="inline-flex items-center gap-1.5 rounded-button bg-primary px-4 py-2.5 text-body font-semibold text-white transition-opacity hover:opacity-95"
+          >
+            Get Help
+          </Link>
+
+          <button
+            type="button"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-button border border-border bg-card text-text-primary md:hidden"
+            onClick={() => setOpen((v) => !v)}
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            aria-controls="site-menu"
+          >
+            <Glyph name={open ? "close" : "menu"} size={18} />
+          </button>
+        </div>
       </div>
 
+      {/* ── Mobile sheet ─────────────────────────────────────────────────── */}
       <div
-        className={`border-b border-border bg-surface md:hidden ${open ? "block" : "hidden"}`}
-        aria-hidden={!open}
+        id="site-menu"
+        className={`overflow-hidden border-b border-border bg-page md:hidden ${
+          open ? "block" : "hidden"
+        }`}
       >
-        <nav className="flex flex-col gap-0 px-4 py-4">
-          {HEADER_NAV.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="py-3 text-body text-text-secondary hover:text-text-primary"
-              onClick={() => setOpen(false)}
-            >
-              {item.label}
-            </Link>
-          ))}
-          <Link
-            href="/support"
-            className="py-3 text-body text-text-secondary hover:text-text-primary"
-            onClick={() => setOpen(false)}
-          >
-            Contact Support
-          </Link>
-          <div className="mt-2 flex flex-col gap-2 border-t border-border pt-4">
-            <ButtonLink
-              variant="ghost"
-              className="w-full justify-center"
-              href="/become-a-provider"
-              onClick={() => setOpen(false)}
-            >
-              Become a Provider
-            </ButtonLink>
-            <ButtonLink
-              className="w-full justify-center"
-              href="/download"
-              onClick={() => setOpen(false)}
-            >
-              Download
-            </ButtonLink>
+        <nav className="mx-auto max-w-6xl px-4 py-3 sm:px-6" aria-label="Site">
+          <ul>
+            {HEADER_NAV.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="flex items-center justify-between border-b border-border py-3.5 text-body-lg font-medium text-text-primary"
+                >
+                  {item.label}
+                  <Glyph name="arrowRight" size={15} className="text-text-tertiary" />
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Link
+                href="/for-providers"
+                className="flex items-center justify-between border-b border-border py-3.5 text-body-lg font-medium text-text-primary"
+              >
+                Become a Provider
+                <Glyph name="arrowRight" size={15} className="text-text-tertiary" />
+              </Link>
+            </li>
+          </ul>
+
+          <div className="flex items-center justify-between gap-3 py-4">
+            <span className="text-body-sm font-medium text-text-secondary">Theme</span>
+            <ThemeToggle />
           </div>
         </nav>
       </div>

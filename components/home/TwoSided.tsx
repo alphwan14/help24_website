@@ -93,7 +93,10 @@ export function TwoSided() {
           </Link>
         </div>
 
-        <div>
+        {/* The id is the composer's scroll target: putting a card "on the
+            board" means putting it HERE, and the composer sits directly
+            above this section on /how-it-works. */}
+        <div id="board" className="scroll-mt-24">
           <div className="mb-3 flex items-center justify-between gap-3">
             <p className="text-section-title font-semibold text-text-primary">
               {side === "need" ? "What customers post" : "What your listing looks like"}

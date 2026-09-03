@@ -46,7 +46,7 @@ export default function ContactPage() {
       <Section>
         {/* Direct email */}
         <div className="relative overflow-hidden rounded-card border border-border bg-card p-8 text-center shadow-card sm:p-10">
-          <div className="bg-radial-glow pointer-events-none absolute inset-0" aria-hidden />
+          <div className="bg-atmosphere pointer-events-none absolute inset-0" aria-hidden />
           <div className="relative">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-badge bg-primary/10 text-primary">
               <Icon name="mail" />

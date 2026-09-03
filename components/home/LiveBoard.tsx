@@ -22,7 +22,7 @@
 import { useEffect, useState } from "react";
 import { ApplicantList, PostCard, type FeedPost } from "@/components/ds/PostCard";
 import { CARD_METRICS } from "@/lib/tokens";
-import { useReducedMotion } from "./useReducedMotion";
+import { useReducedMotion } from "@/components/useReducedMotion";
 
 interface Props {
   posts: FeedPost[];

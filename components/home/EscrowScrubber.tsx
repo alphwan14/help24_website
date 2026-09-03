@@ -28,7 +28,7 @@ import { Avatar } from "@/components/ds/Avatar";
 import { Badge } from "@/components/ds/Badge";
 import { Glyph } from "@/components/ds/glyphs";
 import { Section, SectionLabel } from "@/components/Section";
-import { useReducedMotion } from "./useReducedMotion";
+import { useReducedMotion } from "@/components/useReducedMotion";
 
 const AMOUNT = 1500;
 

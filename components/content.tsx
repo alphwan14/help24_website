@@ -135,7 +135,7 @@ export function CtaBand({
   return (
     <Section>
       <div className="relative overflow-hidden rounded-card border border-border bg-card p-8 text-center shadow-card sm:p-12">
-        <div className="bg-radial-glow pointer-events-none absolute inset-0" aria-hidden />
+        <div className="bg-atmosphere pointer-events-none absolute inset-0" aria-hidden />
         <div className="relative">
           <h2 className="text-h2 font-semibold text-text-primary">{title}</h2>
           <p className="mx-auto mt-3 max-w-md text-body-lg text-text-secondary">

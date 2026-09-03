@@ -42,7 +42,7 @@ export function DownloadButton({
       href={platform.url}
       {...{ [TRACK_ATTR]: "download_click" }}
       {...{ [`${TRACK_ATTR}-platform`]: platform.trackId }}
-      className={`group inline-flex items-center justify-center gap-3 rounded-button bg-primary px-8 py-4 text-body-lg font-semibold text-white shadow-card transition-all duration-200 hover:opacity-95 hover:shadow-card-glow active:opacity-90 ${className}`}
+      className={`group inline-flex items-center justify-center gap-3 rounded-button bg-primary px-8 py-4 text-body-lg font-semibold text-white shadow-card transition-all duration-200 hover:opacity-95 hover:shadow-lift active:opacity-90 ${className}`}
     >
       <Icon name="download" className="h-5 w-5 shrink-0" />
       <span>{platform.ctaLabel}</span>

@@ -35,10 +35,20 @@ export const LAUNCH = {
 
 export type NavLink = { label: string; href: string; external?: boolean };
 
-/** Primary header navigation. */
+/**
+ * Header navigation — the SECONDARY links only.
+ *
+ * "Get Help" and "Become a Provider" are the primary actions and are rendered
+ * as controls by the header itself, not as entries here: a list that mixes
+ * "Safety" with "Get Help" gives them the same visual weight, which is exactly
+ * the flattening this navigation is trying to avoid.
+ *
+ * Four items. Contact reaches the same people as Help Centre and lives in the
+ * footer; a fifth link buys nothing and costs the bar its quietness.
+ */
 export const HEADER_NAV: NavLink[] = [
   { label: "How it works", href: "/how-it-works" },
-  { label: "For providers", href: "/for-providers" },
+  { label: "Services", href: "/services" },
   { label: "Safety", href: "/safety" },
   { label: "Help Centre", href: "/help" },
 ];
@@ -49,6 +59,7 @@ export const FOOTER_GROUPS: { title: string; links: NavLink[] }[] = [
     title: "Product",
     links: [
       { label: "How it works", href: "/how-it-works" },
+      { label: "All services", href: "/services" },
       { label: "For customers", href: "/for-customers" },
       { label: "For providers", href: "/for-providers" },
       { label: "Safety & Escrow", href: "/safety" },
@@ -103,6 +114,7 @@ export const SITEMAP_ROUTES: { path: string; priority: number }[] = [
   { path: "/", priority: 1.0 },
   { path: "/download", priority: 0.9 },
   { path: "/how-it-works", priority: 0.8 },
+  { path: "/services", priority: 0.8 },
   { path: "/for-customers", priority: 0.8 },
   { path: "/for-providers", priority: 0.8 },
   { path: "/become-a-provider", priority: 0.8 },

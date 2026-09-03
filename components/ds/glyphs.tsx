@@ -14,6 +14,7 @@ const paths: Record<string, string> = {
   star: "M12 3l2.6 5.7 6.4.7-4.7 4.3 1.3 6.3L12 16.8 6.4 20l1.3-6.3L3 9.4l6.4-.7z", // Icons.star_rounded
   search: "M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z M21 21l-4.35-4.35", // Iconsax.search_normal
   close: "M6 6l12 12 M18 6 6 18", // Icons.close
+  menu: "M4 7h16 M4 12h16 M4 17h16", // Icons.menu
   check: "M20 6 9 17l-5-5",
   chevronDown: "M6 9l6 6 6-6",
   arrowRight: "M5 12h14 M12 5l7 7-7 7",

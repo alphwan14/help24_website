@@ -32,6 +32,30 @@ export const PALETTE = {
   "card-hover": "#252528", // darkCardHover
   border: "#2C2C30", // darkBorder — the 1px card boundary
 
+  /**
+   * WEB-ONLY SURFACES. The app has no equivalent because the app has one
+   * theme; the website has two and needs two names the app never needed.
+   *
+   * `page` is the ground the whole site stands on. In dark it is exactly
+   * `bg-dark`, the app's scaffold colour. In light it is warm paper. New code
+   * should say `page`; `bg-dark` stays because twenty existing class names
+   * spell it that way and renaming them would be churn with nothing to show.
+   *
+   * `border-strong` is the boundary meant to be SEEN rather than felt.
+   *
+   * It outlines the secondary button, and that is what sets its value: a white
+   * button on warm paper differs from its background by about 1.03:1, so the
+   * outline is not decoration — it is the only thing that says a control is
+   * there. WCAG asks 3:1 of anything doing that job, which is why the light
+   * value is a mid warm grey (3.0:1) rather than the pale hairline that looks
+   * more tasteful in isolation and disappears in use.
+   */
+  page: "#0A0A0A",
+  /* Not the app's `darkBorder` one step up, which is what this was: at
+     #3A3A42 it measured 1.8:1 on the page and could not do the one job it is
+     named for. This clears 3:1 on all three dark surfaces. */
+  "border-strong": "#6B6B76",
+
   /* Accents — AppTheme (app_theme.dart:19-23) */
   primary: "#6265F0", // primaryAccent — buttons, active pill, category chip, Post FAB
   /**
@@ -359,38 +383,216 @@ export function cardMoneyLabel(
 }
 
 /* ────────────────────────────────────────────────────────────────────────────
+ * THEME
+ * ──────────────────────────────────────────────────────────────────────────── */
+
+/**
+ * The light theme, as overrides on PALETTE.
+ *
+ * PALETTE above IS the dark theme — every value in it was read out of the
+ * Flutter app, and dark is where the website and the phone are literally the
+ * same colours. That parity is not negotiable, so light is expressed as a diff
+ * rather than by forking the palette in two: a token absent from this map is
+ * identical in both themes, and a token present here has been chosen for light
+ * on purpose.
+ *
+ * IT IS NOT AN INVERSION. Three things are decided differently here:
+ *
+ *   PAPER, NOT WHITE. The ground is #FBF9F6 and the secondary band is #F4F0E9
+ *   — a warm, faintly yellow grey. Cards are true white and therefore lift off
+ *   it without needing a shadow to prove they are cards. A pure-white page
+ *   with pure-white cards has to draw borders everywhere to stay legible, and
+ *   that is what makes a light theme feel like a form.
+ *
+ *   TEXT-SAFE ACCENTS. #10B981 money-green is 4.9:1 on near-black and 2.1:1 on
+ *   white. Amber is worse. Every colour this site puts LETTERS in is therefore
+ *   darkened for light — the fills stay recognisably the same hue, the text
+ *   drops a step or two down the ramp. This is the problem `primary-bright`
+ *   was invented for on dark, solved the same way and in the same place.
+ *
+ *   BORDERS DO MORE WORK. On dark a card separates from the page by being
+ *   lighter than it. On light it separates by being whiter AND by having a
+ *   real edge, so `border` here is a colour you can see rather than a hairline
+ *   that only registers against black.
+ */
+export const LIGHT: Partial<Record<PaletteKey, string>> = {
+  /* Surfaces — warm paper, not sterile white. */
+  page: "#FBF9F6",
+  "bg-dark": "#FBF9F6", // the compatibility alias, kept in step with `page`
+  surface: "#F4F0E9", // the quieter band: footer, inset panels
+  card: "#FFFFFF",
+  "card-hover": "#FBF8F3",
+  border: "#E6E0D6",
+  "border-strong": "#8F897E",
+
+  /* Accents. The indigo FILL goes a shade deeper so white letters clear AA on
+     it (5.6:1); `primary-bright` stops meaning "lighter" and starts meaning
+     "the accent you may set text in", which is what it always was. */
+  primary: "#5457E8",
+  "primary-bright": "#4338CA",
+  secondary: "#0E7490",
+
+  /*
+     Money and status, darkened until they can carry 12–14px text on white AND
+     on their own tint.
+
+     THE SECOND CONDITION IS THE BINDING ONE. These colours mostly appear as a
+     badge: the label in the colour, on a 10–12% wash of the same colour. That
+     wash lightens the background just enough to cost roughly a tenth of a
+     point, so a value chosen against plain white lands just under AA on the
+     chip it is actually used in. Amber and green are both here for that reason
+     and not because they failed on white — they did not. */
+  money: "#047857",
+  success: "#047857",
+  warning: "#AB4E08",
+  error: "#DC2626",
+
+  /* Urgency keeps the app's hues, one step down the ramp each — same tint
+     arithmetic as above; Urgent already cleared it and is untouched. */
+  "urgency-urgent": "#C62828",
+  "urgency-soon": "#AB4E08",
+  "urgency-flexible": "#2B7530",
+
+  /* Post type badge. */
+  "type-request": "#1565C0",
+  "type-offer": "#2B7530",
+  "type-job": "#7B1FA2",
+
+  /* Text. Near-black rather than black — #141317 on #FBF9F6 measures 17.6:1,
+     and true black on warm paper reads as a printing error.
+
+     All three are measured against the DARKEST ground they can land on, which
+     is `surface`, not `page`: tertiary at #78747F cleared AA on paper and
+     missed it by a tenth on the situations band, which is exactly the sort of
+     near-miss that only shows up if you check the worst case rather than the
+     representative one. */
+  "text-primary": "#141317",
+  "text-secondary": "#55525C", // 7.3:1 on page, 7.6:1 on card, 6.7:1 on surface
+  "text-tertiary": "#6E6A76",
+
+  /* Filter pill, unselected. */
+  "pill-inactive": "#F1ECE3",
+  "pill-inactive-border": "#DFD7C9",
+};
+
+/**
+ * WHAT WAS MEASURED, AND WHAT IS KNOWINGLY LEFT.
+ *
+ * Every pair the site actually paints was checked against WCAG — text at 4.5:1
+ * and control boundaries at 3:1 — including the case that catches people out:
+ * a badge label sits on a 10–12% wash of ITS OWN colour, not on the card, and
+ * that wash costs about a tenth of a point. Several light values here are one
+ * step darker than they look like they need to be for exactly that reason.
+ *
+ * Everything the WEBSITE owns passes in both themes. Three pairs do not, all of
+ * them in dark, and all of them values read straight out of the Flutter app:
+ *
+ *   text-tertiary on a card        3.5:1   the app's "muted"
+ *   Urgent on its own 12% tint     3.6:1   PostModel.urgencyColor
+ *   Job badge on its own 10% tint  2.6:1   PostModel.typeBadgeColor
+ *
+ * They are carried rather than corrected because this file is a mirror of the
+ * app and silently diverging would make it a worse mirror. What the website
+ * does instead is refuse to put WORDS in them: `text-tertiary` is for glyphs
+ * and placeholders only (there is a `primary-bright`-shaped fix available for
+ * the badges if the app ever wants it, and `primary-bright` is precisely what
+ * that fix looked like the last time it was needed).
+ */
+
+/**
+ * Elevation, per theme.
+ *
+ * A shadow is not a colour and cannot live in PALETTE, but it is the token
+ * that most obviously cannot be shared: on dark, depth comes from a lighter
+ * surface and the shadow is nearly invisible; on light, depth IS the shadow
+ * and it has to be soft, warm and layered or the card looks stamped on.
+ */
+export const SHADOWS = {
+  dark: {
+    card: "0 1px 2px rgba(0,0,0,0.4), 0 8px 24px -12px rgba(0,0,0,0.6)",
+    lift: "0 2px 4px rgba(0,0,0,0.45), 0 16px 40px -16px rgba(0,0,0,0.75)",
+    feed: "0 2px 8px rgba(0,0,0,0.2)",
+  },
+  light: {
+    card: "0 1px 2px rgba(31,26,17,0.05), 0 8px 24px -14px rgba(31,26,17,0.18)",
+    lift: "0 2px 6px rgba(31,26,17,0.07), 0 20px 44px -18px rgba(31,26,17,0.24)",
+    feed: "0 1px 3px rgba(31,26,17,0.07), 0 6px 16px -10px rgba(31,26,17,0.16)",
+  },
+} as const;
+
+/* ────────────────────────────────────────────────────────────────────────────
  * CSS CUSTOM PROPERTIES
  * ──────────────────────────────────────────────────────────────────────────── */
+
+/** `#6265F0` becomes `98 101 240`. */
+function channels(hex: string): string {
+  const n = parseInt(hex.replace("#", ""), 16);
+  // eslint-disable-next-line no-bitwise
+  return `${(n >> 16) & 255} ${(n >> 8) & 255} ${n & 255}`;
+}
 
 /**
  * A palette colour at a given alpha, as `rgba(…)`.
  *
- * The site itself never needs this — CSS `color-mix(in srgb, var(--x) N%, …)`
- * does the same job without leaving the token layer. It exists for the two
- * places that render outside a browser and therefore cannot resolve a custom
- * property: the OG image (satori) and anything else built with inline styles at
- * build time.
+ * The site itself never needs this — in a browser `rgb(var(--x-rgb) / 0.4)`
+ * says the same thing and follows the theme, which a baked rgba() cannot. It
+ * exists for the one surface that renders outside a browser and therefore
+ * cannot resolve a custom property: the OG image (satori). That surface is
+ * dark-only, so reading PALETTE directly is correct there.
  */
 export function withAlpha(key: PaletteKey, alpha: number): string {
-  const hex = PALETTE[key].replace("#", "");
-  const n = parseInt(hex, 16);
-  // eslint-disable-next-line no-bitwise
-  return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${alpha})`;
+  return `rgba(${channels(PALETTE[key]).split(" ").join(",")},${alpha})`;
 }
 
 /**
- * Emits `:root { --primary: #6265F0; … }` from PALETTE.
+ * Every token, twice: once as a colour and once as a bare `r g b` triple.
  *
- * Injected once by app/layout.tsx. This is why no stylesheet in this project
- * contains a hex literal: globals.css and design-system.css reference
- * `var(--name)` and the values arrive from here.
+ * The triple is what keeps `bg-primary/10` working. Tailwind builds an opacity
+ * utility by substituting into `rgb(var(--primary-rgb) / <alpha-value>)`,
+ * which it cannot do with a hex or with a `var()` holding a whole colour — so
+ * without the triples, making colours theme-aware would have cost every
+ * `/opacity` class on the site. Inline styles and `color-mix()` keep using the
+ * plain `var(--primary)` form, which is why both are emitted.
+ */
+function themeBlock(map: Record<string, string>, shadows: Record<string, string>): string {
+  const colours = Object.entries(map)
+    .map(([name, hex]) => `--${name}:${hex.toLowerCase()};--${name}-rgb:${channels(hex)}`)
+    .join(";");
+  const shade = Object.entries(shadows)
+    .map(([name, value]) => `--shadow-${name}:${value}`)
+    .join(";");
+  return `${colours};${shade}`;
+}
+
+/**
+ * The stylesheet injected into <head> by app/layout.tsx.
+ *
+ * THE CASCADE, IN ORDER, AND WHY IT IS THIS ORDER:
+ *
+ *   1. `:root` is LIGHT. Light is the design's primary reference, so it is the
+ *      default rather than the special case, and a browser that reports no
+ *      preference lands on the theme that was drawn first.
+ *   2. `prefers-color-scheme: dark` switches to dark — but only on
+ *      `:root:not([data-theme="light"])`, so a visitor who has explicitly
+ *      chosen light is not overruled by their operating system.
+ *   3. `[data-theme="dark"]` switches to dark unconditionally, so the manual
+ *      choice wins in the other direction too, on a light-preferring system.
+ *
+ * A tiny blocking script (components/ThemeScript.tsx) stamps `data-theme`
+ * before first paint, so neither override arrives late enough to flash.
  */
 export function tokensCss(): string {
-  const vars = Object.entries(PALETTE)
-    .map(([name, hex]) => `--${name}:${hex.toLowerCase()}`)
-    .join(";");
+  const light = { ...PALETTE, ...LIGHT };
   const radii = Object.entries(RADIUS)
     .map(([name, px]) => `--radius-${name}:${px}px`)
     .join(";");
-  return `:root{${vars};${radii}}`;
+
+  const lightBlock = themeBlock(light, SHADOWS.light);
+  const darkBlock = themeBlock(PALETTE, SHADOWS.dark);
+
+  return [
+    `:root{color-scheme:light;${lightBlock};${radii}}`,
+    `@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;${darkBlock}}}`,
+    `:root[data-theme="dark"]{color-scheme:dark;${darkBlock}}`,
+  ].join("");
 }

@@ -71,7 +71,7 @@ export function BeforeAfter() {
       </div>
 
       {/* One frame, one width. Switching must not move anything around it. */}
-      <div className="mt-8 rounded-card border border-border bg-surface p-3 sm:p-6">
+      <div className="mt-8 rounded-card border border-border bg-card p-3 sm:p-6">
         <div className="mb-4 flex items-center justify-between gap-3">
           <p className="text-section-title font-semibold text-text-primary">
             {mode === "before"
@@ -110,11 +110,19 @@ function Thread() {
     <ol className="space-y-2.5">
       {THREAD.map((m, i) => (
         <li key={i} className={`flex ${m.from === "you" ? "justify-end" : "justify-start"}`}>
+          {/*
+            Two bubbles that have to stay apart in BOTH themes.
+            The original pair — card for you, page for them — worked on
+            near-black, where those two surfaces are eight steps apart. On warm
+            paper they are almost the same colour and the thread read as one
+            person talking. Tinting your own side with the accent separates
+            them by hue rather than by luminance, which survives either ground.
+          */}
           <div
             className={`max-w-[80%] rounded-card px-3.5 py-2.5 text-body ${
               m.from === "you"
-                ? "rounded-br-tag bg-card text-text-primary"
-                : "rounded-bl-tag border border-border bg-bg-dark text-text-secondary"
+                ? "rounded-br-tag bg-primary/10 text-text-primary"
+                : "rounded-bl-tag border border-border bg-surface text-text-secondary"
             }`}
           >
             {m.text}

@@ -18,7 +18,7 @@ export default function NotFound() {
   return (
     <SitePage>
       <section className="relative overflow-hidden">
-        <div className="bg-radial-glow pointer-events-none absolute inset-0" aria-hidden />
+        <div className="bg-atmosphere pointer-events-none absolute inset-0" aria-hidden />
         <div className="relative mx-auto flex min-h-[70vh] max-w-2xl flex-col items-center justify-center px-4 py-24 text-center sm:px-6">
           <p className="text-label-md font-medium uppercase tracking-wider text-primary">
             Error 404

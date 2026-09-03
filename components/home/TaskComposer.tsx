@@ -29,7 +29,7 @@ import { FilterPill } from "@/components/ds/FilterPill";
 import { Glyph } from "@/components/ds/glyphs";
 import { Section, SectionLabel } from "@/components/Section";
 import { useMarketplace } from "./MarketplaceContext";
-import { useReducedMotion } from "./useReducedMotion";
+import { useReducedMotion } from "@/components/useReducedMotion";
 
 /** The composed card always replaces itself, so re-running never stacks up. */
 const COMPOSED_ID = "composed";

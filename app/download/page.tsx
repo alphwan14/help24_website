@@ -132,7 +132,7 @@ export default function DownloadPage() {
       />
 
       {/* ── Hero ─────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden border-b border-border bg-radial-glow">
+      <section className="relative overflow-hidden border-b border-border bg-atmosphere">
         <div
           className="bg-grid pointer-events-none absolute inset-0 opacity-40"
           aria-hidden
@@ -149,7 +149,7 @@ export default function DownloadPage() {
                 width={192}
                 height={192}
                 sizes="96px"
-                className="mb-6 h-24 w-24 bg-white shadow-card-glow"
+                className="mb-6 h-24 w-24 bg-white shadow-lift"
                 style={{ borderRadius: LOGO_CORNER_RATIO }}
                 priority
               />

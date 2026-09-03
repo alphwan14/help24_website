@@ -94,7 +94,7 @@ export function Situations() {
 
   return (
     <section id="situations" ref={region} className="py-section">
-      <div className="mx-auto w-full max-w-6xl px-5 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         <h2 className="max-w-2xl text-[clamp(1.9rem,5.2vw,3.25rem)] font-bold leading-[1.06] tracking-[-0.035em] text-text-primary">
           Sound like your week?
         </h2>

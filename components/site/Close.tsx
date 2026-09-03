@@ -79,7 +79,7 @@ export function Close() {
 
   return (
     <section id="launch" className="scroll-mt-24 py-section">
-      <div className="mx-auto w-full max-w-6xl px-5 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
           <p className="text-label-md font-semibold uppercase tracking-[0.22em] text-text-tertiary">
             Launching{" "}

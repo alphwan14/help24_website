@@ -101,17 +101,14 @@ export function AppShowcase() {
     <section
       id="app"
       ref={region}
-      className="scroll-mt-20 border-t border-border py-section sm:scroll-mt-24"
+      className="scroll-mt-20 py-section sm:scroll-mt-24"
     >
-      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-        <p className="mb-4 text-label-md font-semibold uppercase tracking-[0.14em] text-primary-bright">
-          In the app
-        </p>
-        <h2 className="max-w-2xl text-[clamp(1.6rem,4.4vw,2.75rem)] font-bold leading-[1.1] tracking-[-0.03em] text-text-primary">
+      <div className="mx-auto w-full max-w-6xl px-5 sm:px-6 lg:px-8">
+        <h2 className="max-w-2xl text-[clamp(1.9rem,5.2vw,3.25rem)] font-bold leading-[1.06] tracking-[-0.035em] text-text-primary">
           Posted here. Finished on your phone.
         </h2>
 
-        <div className="mt-10 grid items-center gap-10 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-20">
+        <div className="mt-12 grid items-center gap-10 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-20">
           {/* ── The frame ──────────────────────────────────────────────── */}
           <Phone>
             {FRAMES.map((f, i) => (
@@ -159,29 +156,23 @@ export function AppShowcase() {
                       setActive(i);
                       setHeld(true);
                     }}
-                    className={`flex w-full items-start gap-4 rounded-card border px-4 py-3.5 text-left transition-all duration-300 ${
-                      on
-                        ? "border-primary bg-card shadow-card"
-                        : "border-transparent hover:border-border hover:bg-card"
+                    /* A left rule that thickens, not a card that appears.
+                       Four steps that each become a bordered panel when active
+                       is four cards taking turns; a rule marks the place in a
+                       list without adding an object to the page. */
+                    className={`flex w-full items-start gap-5 border-l-2 py-3.5 pl-5 text-left transition-all duration-300 ${
+                      on ? "border-primary" : "border-border hover:border-border-strong"
                     }`}
                   >
-                    <span
-                      className={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-label-md font-bold transition-colors duration-300 ${
-                        on ? "bg-primary text-white" : "bg-pill-inactive text-text-secondary"
-                      }`}
-                      aria-hidden
-                    >
-                      {i + 1}
-                    </span>
                     <span className="min-w-0">
                       <span
-                        className={`block text-h5 font-bold tracking-[-0.01em] transition-colors duration-300 ${
+                        className={`block text-[clamp(1.15rem,2.4vw,1.5rem)] font-bold tracking-[-0.02em] transition-colors duration-300 ${
                           on ? "text-text-primary" : "text-text-secondary"
                         }`}
                       >
                         {f.step}
                       </span>
-                      <span className="mt-0.5 block text-body text-text-secondary">{f.line}</span>
+                      <span className="mt-1 block text-body-lg text-text-secondary">{f.line}</span>
                     </span>
                   </button>
                 </li>
@@ -214,14 +205,10 @@ export function AppShowcase() {
  */
 function Phone({ children }: { children: React.ReactNode }) {
   return (
+    /* No glow behind it. A blurred pool of brand colour under a phone is a
+       gradient blob with a job title — the bezel and its shadow are already
+       doing the work of lifting it off the page. */
     <div className="relative mx-auto w-[min(58vw,200px)] lg:w-[300px]">
-      {/* A soft pool of brand colour under the phone, so it sits ON the page
-          rather than being pasted onto it. Purely atmospheric; hidden from
-          assistive tech and cheap to paint (one blurred radial). */}
-      <div
-        className="pointer-events-none absolute -inset-6 rounded-[3rem] bg-primary/10 blur-2xl"
-        aria-hidden
-      />
       <div
         className="relative overflow-hidden border-[10px] border-border-strong bg-page shadow-lift"
         style={{ borderRadius: 40 }}

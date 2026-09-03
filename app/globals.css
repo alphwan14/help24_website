@@ -43,47 +43,47 @@
   }
 }
 
-/* ── Ground textures ───────────────────────────────────────────────────────
- *
- * Both are drawn from `--text-primary` rather than from white, so they invert
- * with the theme automatically: faint light lines on dark, faint dark lines on
- * paper. A grid hard-coded to white simply vanishes in light mode, which is
- * how most retrofitted themes lose their texture.
- */
-.bg-grid {
-  background-image:
-    linear-gradient(rgb(var(--text-primary-rgb) / 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(var(--text-primary-rgb) / 0.045) 1px, transparent 1px);
-  background-size: 64px 64px;
-}
-
 /**
- * The hero's atmosphere.
+ * The hero's ground.
  *
- * Not a "gradient blob" — it has no edge and no shape. It is a wide, very low
- * ellipse of brand colour bled in from above the fold, so the top of the page
- * is warmer than the bottom and the eye starts where the headline is. On light
- * it has to be weaker (colour on paper reads much louder than colour on black)
- * which is why the two strengths are separate rules rather than one opacity.
+ * ONE very low, very wide bleed of brand colour entering from above the fold,
+ * so the top of the page is fractionally warmer than the bottom and the eye
+ * starts where the headline is. It has no edge, no shape and no second layer.
+ *
+ * WHAT WAS HERE BEFORE. A 64px grid over a two-ellipse gradient. The grid was
+ * the single biggest reason the hero read as a template — a texture with no
+ * product meaning, drawing squares behind a page that is about people and
+ * money. It is gone, and nothing replaced it: the hero's visual interest is
+ * now the product running in it.
+ *
+ * The remaining wash is deliberately weaker in light, where colour on paper
+ * reads far louder than colour on black. If you cannot tell it is there, it is
+ * doing its job.
  */
 .bg-atmosphere {
-  background-image:
-    radial-gradient(ellipse 90% 55% at 50% -15%, rgb(var(--primary-rgb) / 0.1), transparent 60%),
-    radial-gradient(ellipse 60% 45% at 92% 4%, rgb(var(--secondary-rgb) / 0.07), transparent 55%);
+  background-image: radial-gradient(
+    ellipse 120% 60% at 50% -25%,
+    rgb(var(--primary-rgb) / 0.055),
+    transparent 62%
+  );
 }
 
 :root[data-theme="dark"] .bg-atmosphere,
 :root:not([data-theme="light"]) .bg-atmosphere {
-  background-image:
-    radial-gradient(ellipse 90% 55% at 50% -15%, rgb(var(--primary-rgb) / 0.16), transparent 60%),
-    radial-gradient(ellipse 60% 45% at 92% 4%, rgb(var(--secondary-rgb) / 0.08), transparent 55%);
+  background-image: radial-gradient(
+    ellipse 120% 60% at 50% -25%,
+    rgb(var(--primary-rgb) / 0.11),
+    transparent 62%
+  );
 }
 
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) .bg-atmosphere {
-    background-image:
-      radial-gradient(ellipse 90% 55% at 50% -15%, rgb(var(--primary-rgb) / 0.1), transparent 60%),
-      radial-gradient(ellipse 60% 45% at 92% 4%, rgb(var(--secondary-rgb) / 0.07), transparent 55%);
+    background-image: radial-gradient(
+      ellipse 120% 60% at 50% -25%,
+      rgb(var(--primary-rgb) / 0.055),
+      transparent 62%
+    );
   }
 }
 

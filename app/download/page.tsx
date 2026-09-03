@@ -133,10 +133,6 @@ export default function DownloadPage() {
 
       {/* ── Hero ─────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden border-b border-border bg-atmosphere">
-        <div
-          className="bg-grid pointer-events-none absolute inset-0 opacity-40"
-          aria-hidden
-        />
         <div className="relative mx-auto max-w-6xl px-4 pb-16 pt-14 sm:px-6 sm:pb-20 sm:pt-20 lg:px-8">
           <div className="flex flex-col items-center gap-10 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
             {/* Left: the pitch and the action */}

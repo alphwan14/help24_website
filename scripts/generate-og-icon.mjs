@@ -12,9 +12,15 @@
  *
  * WHY IT IS DOWNSCALED FIRST
  * --------------------------
- * The source icon is 1024×1024 / 177 KB, which is 236 KB once base64-encoded —
- * absurd for a mark that renders at 112 CSS pixels. This resamples to 224 px
- * (2× for retina) and strips metadata, which lands around 6 KB of base64.
+ * The source icon is 768×768 / 16 KB, which is 21 KB once base64-encoded —
+ * inlined into a server bundle on every request. So it is resampled to 224 px
+ * (2× for retina) and stripped of metadata, which lands around 4.5 KB of
+ * base64.
+ *
+ * It is small because the mark is flat: three brand colours, no gradient and no
+ * render grain, so the palette pass below has almost nothing to throw away.
+ * Checked at render size: no banding is visible at 112 px, which is the only
+ * size this file is ever seen at.
  *
  *   npm run generate:og-icon
  *

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { SitePage } from "@/components/SitePage";
 import { Section, SectionLabel } from "@/components/Section";
 import { Icon } from "@/components/Icon";
@@ -21,7 +20,7 @@ import {
 } from "@/lib/release";
 import { pageMetadata } from "@/lib/seo";
 import { SITE } from "@/lib/site";
-import { LOGO_CORNER_RATIO } from "@/lib/tokens";
+import { BrandMark } from "@/components/Brand";
 
 /**
  * The Download page.
@@ -141,18 +140,11 @@ export default function DownloadPage() {
           <div className="flex flex-col items-center gap-10 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
             {/* Left: the pitch and the action */}
             <div className="flex max-w-xl flex-col items-center text-center lg:items-start lg:text-left">
-              {/* Same square and same corner ratio as the header and the app's
-                  launch badge, at 96px. */}
-              <Image
-                src="/help24-logo.png"
-                alt=""
-                width={192}
-                height={192}
-                sizes="96px"
-                className="mb-6 h-24 w-24 bg-white shadow-lift"
-                style={{ borderRadius: LOGO_CORNER_RATIO }}
-                priority
-              />
+              {/* THE MARK, NOT THE LOCKUP: the <h1> directly below already
+                  reads "Download Help24", and the lockup would set the name a
+                  second time in the same eyeful. No plate and no radius — see
+                  Header.tsx. */}
+              <BrandMark className="mb-6 h-20 w-auto" priority />
               <h1 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl lg:text-5xl">
                 Download Help24
               </h1>

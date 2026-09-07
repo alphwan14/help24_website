@@ -19,12 +19,11 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { HEADER_NAV } from "@/lib/site";
-import { LOGO_CORNER_RATIO } from "@/lib/tokens";
 import { ThemeToggle } from "./theme/ThemeToggle";
 import { Glyph } from "./ds/glyphs";
+import { BrandLockup } from "./Brand";
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -71,22 +70,16 @@ export function Header() {
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4 sm:px-6 lg:px-8">
         {/*
           The logo, not a wordmark — and the app's shape, not a crop of it.
-          This is the square artwork with its corners rounded at
-          LOGO_CORNER_RATIO, exactly what `splash_badge.png` puts on screen when
-          the app launches. It stays white and opaque in both themes because the
-          mark inside it is black; knocked out of a dark page it would simply
-          not be there, and recolouring it would stop it being the logo.
+          This is exactly what `splash_badge.png` puts on screen when the app
+          launches.
+
+          No background, no ring and no border-radius. The mark carries its own
+          shape; a plate or a second radius behind it would only disagree with
+          it. The header used to show the bare tile and no wordmark — the lockup
+          now carries both, which is why there is still no text beside it.
         */}
         <Link href="/" className="flex shrink-0 items-center" title="Help24 home">
-          <Image
-            src="/help24-logo.png"
-            alt="Help24"
-            width={192}
-            height={192}
-            priority
-            className="h-10 w-10 bg-white ring-1 ring-border"
-            style={{ borderRadius: LOGO_CORNER_RATIO }}
-          />
+          <BrandLockup className="h-8 w-auto" priority />
         </Link>
 
         <nav className="ml-2 hidden items-center gap-6 md:flex" aria-label="Main">

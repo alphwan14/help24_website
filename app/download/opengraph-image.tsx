@@ -70,7 +70,6 @@ export default async function Image() {
             width={112}
             height={112}
             alt=""
-            style={{ borderRadius: 26 }}
           />
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div

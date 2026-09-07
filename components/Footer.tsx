@@ -11,9 +11,8 @@
  * repeating at the bottom of every page.
  */
 import Link from "next/link";
-import Image from "next/image";
 import { SITE, FOOTER_GROUPS, LAUNCH } from "@/lib/site";
-import { LOGO_CORNER_RATIO } from "@/lib/tokens";
+import { BrandLockup } from "./Brand";
 
 const SOCIALS = [
   { label: "Twitter", href: "https://twitter.com/help24", mark: "X" },
@@ -29,18 +28,11 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-14 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-5 lg:gap-16">
           <div className="lg:col-span-2">
-            {/* Same square and same 20.5% corners as the header and the app's
-                launch badge — one brand mark, not a mark in one corner of the
-                page and a wordmark in the other. */}
+            {/* The same lockup as the header — one brand mark, not a mark in
+                one corner of the page and a wordmark in the other. Undressed,
+                for the reasons in Header.tsx. */}
             <Link href="/" className="inline-flex items-center" title="Help24 home">
-              <Image
-                src="/help24-logo.png"
-                alt="Help24"
-                width={192}
-                height={192}
-                className="h-12 w-12 bg-white ring-1 ring-border"
-                style={{ borderRadius: LOGO_CORNER_RATIO }}
-              />
+              <BrandLockup className="h-9 w-auto" />
             </Link>
             <p className="mt-4 max-w-xs text-body text-text-secondary">
               Find someone nearby. Agree a price. Get it done.

@@ -29,13 +29,18 @@ export const metadata: Metadata = {
     url: SITE.url,
     title: `${SITE.name} — ${SITE.tagline}`,
     description: SITE.description,
-    images: [{ url: "/help24-icon.png", width: 1024, height: 1024, alt: SITE.name }],
+    // The OPAQUE rendition. Social clients composite a transparent PNG onto
+    // a background of their own choosing — white in one client, near-black in
+    // the next — so an unfurl of the tile would sometimes show four bright
+    // notches where its corners are. The JSON-LD logo below stays transparent,
+    // which is what schema.org consumers want.
+    images: [{ url: "/help24-icon-bleed.png", width: 1024, height: 1024, alt: SITE.name }],
   },
   twitter: {
     card: "summary",
     title: `${SITE.name} — ${SITE.tagline}`,
     description: SITE.description,
-    images: ["/help24-icon.png"],
+    images: ["/help24-icon-bleed.png"],
   },
   robots: {
     index: true,

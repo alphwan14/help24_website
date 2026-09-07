@@ -1,91 +1,139 @@
 /**
- * Builds every rendition of the Help24 mark from one source.
+ * Builds every raster rendition of the Help24 mark from the brand vectors.
  *
- *   public/help24-icon.png   1024×1024 — the original, 173KB
+ *   mobile-app/branding/help24-icon-dark.svg
+ *        ↓  render
+ *   public/help24-icon.png        768  the brand tile, transparent corners
  *        ↓  resize only
- *   public/help24-logo.png   192  header, footer, download page
- *   public/icon-192.png      192  web app manifest (purpose: any)
- *   public/icon-512.png      512  web app manifest (purpose: maskable)
- *   app/icon.png              96  favicon (Next file convention)
- *   app/apple-icon.png       180  iOS home screen
+ *   public/icon-192.png           192  web app manifest (purpose: any)
  *
- * THE SHAPE IS THE APP'S SHAPE.
+ *   mobile-app/branding/help24-icon-1024.png
+ *        ↓  copy / resize
+ *   public/help24-icon-bleed.png 1024  opaque, full-bleed ink — og:image
+ *   public/icon-512.png           512  web app manifest (purpose: maskable)
+ *   app/apple-icon.png            180  iOS home screen
  *
- * `mobile-app/assets/splash_badge.png` is what the app puts on screen at
- * launch: a 464×464 WHITE SQUARE with the mark sitting inside it at 56.0% ×
- * 50.4%, corners rounded at 95/464 = 20.5% of the side, on the #0A0A0A field.
- * Measured against the source icon, that is the same composition, pixel for
- * pixel — the splash badge is simply the square artwork with its corners cut.
+ *   mobile-app/branding/help24-favicon-32.png
+ *        ↓  copy
+ *   app/icon.png                   32  favicon (Next file convention)
  *
- * So these are a plain RESIZE. Nothing is trimmed and nothing is re-padded.
+ *   mobile-app/branding/help24-{lockup,mark}{,-on-dark}.svg
+ *        ↓  copy
+ *   public/help24-{lockup,mark}{,-on-dark}.svg  header, footer, download
  *
- * An earlier version of this script trimmed the white margin so the mark
- * filled ~87% of the tile, on the theory that a bigger mark reads better at
- * 36px. It does not: the logo is drawn to sit in a square with air around it,
- * and cropping to its bounding box makes it look cramped and starved — the
- * whitespace is part of the artwork, not waste. The tile is made bigger
- * instead, which is the change that was actually needed.
+ * WHY THE SOURCES ARE VECTORS NOW
+ * -------------------------------
+ * The mark is two uprights with a gold crossbar floating between them, and the
+ * GAPS either side of that bar are the whole idea — two parties, the payment
+ * held in the middle, touching neither. Rendering each size from the vector
+ * keeps those gaps geometrically exact. Deriving small sizes by resampling a
+ * big raster is what closes them.
  *
- * The corners are NOT baked in here. They are rounded in CSS at
- * `LOGO_CORNER_RATIO` (lib/tokens.ts), which is crisp at every size and
- * follows the element. Baking them would also be wrong for three of these
- * files: the maskable manifest icon and the iOS touch icon must be full-bleed
- * squares, because the platform applies its own mask and would cut a second
- * time.
+ * WHY TWO MASTERS
+ * ---------------
+ * The tile carries its own boundary — a rounded tile with transparent corners.
+ * Everywhere the site draws it itself, that boundary is the shape and nothing
+ * may round it a second time.
  *
- * WEIGHT. `app/icon.png`, `app/apple-icon.png` and both manifest icon entries
- * used to be the same 1024×1024, 173KB file. A browser fetched it twice on
- * every page load — 347KB for a favicon and a manifest entry nobody looks at.
- * Each rendition is now the size it is actually used at.
+ * Two consumers apply a mask of their own and would cut into it: a
+ * `purpose: maskable` manifest icon and the iOS touch icon (which also
+ * composites transparency onto black). Those read the bleed master — a flat
+ * ink square — so the platform's mask lands on brand Ink rather than on a
+ * corner of the mark or a black triangle.
  *
- * The background stays WHITE and opaque. The logo's "24" and "HELP" are black;
- * knocking the background out would make them invisible on the near-black
- * site, and recolouring them would no longer be the logo.
+ * THE FAVICON IS NOT A SMALL ICON. It is a separate drawing with widened gaps,
+ * because below roughly 24px antialiasing fills the standard mark's gaps in and
+ * it reads as a solid blob. It is copied at its native size, never generated
+ * from the tile, and the tile is never shrunk into its place.
  *
- * `public/help24-icon.png` is left alone: it is the source here and the source
- * `generate-og-icon.mjs` reads. The Flutter app is read-only — the splash
- * badge above was measured, never modified, and the source used is the copy
- * already in this site's public/ directory.
+ * NO `flatten()`. The tile carries its own ink field, so it needs no backing.
+ * Flattening it onto white is how a logo becomes a white rectangle in a dark
+ * footer.
  *
  * Run: npm run generate:logo
  */
 import sharp from "sharp";
 import { fileURLToPath } from "node:url";
+import fs from "node:fs/promises";
 import path from "node:path";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const SRC = path.join(root, "public", "help24-icon.png");
-const WHITE = { r: 255, g: 255, b: 255, alpha: 1 };
+// The vector sources, VENDORED INTO THIS REPO ON PURPOSE.
+//
+// The masters live in the app repo, at mobile-app/branding/. This script used
+// to reach across to them by relative path, which works only on a machine where
+// both repos happen to sit side by side — this is a separate repository, and a
+// fresh clone of it has no sibling to reach. The renditions below are committed
+// output, so a build never runs this script and the site deploys fine either
+// way; but the script itself has to be runnable from the repo that contains it.
+//
+// The cost is that a change to the artwork has to be copied here. That is a
+// deliberate trade: an explicit copy that a diff will show, rather than a path
+// that silently resolves to something different depending on who checked out
+// what. Keep brand/ in step with mobile-app/branding/ when the mark changes.
+const BRAND = path.resolve(root, "brand");
 
+const TILE_SVG = path.join(BRAND, "help24-icon-dark.svg");
+const BLEED_SRC = path.join(BRAND, "help24-icon-1024.png");
+const FAVICON_SRC = path.join(BRAND, "help24-favicon-32.png");
+
+const TILE = path.join(root, "public", "help24-icon.png");
+const BLEED = path.join(root, "public", "help24-icon-bleed.png");
+
+/** Rasterise an SVG so its width lands on exactly `px`, preserving aspect. */
+async function renderSvg(file, px) {
+  const svg = await fs.readFile(file);
+  const vb = svg.toString("utf8", 0, 400).match(/viewBox="([\d.\s-]+)"/);
+  if (!vb) throw new Error(`no viewBox in ${path.basename(file)}`);
+  const [, , vw, vh] = vb[1].trim().split(/\s+/).map(Number);
+  return sharp(svg, { density: Math.min(2400, (72 * px) / vw) })
+    .resize({ width: px, height: Math.round((px * vh) / vw), fit: "fill" })
+    .png({ compressionLevel: 9 })
+    .toBuffer();
+}
+
+const report = (file, size, bytes, use) =>
+  console.log(
+    `  ${file.padEnd(30)} ${String(size).padStart(4)}px  ` +
+      `${(bytes / 1024).toFixed(1).padStart(6)} KB   ${use}`,
+  );
+
+// ── the two masters ──────────────────────────────────────────────────────────
+const tile768 = await renderSvg(TILE_SVG, 768);
+await fs.writeFile(TILE, tile768);
+report("public/help24-icon.png", 768, tile768.length, "master: tile, JSON-LD logo");
+
+await fs.copyFile(BLEED_SRC, BLEED);
+const bleedBytes = (await fs.stat(BLEED)).size;
+report("public/help24-icon-bleed.png", 1024, bleedBytes, "master: bleed, og:image");
+
+// ── derived ──────────────────────────────────────────────────────────────────
 const OUTPUTS = [
-  { file: ["public", "help24-logo.png"], size: 192, use: "header / footer / download" },
-  { file: ["public", "icon-192.png"], size: 192, use: "manifest, purpose any" },
-  { file: ["public", "icon-512.png"], size: 512, use: "manifest, purpose maskable" },
-  { file: ["app", "icon.png"], size: 96, use: "favicon" },
-  { file: ["app", "apple-icon.png"], size: 180, use: "iOS home screen" },
+  { src: TILE, file: ["public", "icon-192.png"], size: 192, use: "manifest, purpose any" },
+  { src: BLEED, file: ["public", "icon-512.png"], size: 512, use: "manifest, purpose maskable" },
+  { src: BLEED, file: ["app", "apple-icon.png"], size: 180, use: "iOS home screen" },
 ];
 
-const meta = await sharp(SRC).metadata();
-// Reported so a change to the source artwork is visible in the build log
-// rather than discovered on the page.
-const mark = await sharp(SRC).trim({ threshold: 12 }).toBuffer({ resolveWithObject: true });
-console.log(
-  `source ${meta.width}×${meta.height}; mark occupies ` +
-    `${((mark.info.width / meta.width) * 100).toFixed(1)}% × ` +
-    `${((mark.info.height / meta.height) * 100).toFixed(1)}% ` +
-    `(the app's splash badge is 56.0% × 50.4% — these should match)`,
-);
-
-for (const { file, size, use } of OUTPUTS) {
-  const out = await sharp(SRC)
-    .resize(size, size, { fit: "contain", background: WHITE })
-    .flatten({ background: WHITE })
-    .png({ compressionLevel: 9, palette: true })
+for (const { src, file, size, use } of OUTPUTS) {
+  const out = await sharp(src)
+    .resize(size, size, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .png({ compressionLevel: 9 })
     .toBuffer();
-
   await sharp(out).toFile(path.join(root, ...file));
-  console.log(
-    `  ${file.join("/").padEnd(24)} ${String(size).padStart(4)}px  ` +
-      `${(out.length / 1024).toFixed(1).padStart(6)} KB   ${use}`,
-  );
+  report(file.join("/"), size, out.length, use);
+}
+
+// ── copied verbatim ──────────────────────────────────────────────────────────
+await fs.copyFile(FAVICON_SRC, path.join(root, "app", "icon.png"));
+report("app/icon.png", 32, (await fs.stat(path.join(root, "app", "icon.png"))).size, "favicon — the widened-gap drawing");
+
+for (const name of [
+  "help24-lockup.svg",
+  "help24-lockup-on-dark.svg",
+  "help24-mark.svg",
+  "help24-mark-on-dark.svg",
+]) {
+  await fs.copyFile(path.join(BRAND, name), path.join(root, "public", name));
+  const bytes = (await fs.stat(path.join(root, "public", name))).size;
+  report(`public/${name}`, "vec", bytes, "header / footer / download");
 }

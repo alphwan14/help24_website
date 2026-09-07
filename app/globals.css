@@ -302,3 +302,35 @@
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+/* The brand mark comes in two renditions — Ink uprights for a light ground,
+   Bone for a dark one — and exactly one may be visible. Both are in the DOM so
+   the correct one is painted on the FIRST frame: the theme is resolved by a
+   blocking script before hydration, and picking the variant in React instead
+   would flash the wrong one on the element a visitor uses to identify the site.
+
+   Same three-state cascade as .bg-atmosphere above: `:root` is light,
+   `prefers-color-scheme: dark` applies only when the visitor has not forced
+   light, and `[data-theme]` wins outright in both directions. */
+.brand-on-dark {
+  display: none;
+}
+
+:root[data-theme="dark"] .brand-on-light,
+:root:not([data-theme="light"]) .brand-on-light {
+  display: none;
+}
+
+:root[data-theme="dark"] .brand-on-dark,
+:root:not([data-theme="light"]) .brand-on-dark {
+  display: block;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .brand-on-light {
+    display: block;
+  }
+  :root:not([data-theme="dark"]) .brand-on-dark {
+    display: none;
+  }
+}

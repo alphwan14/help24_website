@@ -145,18 +145,17 @@ export const RADIUS = {
   full: 9999, // avatars
 } as const;
 
-/**
- * The corner radius of the logo tile, as a fraction of its side.
+/*
+ * There is deliberately no LOGO_CORNER_RATIO here any more.
  *
- * Measured off the app's launch badge (`mobile-app/assets/splash_badge.png`):
- * a 464px white square with the corners cut at 95px — 20.5%. Expressed as a
- * percentage rather than px so a 36px header tile and a 96px download-page
- * tile are the same shape rather than the same number.
- *
- * It is not in RADIUS above because that scale is in pixels and describes UI
- * chrome; this describes one piece of artwork.
+ * It existed because the previous mark was a plain square and the site rounded
+ * it in CSS at 20.5%, measured off the app's launch badge. The current artwork
+ * arrives with its boundary already drawn — a superellipse, not a rounded
+ * rectangle — and ships with transparent corners, so the shape travels with the
+ * file. A CSS radius on top of it would cut a second, disagreeing curve across
+ * the artwork's own edge, which is why every call site lost it rather than
+ * having the number retuned. See scripts/generate-logo.mjs.
  */
-export const LOGO_CORNER_RATIO = "20.5%";
 
 /** Geometry of a feed card — FeedCardTokens (widgets/feed_card_tokens.dart). */
 export const CARD_METRICS = {

@@ -33,6 +33,24 @@ export const LAUNCH = {
   short: "19 Oct 2026",
 } as const;
 
+/**
+ * Help24's own social accounts. EMPTY ON PURPOSE.
+ *
+ * This list used to hold twitter.com/help24, linkedin.com/company/help24 and
+ * instagram.com/help24. None of them belong to this company — the Instagram
+ * handle is a private individual's, display name "Kaycie" — so every page on
+ * the site carried three links under the Help24 lockup pointing at strangers.
+ *
+ * The same three URLs were also asserted as `sameAs` in the Organization
+ * schema, which told Google those accounts WERE this entity. Both are gone.
+ *
+ * ADD A HANDLE ONLY AFTER OPENING IT. Check that the account exists, that
+ * Help24 controls it, and add it to `organizationLd()` in lib/jsonld.ts at the
+ * same time — the footer and the schema should never disagree about who this
+ * company is.
+ */
+export const SOCIALS: { label: string; href: string; mark: string }[] = [];
+
 export type NavLink = { label: string; href: string; external?: boolean };
 
 /**

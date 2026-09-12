@@ -29,8 +29,8 @@ import {
 import { GUIDES } from "../lib/guides.ts";
 import { CITIES } from "../lib/generated/places.ts";
 import { allIndexableRoutes, NOINDEX_ROUTES, STATIC_INDEXABLE } from "../lib/routes.ts";
-import { canonical } from "../lib/seo.ts";
-import { SITE } from "../lib/site.ts";
+import { canonical, pageMetadata } from "../lib/seo.ts";
+import { SITE, SOCIALS } from "../lib/site.ts";
 import { breadcrumbLd, serviceLd, organizationLd, articleLd } from "../lib/jsonld.ts";
 
 /**
@@ -350,6 +350,40 @@ test("the organisation makes no unverified identity claims", () => {
   // No address: Help24 publishes no premises, and an invented one would be the
   // fabrication that LocalBusiness markup is most often caught doing.
   assert.equal(org.address, undefined);
+});
+
+test("no page links to a social account Help24 does not own", () => {
+  /*
+   * The Organization schema and the footer both claimed twitter.com/help24,
+   * linkedin.com/company/help24 and instagram.com/help24. None belong to this
+   * company. Removing the schema entry while leaving three links under the
+   * lockup on every page would have fixed the assertion and kept the problem.
+   */
+  assert.deepEqual(SOCIALS, [], "SOCIALS is populated — verify Help24 owns every handle first");
+});
+
+test("metadata carries a share image and does not double-brand", () => {
+  const branded = pageMetadata({
+    title: `${SITE.name} — Find Trusted Local Service Providers in Kenya`,
+    description: "x".repeat(80),
+    path: "/",
+  }) as any;
+  assert.equal(
+    branded.openGraph.title,
+    `${SITE.name} — Find Trusted Local Service Providers in Kenya`,
+    "the brand was appended to a title that already had it",
+  );
+
+  const plain = pageMetadata({
+    title: "Plumbers in Kenya",
+    description: "x".repeat(80),
+    path: "/services/plumbing",
+  }) as any;
+  assert.equal(plain.openGraph.title, `Plumbers in Kenya · ${SITE.name}`);
+  // Next replaces a parent's openGraph object rather than merging into it, so
+  // omitting images here strips the share card from every page that calls this.
+  assert.ok(plain.openGraph.images?.[0]?.url, "no og:image");
+  assert.ok(plain.twitter.images?.[0], "no twitter:image");
 });
 
 test("breadcrumb positions are 1-based and items are canonical", () => {

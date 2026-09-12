@@ -11,14 +11,8 @@
  * repeating at the bottom of every page.
  */
 import Link from "next/link";
-import { SITE, FOOTER_GROUPS, LAUNCH } from "@/lib/site";
+import { SITE, SOCIALS, FOOTER_GROUPS, LAUNCH } from "@/lib/site";
 import { BrandLockup } from "./Brand";
-
-const SOCIALS = [
-  { label: "Twitter", href: "https://twitter.com/help24", mark: "X" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/company/help24", mark: "in" },
-  { label: "Instagram", href: "https://www.instagram.com/help24", mark: "ig" },
-];
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -44,7 +38,8 @@ export function Footer() {
               </time>
             </p>
 
-            <div className="mt-5 flex gap-2.5">
+            {/* Renders nothing while SOCIALS is empty — see the note above. */}
+            <div className={SOCIALS.length ? "mt-5 flex gap-2.5" : "hidden"}>
               {SOCIALS.map((s) => (
                 <a
                   key={s.label}

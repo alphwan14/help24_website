@@ -2,6 +2,20 @@ import type { Metadata } from "next";
 import { SITE } from "./site";
 
 /**
+ * The share card.
+ *
+ * The OPAQUE rendition, matching the root layout: social clients composite a
+ * transparent PNG onto a background of their own choosing, so the transparent
+ * tile shows four bright notches at its corners in some clients and not others.
+ */
+const OG_IMAGE = {
+  url: "/help24-icon-bleed.png",
+  width: 1024,
+  height: 1024,
+  alt: SITE.name,
+} as const;
+
+/**
  * Per-route metadata. Keeps canonical URL, Open Graph and Twitter tags
  * consistent across pages.
  *
@@ -36,7 +50,8 @@ export function pageMetadata({
   robots?: "index" | "noindex";
 }): Metadata {
   const url = canonical(path);
-  const ogTitle = `${title} · ${SITE.name}`;
+  // Do not brand a title that is already branded. See the note above.
+  const ogTitle = title.includes(SITE.name) ? title : `${title} · ${SITE.name}`;
   return {
     title,
     description,
@@ -49,12 +64,21 @@ export function pageMetadata({
       description,
       url,
       siteName: SITE.name,
+      locale: "en_KE",
       type: "website",
+      images: [OG_IMAGE],
     },
     twitter: {
-      card: "summary_large_image",
+      /*
+       * `summary`, not `summary_large_image`. The only card art this site has
+       * is the 1024x1024 app icon, and a square image in a large-image card is
+       * letterboxed with bars down both sides. The small card is the one that
+       * was designed for a square.
+       */
+      card: "summary",
       title: ogTitle,
       description,
+      images: [OG_IMAGE.url],
     },
   };
 }

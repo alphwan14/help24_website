@@ -10,6 +10,7 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 
 import {
   SERVICES,
@@ -384,6 +385,34 @@ test("metadata carries a share image and does not double-brand", () => {
   // omitting images here strips the share card from every page that calls this.
   assert.ok(plain.openGraph.images?.[0]?.url, "no og:image");
   assert.ok(plain.twitter.images?.[0], "no twitter:image");
+});
+
+test("a favicon Google Search can use is declared, and /favicon.ico exists", () => {
+  /*
+   * Google recommends a square favicon larger than 48x48; the site shipped only
+   * a 32x32. And /favicon.ico returned 404, which browsers and many crawlers
+   * request before reading any <link> tag. Both are produced by
+   * scripts/generate-logo.mjs and served by Next's app/ icon file convention.
+   */
+  const png = readFileSync(new URL("../app/icon1.png", import.meta.url));
+  assert.equal(png.subarray(1, 4).toString(), "PNG", "app/icon1.png is not a PNG");
+  const w = png.readUInt32BE(16);
+  const h = png.readUInt32BE(20);
+  assert.equal(w, h, `app/icon1.png is ${w}x${h}, not square`);
+  assert.ok(w > 48 && w % 48 === 0, `app/icon1.png is ${w}px; Google wants a multiple of 48 above 48`);
+
+  const ico = readFileSync(new URL("../app/favicon.ico", import.meta.url));
+  assert.equal(ico.readUInt16LE(0), 0, "favicon.ico reserved field");
+  assert.equal(ico.readUInt16LE(2), 1, "favicon.ico is not an icon container");
+  const count = ico.readUInt16LE(4);
+  const sizes = Array.from({ length: count }, (_, i) => ico.readUInt8(6 + i * 16));
+  assert.ok(sizes.includes(48), `favicon.ico carries ${sizes.join(", ")}px, no 48`);
+  for (let i = 0; i < count; i++) {
+    const len = ico.readUInt32LE(6 + i * 16 + 8);
+    const off = ico.readUInt32LE(6 + i * 16 + 12);
+    assert.ok(off + len <= ico.length, `favicon.ico entry ${i} runs past the end of the file`);
+    assert.equal(ico.subarray(off + 1, off + 4).toString(), "PNG", `favicon.ico entry ${i} is not PNG`);
+  }
 });
 
 test("breadcrumb positions are 1-based and items are canonical", () => {

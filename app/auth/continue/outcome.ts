@@ -5,9 +5,15 @@
  * -------------------------------------
  * The Flutter app sends `ActionCodeSettings.url = https://help24.co.ke/auth/continue`
  * with `handleCodeInApp: false` (see mobile-app/lib/config/app_urls.dart and
- * auth_service.dart). That combination means the identity provider hosts the
- * action itself — it consumes the one-time code on its own page, and only
- * AFTER that succeeds does it offer the user a "Continue" link to this URL.
+ * auth_service.dart), so this URL is what the action is told to hand off to
+ * once it is finished.
+ *
+ * The action itself is performed at `/auth/action` — Help24's own handler,
+ * which the identity console's "Custom action URL" points at. It consumes the
+ * one-time code, and only after that succeeds does it link the user here, as
+ * `?s=<mode>`. (Before that handler existed the provider's own hosted page did
+ * the consuming and offered the same hand-off; either way this page is the
+ * step AFTER the credential has been spent.)
  *
  * So the ordinary arrival here is a page-view with no one-time code attached,
  * and the honest thing to say is "that worked — here is what to do next".
@@ -23,11 +29,11 @@
  * password had changed.
  *
  * That is also exactly what would happen if someone later repoints the
- * console's action-handler URL at this page. This file refuses that quietly
- * and visibly instead: [attention], not [done]. If you are reading this
- * because the page "wrongly" says it could not finish, the fix is upstream —
- * either restore the hosted handler, or build a real handler here. Do not
- * make this branch report success.
+ * console's "Custom action URL" at THIS page instead of `/auth/action`. This
+ * file refuses that quietly and visibly instead: [attention], not [done]. If
+ * you are reading this because the page "wrongly" says it could not finish,
+ * the fix is upstream — point the console back at `/auth/action`. Do not make
+ * this branch report success.
  *
  * HOW THE INCOMING PARAMETERS ARE CONTAINED
  * -----------------------------------------
@@ -76,8 +82,6 @@ export interface OutcomeAction {
 export interface Outcome {
   readonly key: OutcomeKey;
   readonly tone: OutcomeTone;
-  /** Small uppercase eyebrow above the heading. */
-  readonly eyebrow: string;
   readonly title: string;
   /** The one sentence that says what happened. */
   readonly body: string;
@@ -107,7 +111,6 @@ const OUTCOMES: Record<OutcomeKey, Outcome> = {
   generic: {
     key: "generic",
     tone: "done",
-    eyebrow: "All done",
     title: "You're all set",
     body: "That's been taken care of. There is nothing else to do on this page.",
     next: RETURN_TO_APP,
@@ -117,9 +120,8 @@ const OUTCOMES: Record<OutcomeKey, Outcome> = {
   resetPassword: {
     key: "resetPassword",
     tone: "done",
-    eyebrow: "Password updated",
-    title: "Your new password is ready",
-    body: "Your Help24 password has been changed. The old one no longer works, on any device.",
+    title: "Your password has been changed",
+    body: "The old password no longer works, on this or any other device.",
     next: RETURN_TO_APP,
     primary: BACK_HOME,
     secondary: GET_APP,
@@ -127,9 +129,10 @@ const OUTCOMES: Record<OutcomeKey, Outcome> = {
   verifyEmail: {
     key: "verifyEmail",
     tone: "done",
-    eyebrow: "Email confirmed",
     title: "Your email address is confirmed",
-    body: "Thanks — we know this mailbox is yours. It is now the address we use to help you back into your account.",
+    body:
+      "This is now the address we use to get you back into your account if " +
+      "you are ever locked out.",
     next: RETURN_TO_APP,
     primary: BACK_HOME,
     secondary: GET_APP,
@@ -137,9 +140,10 @@ const OUTCOMES: Record<OutcomeKey, Outcome> = {
   recoverEmail: {
     key: "recoverEmail",
     tone: "done",
-    eyebrow: "Email restored",
     title: "Your email address has been restored",
-    body: "The change to your account email has been reversed. If you did not ask for that change, secure your account by resetting your password.",
+    body:
+      "The change to your account email has been reversed. If you did not ask " +
+      "for it, reset your password now — someone else may have had access.",
     next: RETURN_TO_APP,
     primary: BACK_HOME,
     secondary: GET_APP,
@@ -147,9 +151,8 @@ const OUTCOMES: Record<OutcomeKey, Outcome> = {
   verifyAndChangeEmail: {
     key: "verifyAndChangeEmail",
     tone: "done",
-    eyebrow: "Email updated",
     title: "Your email address has been updated",
-    body: "Your Help24 account now uses this address for sign-in and account recovery.",
+    body: "Help24 will use this address for signing in and for account recovery.",
     next: RETURN_TO_APP,
     primary: BACK_HOME,
     secondary: GET_APP,
@@ -157,7 +160,6 @@ const OUTCOMES: Record<OutcomeKey, Outcome> = {
   unsupported: {
     key: "unsupported",
     tone: "attention",
-    eyebrow: "Unrecognised link",
     title: "This link isn't one we can open here",
     body: "We couldn't tell what this link was for, so we haven't changed anything on your account.",
     next: "Open the most recent Help24 email and use the link there, or start again from the app.",
@@ -167,7 +169,6 @@ const OUTCOMES: Record<OutcomeKey, Outcome> = {
   incomplete: {
     key: "incomplete",
     tone: "attention",
-    eyebrow: "Not finished yet",
     title: "We couldn't complete that link",
     body:
       "This link hasn't been used yet, so nothing on your account has changed. " +
@@ -236,6 +237,25 @@ export function keyFromSearchParams(params: URLSearchParams): OutcomeKey {
     const value = params.get(name);
     return value !== null && value.trim() !== "" ? value.trim() : null;
   });
+}
+
+/**
+ * The canonical URL for this page, carrying one outcome key.
+ *
+ * The ONE place that knows how to address `/auth/continue`. The action handler
+ * links here after a completed action, and it must not have to know the
+ * parameter name — a second spelling of `?s=` would produce a link that this
+ * route's own middleware treats as a foreign hand-off and rewrites, which is a
+ * loop nobody would look for.
+ *
+ * Relative and internal BY CONSTRUCTION, and that is the security property.
+ * The only input is a key from the closed set above, so no value from an
+ * inbound link — `continueUrl` above all — can reach the returned string. An
+ * open redirect here would be Help24 vouching for wherever an emailed link
+ * decided to send someone.
+ */
+export function continueHref(key: OutcomeKey): string {
+  return `/auth/continue?${OUTCOME_PARAM}=${key}`;
 }
 
 /** The outcome for a canonical `?s=` value; anything unknown reads as generic. */

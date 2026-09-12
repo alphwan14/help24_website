@@ -1,0 +1,14 @@
+{
+  // The test programme. Identical to the app's, plus the one option that lets a
+  // test import `../app/auth/action/request.ts` by its real name — which is
+  // what `node --test` needs in order to resolve it without a bundler, a
+  // loader, or a test framework.
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "types": ["node"]
+  },
+  "include": ["**/*.ts", "../app/**/*.ts", "../lib/**/*.ts"],
+  "exclude": []
+}

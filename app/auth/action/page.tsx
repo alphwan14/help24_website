@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SitePage } from "@/components/SitePage";
+import { AuthChrome } from "../AuthChrome";
 import { ActionHandler, Assurance } from "./ActionHandler";
 import { SITE } from "@/lib/site";
 
@@ -22,6 +22,11 @@ import { SITE } from "@/lib/site";
  * with both values sitting in the HTML — displayed nowhere, present anyway.
  * Adding a prop here, or a `useSearchParams()` in the component tree, would
  * make this route dynamic and reintroduce exactly that. Do not.
+ *
+ * THE CHROME IS DELIBERATELY NOT THE SITE'S
+ * -----------------------------------------
+ * See ../AuthChrome. A page that asks for a password should not also be
+ * advertising; the brand mark stays, the marketing navigation goes.
  */
 
 export const metadata: Metadata = {
@@ -35,18 +40,9 @@ export const metadata: Metadata = {
 
 export default function AuthActionPage() {
   return (
-    <SitePage>
-      <section className="relative overflow-hidden">
-        <div className="bg-atmosphere pointer-events-none absolute inset-0" aria-hidden />
-        <div
-          className="bg-grid pointer-events-none absolute inset-0 opacity-40"
-          aria-hidden
-        />
-        <div className="relative mx-auto flex min-h-[calc(100vh-4rem)] max-w-2xl flex-col items-center justify-center px-4 py-20 sm:px-6">
-          <ActionHandler />
-          <Assurance />
-        </div>
-      </section>
-    </SitePage>
+    <AuthChrome>
+      <ActionHandler />
+      <Assurance />
+    </AuthChrome>
   );
 }

@@ -16,5 +16,13 @@
     "paths": { "@/*": ["./*"] }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".next-dev/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  // `tests/` is excluded from the APPLICATION programme on purpose. Those files
+  // are run by `node --test`, which resolves ES modules and therefore requires
+  // import specifiers to carry the real `.ts` extension — a spelling this
+  // config rejects unless `allowImportingTsExtensions` is on, and turning that
+  // on for the whole site would relax a check the app benefits from. They keep
+  // their own tsconfig instead (`tests/tsconfig.json`, run by `npm run
+  // typecheck:tests`), so the tests are still type-checked, just not as part of
+  // the thing that gets deployed.
+  "exclude": ["node_modules", "tests"]
 }

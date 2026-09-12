@@ -151,6 +151,36 @@ export function validatePassword(password: string): string | null {
   return null;
 }
 
+/** The four strength bands, matching the mobile app's meter exactly. */
+export const STRENGTH_LABELS = ["Too weak", "Okay", "Good", "Strong"] as const;
+
+/**
+ * Rough strength score in 0–3, ported line for line from
+ * `AuthService.passwordStrength` in the mobile app.
+ *
+ * Length dominates, because length is what actually resists guessing. The port
+ * is deliberate duplication rather than a shared package: the two runtimes
+ * cannot import each other, and a meter that scores the same password
+ * differently on the two surfaces would read as one of them being broken.
+ *
+ * The floor is [validatePassword], not a length check of its own. Both copies
+ * of this function originally started at `length < MIN_PASSWORD_LENGTH`, so
+ * both agreed with the validator about short passwords and disagreed about
+ * every other rule: `12345678` rendered as "Okay" and was then refused on
+ * submit. Deriving the floor from the validator makes that class of
+ * disagreement impossible rather than merely fixed once.
+ */
+export function passwordStrength(password: string): number {
+  if (validatePassword(password) !== null) return 0;
+  let score = 1;
+  if (password.length >= 12) score++;
+  const classes = [/[a-z]/, /[A-Z]/, /\d/, /[^\w\s]/].filter((r) =>
+    r.test(password),
+  ).length;
+  if (classes >= 3) score++;
+  return Math.min(score, 3);
+}
+
 /**
  * True when a failed submission should keep the user on the password form
  * rather than throwing them out to an error page.

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
-import { SitePage } from "@/components/SitePage";
+import { AuthChrome } from "../AuthChrome";
 import { Icon } from "@/components/Icon";
 import { SITE } from "@/lib/site";
 import {
@@ -13,13 +13,26 @@ import {
 } from "./outcome";
 
 /**
- * Where a Help24 password-reset or email-confirmation link lands once the
- * action itself is done.
+ * The address in `ActionCodeSettings.url` — where a Help24 password-reset or
+ * email-confirmation link lands once the action itself is done.
  *
  * Until this route existed, every one of those emails pointed at a URL that
  * returned the site's 404 page — so the last thing a user saw after resetting
  * their password was "This page took a day off". The decision logic, and the
  * one case that must never be reported as success, is in ./outcome.ts.
+ *
+ * WHEN A USER ACTUALLY GETS HERE
+ * ------------------------------
+ * Only when the PROVIDER'S hosted page handled the action and then redirected
+ * to this URL — the degraded path that applies if the console's custom action
+ * URL is unset, or if `ActionCodeSettings` was refused and the client fell
+ * back to a plain send (see `_continueUrlRejections` in the app's
+ * auth_service.dart).
+ *
+ * On the normal path the link opens /auth/action, which does the work and
+ * reports it. That page deliberately does NOT forward here: it had already
+ * said what happened, and a second screen repeating it read as though the
+ * first had not worked.
  */
 
 export const metadata: Metadata = {
@@ -60,89 +73,69 @@ export default function AuthContinuePage({
   const outcome = outcomeFor(searchParams[OUTCOME_PARAM]);
   const done = outcome.tone === "done";
 
-  const accent = done ? "text-money" : "text-warning";
-  const accentBg = done ? "bg-money/10" : "bg-warning/10";
-  const accentRing = done ? "ring-money/20" : "ring-warning/20";
-
   return (
-    <SitePage>
-      <section className="relative overflow-hidden">
-        <div className="bg-atmosphere pointer-events-none absolute inset-0" aria-hidden />
+    <AuthChrome>
+      <div
+        className="w-full rounded-card border border-border bg-card p-6 shadow-card sm:p-8"
+        data-outcome={outcome.key}
+      >
+        {/* Small and quiet: a state marker, not a hero. See StatusMark in
+            ../action/ActionHandler.tsx for why the 56px haloed glyph went. */}
         <div
-          className="bg-grid pointer-events-none absolute inset-0 opacity-40"
+          className={`flex h-10 w-10 items-center justify-center rounded-badge ${
+            done ? "bg-money/10 text-money" : "bg-warning/10 text-warning"
+          }`}
           aria-hidden
-        />
-
-        <div
-          className="relative mx-auto flex min-h-[calc(100vh-4rem)] max-w-2xl flex-col items-center justify-center px-4 py-20 sm:px-6"
-          data-outcome={outcome.key}
         >
-          <div className="w-full rounded-card border border-border bg-card p-6 shadow-card sm:p-10">
-            {/* Status mark */}
-            <div
-              className={`flex h-14 w-14 items-center justify-center rounded-badge ring-8 ${accentBg} ${accentRing} ${accent}`}
-            >
-              <Icon name={done ? "check" : "alert"} className="h-7 w-7" />
-            </div>
-
-            <p
-              className={`mt-6 text-label-md font-medium uppercase tracking-wider ${
-                done ? "text-money" : "text-warning"
-              }`}
-            >
-              {outcome.eyebrow}
-            </p>
-
-            <h1 className="mt-3 text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">
-              {outcome.title}
-            </h1>
-
-            <p className="mt-4 text-body-lg leading-relaxed text-text-secondary">
-              {outcome.body}
-            </p>
-
-            {/* What to do now — separated from what happened, because they are
-                different questions and users read the second one first. */}
-            <div className="mt-6 flex items-start gap-3 rounded-card border border-border bg-bg-dark/40 p-4">
-              <span className="mt-0.5 shrink-0 text-primary-bright">
-                <Icon name="phone" className="h-5 w-5" />
-              </span>
-              <p className="text-body text-text-secondary">{outcome.next}</p>
-            </div>
-
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href={outcome.primary.href}
-                className="inline-flex items-center justify-center gap-2 rounded-button bg-primary px-5 py-3 text-body font-semibold text-white transition-opacity hover:opacity-95"
-              >
-                {outcome.primary.label}
-                <Icon name="arrow" className="h-4 w-4" />
-              </Link>
-              <Link
-                href={outcome.secondary.href}
-                className="inline-flex items-center justify-center gap-2 rounded-button border border-border bg-transparent px-5 py-3 text-body font-semibold text-text-primary transition-colors hover:bg-card/50"
-              >
-                {outcome.secondary.label}
-              </Link>
-            </div>
-          </div>
-
-          {/* Reassurance, and the only address on the page. Someone who
-              followed an email link is entitled to know they are on the real
-              Help24 and how to reach a human without going back to the app. */}
-          <p className="mt-6 px-2 text-center text-body-sm text-text-tertiary">
-            You&apos;re on {SITE.domain}, the official Help24 site. Didn&apos;t
-            request this?{" "}
-            <a
-              href={`mailto:${SITE.supportEmail}`}
-              className="font-medium text-primary-bright hover:underline"
-            >
-              Tell us
-            </a>{" "}
-            and we&apos;ll secure your account.
-          </p>
+          <Icon name={done ? "check" : "alert"} className="h-5 w-5" />
         </div>
-      </section>
-    </SitePage>
+
+        <h1 className="mt-5 text-h3 font-semibold tracking-tight text-text-primary sm:text-h2">
+          {outcome.title}
+        </h1>
+
+        <p className="mt-3 text-body-lg text-text-secondary">{outcome.body}</p>
+
+        {/* What to do now — separated from what happened, because they are
+            different questions and users read the second one first. */}
+        <div className="mt-5 flex items-start gap-3 rounded-button border border-border bg-page/60 p-4">
+          <span className="mt-0.5 shrink-0 text-primary-bright" aria-hidden>
+            <Icon name="phone" className="h-4 w-4" />
+          </span>
+          <p className="text-body text-text-secondary">{outcome.next}</p>
+        </div>
+
+        <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+          <Link
+            href={outcome.primary.href}
+            className="inline-flex items-center justify-center gap-2 rounded-button bg-primary px-5 py-3 text-body font-semibold text-white transition-opacity hover:opacity-95"
+          >
+            {outcome.primary.label}
+            <Icon name="arrow" className="h-4 w-4" />
+          </Link>
+          <Link
+            href={outcome.secondary.href}
+            className="inline-flex items-center justify-center gap-2 rounded-button border border-border-strong bg-transparent px-5 py-3 text-body font-semibold text-text-primary transition-colors hover:bg-page/60"
+          >
+            {outcome.secondary.label}
+          </Link>
+        </div>
+      </div>
+
+      {/* Someone who followed an email link is entitled to know how to reach a
+          human without going back to the app. It points at the support PAGE,
+          not at a mailbox: support@help24.co.ke has no inbound mail route on
+          this domain today, so a mailto here would bounce. */}
+      <p className="mt-5 px-2 text-center text-body-sm text-text-tertiary">
+        Did not ask for this? Nothing on your account has changed.{" "}
+        <Link
+          href="/support"
+          className="font-medium text-primary-bright hover:underline"
+        >
+          Tell us
+        </Link>{" "}
+        and we will secure it.
+      </p>
+    </AuthChrome>
   );
 }

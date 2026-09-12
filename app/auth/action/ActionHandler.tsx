@@ -3,8 +3,7 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { Icon } from "@/components/Icon";
-import { SITE } from "@/lib/site";
-import { OUTCOME_PARAM } from "../continue/outcome";
+import { parseActionRequest, type Mode } from "./request";
 import {
   client,
   verifyPasswordResetCode,
@@ -16,7 +15,9 @@ import {
   toFailure,
   isFixableOnForm,
   validatePassword,
+  passwordStrength,
   MIN_PASSWORD_LENGTH,
+  STRENGTH_LABELS,
   MALFORMED,
   UNSUPPORTED,
   type ActionFailure,
@@ -54,13 +55,17 @@ import {
  * in the address bar — and so in browser history, in the `Referer` of every
  * link on this page, and on the screen of anyone glancing over the user's
  * shoulder. Stripping first makes that window zero.
+ *
+ * WHAT THE PRESENTATION IS FOR
+ * ----------------------------
+ * A person reaches this page by clicking a link in an email, which is the most
+ * impersonated action there is, and is then asked to type a credential for an
+ * account that holds escrow money. Every presentation decision below answers
+ * one question: does this look like the real Help24, and is it obvious what to
+ * do? Hence the reduced chrome, one heading per state, the account being acted
+ * on shown as a labelled row rather than buried in a sentence, and no
+ * decoration that a template could have supplied.
  */
-
-type Mode =
-  | "resetPassword"
-  | "verifyEmail"
-  | "recoverEmail"
-  | "verifyAndChangeEmail";
 
 type Phase =
   /** Checking the code, or applying an action that needs no input. */
@@ -72,45 +77,38 @@ type Phase =
   | { kind: "done"; mode: Mode; email: string | null }
   | { kind: "failed"; failure: ActionFailure };
 
-/** Success copy, one entry per action this handler completes. */
-const SUCCESS: Record<
-  Mode,
-  { eyebrow: string; title: string; body: string; next: string }
-> = {
+/**
+ * Success copy, one entry per action this handler completes.
+ *
+ * Three fields, three different jobs, and no two of them may say the same
+ * thing: `title` is what happened, `body` is the consequence the user cannot
+ * infer, `next` is the single action left. The eyebrow labels that used to sit
+ * above each title ("PASSWORD UPDATED" over "Your new password is ready") were
+ * the heading twice in two typefaces, which is decoration wearing the costume
+ * of information.
+ */
+const SUCCESS: Record<Mode, { title: string; body: string; next: string }> = {
   resetPassword: {
-    eyebrow: "Password updated",
-    title: "Your new password is ready",
-    body: "Your Help24 password has been changed. The old one no longer works, on any device.",
-    next: "Open Help24 on your phone and sign in with your new password.",
+    title: "Your password has been changed",
+    body: "The old password no longer works, on this or any other device.",
+    next: "Open Help24 and sign in with your new password.",
   },
   verifyEmail: {
-    eyebrow: "Email confirmed",
     title: "Your email address is confirmed",
-    body: "Thanks — we know this mailbox is yours. It is now the address we use to help you back into your account.",
-    next: "Open Help24 on your phone and carry on where you left off.",
+    body: "This is now the address we use to get you back into your account if you are ever locked out.",
+    next: "Open Help24 and carry on where you left off.",
   },
   recoverEmail: {
-    eyebrow: "Email restored",
     title: "Your email address has been restored",
     body: "The change to your account email has been reversed.",
     next: "If you did not ask for that change, reset your password now — someone else may have had access.",
   },
   verifyAndChangeEmail: {
-    eyebrow: "Email updated",
     title: "Your email address has been updated",
-    body: "Your Help24 account now uses this address for sign-in and account recovery.",
-    next: "Open Help24 on your phone and sign in with your new address.",
+    body: "Help24 will use this address for signing in and for account recovery.",
+    next: "Open Help24 and sign in with your new address.",
   },
 };
-
-function isMode(value: string): value is Mode {
-  return (
-    value === "resetPassword" ||
-    value === "verifyEmail" ||
-    value === "recoverEmail" ||
-    value === "verifyAndChangeEmail"
-  );
-}
 
 export function ActionHandler() {
   const [phase, setPhase] = useState<Phase>({ kind: "working" });
@@ -137,27 +135,26 @@ export function ActionHandler() {
     if (started.current) return;
     started.current = true;
 
-    const params = new URLSearchParams(window.location.search);
-    const mode = params.get("mode");
-    const code = params.get("oobCode");
+    const search = window.location.search;
 
     // Synchronously, before any network call. See the note at the top.
     window.history.replaceState(null, "", window.location.pathname);
 
-    if (!code || !mode) {
-      setPhase({ kind: "failed", failure: MALFORMED });
-      return;
-    }
-    if (!isMode(mode)) {
-      // `signIn` (email-link sign-in) lands here too. Help24 does not use it,
-      // and guessing at an action we do not support would be worse than saying
-      // so plainly.
-      setPhase({ kind: "failed", failure: UNSUPPORTED });
+    // Pure, and tested without a browser — see ./request.ts. `signIn`
+    // (email-link sign-in) classifies as `unsupported`: Help24 does not use it,
+    // and guessing at an action we do not support would be worse than saying so
+    // plainly.
+    const request = parseActionRequest(search);
+    if (request.kind !== "run") {
+      setPhase({
+        kind: "failed",
+        failure: request.kind === "malformed" ? MALFORMED : UNSUPPORTED,
+      });
       return;
     }
 
-    codeRef.current = code;
-    void run(mode, code);
+    codeRef.current = request.oobCode;
+    void run(request.mode, request.oobCode);
 
     async function run(m: Mode, oobCode: string) {
       const auth = client();
@@ -241,66 +238,84 @@ export function ActionHandler() {
 
   if (phase.kind === "failed") {
     return (
-      <Shell tone="attention" icon="alert" eyebrow="We could not do that" outcome="failed">
+      <Card outcome="failed">
+        <StatusMark tone="attention" icon="alert" />
         <Heading>{phase.failure.title}</Heading>
         <Body>{phase.failure.message}</Body>
         <NextStep>{phase.failure.next}</NextStep>
+        {/*
+          No primary button here, deliberately. The action that resolves an
+          expired link happens in the app, not on this page, so promoting a
+          help link to primary would dress a detour up as the solution. Both
+          routes out are offered at equal, quieter weight.
+        */}
         <Actions
-          primary={{ label: "Visit Help Centre", href: "/help" }}
-          secondary={{ label: "Contact support", href: "/support" }}
+          secondary={{ label: "Help Centre", href: "/help" }}
+          tertiary={{ label: "Contact support", href: "/support" }}
         />
-      </Shell>
+      </Card>
     );
   }
 
   if (phase.kind === "done") {
     const copy = SUCCESS[phase.mode];
     return (
-      <Shell tone="done" icon="check" eyebrow={copy.eyebrow} outcome={phase.mode}>
+      <Card outcome={phase.mode}>
+        <StatusMark tone="done" icon="check" />
         <Heading>{copy.title}</Heading>
-        <Body>
-          {copy.body}
-          {phase.email ? (
-            <>
-              {" "}
-              The address on your account is{" "}
-              <span className="font-medium text-text-primary">{phase.email}</span>.
-            </>
-          ) : null}
-        </Body>
+        <Body>{copy.body}</Body>
+        {phase.email ? <AccountRow email={phase.email} /> : null}
         <NextStep>{copy.next}</NextStep>
-        <Actions
-          // Hard-coded, internal, and never derived from the inbound
-          // `continueUrl`. The provider restricts that value to authorized
-          // domains, but a redirect target taken from a URL a stranger can
-          // craft is an open redirect waiting to happen, so it is ignored
-          // outright rather than validated.
-          primary={{
-            label: "Continue",
-            href: `/auth/continue?${OUTCOME_PARAM}=${phase.mode}`,
-          }}
-          secondary={{ label: "Back to Help24", href: "/" }}
-        />
-      </Shell>
+        {/*
+          THE FLOW ENDS HERE, AND THAT IS THE CHANGE.
+          --------------------------------------------
+          This used to offer "Continue" → /auth/continue, which reported the
+          same event a second time: "Your password has been changed" followed
+          by "Your new password is ready". One action, two screens, no new
+          information — and the second one reads as though the first had not
+          taken effect.
+
+          /auth/continue still exists and still carries its own full copy,
+          because it is the address in `ActionCodeSettings.url` and is reached
+          directly whenever the provider's own hosted page handled the action
+          instead of this one. It is a landing page for that path, not a step
+          in this one.
+
+          Note also what is NOT here: the inbound `continueUrl` parameter. The
+          provider restricts it to authorized domains, but a redirect target
+          taken from a URL a stranger can craft is an open redirect waiting to
+          happen, so it is ignored outright rather than validated.
+        */}
+        <Actions secondary={{ label: "Back to Help24", href: "/" }} />
+      </Card>
     );
   }
 
   // phase.kind === "form" | "saving"
   const saving = phase.kind === "saving";
   return (
-    <Shell
-      tone="neutral"
-      icon="lock"
-      eyebrow="Choose a new password"
-      outcome="resetPassword-form"
-    >
+    <Card outcome="resetPassword-form">
+      <StatusMark tone="neutral" icon="lock" />
       <Heading>Set a new password</Heading>
-      <Body>
-        You are resetting the password for{" "}
-        <span className="font-medium text-text-primary">{phase.email}</span>.
-      </Body>
+      <Body>Choose a password you have not used on Help24 before.</Body>
+      <AccountRow email={phase.email} />
 
       <form onSubmit={onSubmit} className="mt-6" noValidate>
+        {/*
+          Invisible to a person, essential to a password manager. Without a
+          username in the form, browsers save the new password against no
+          account — or offer to update the wrong one. `hidden` rather than
+          CSS-hidden so it is never focusable or read aloud.
+        */}
+        <input
+          type="email"
+          name="email"
+          value={phase.email}
+          autoComplete="username"
+          readOnly
+          hidden
+        />
+
         <PasswordField
           id="new-password"
           label="New password"
@@ -314,11 +329,12 @@ export function ActionHandler() {
           describedBy="password-rule"
           invalid={formError !== null}
         />
+        <StrengthMeter password={password} />
         <p id="password-rule" className="mt-2 text-body-sm text-text-tertiary">
           At least {MIN_PASSWORD_LENGTH} characters, with letters as well as numbers.
         </p>
 
-        <div className="mt-4">
+        <div className="mt-5">
           <PasswordField
             id="confirm-password"
             label="Confirm new password"
@@ -335,7 +351,7 @@ export function ActionHandler() {
         {formError && (
           <p
             role="alert"
-            className="mt-4 flex items-start gap-2 rounded-card border border-error/40 bg-error/10 p-3 text-body-sm text-text-primary"
+            className="mt-4 flex items-start gap-2.5 rounded-card border border-error/40 bg-error/10 p-3 text-body-sm text-text-primary"
           >
             <span className="mt-0.5 shrink-0 text-error" aria-hidden>
               <Icon name="alert" className="h-4 w-4" />
@@ -351,8 +367,12 @@ export function ActionHandler() {
         >
           {saving ? "Saving…" : "Save new password"}
         </button>
+
+        <p className="mt-4 text-center text-body-sm text-text-tertiary">
+          You will stay signed out on other devices until you sign in again.
+        </p>
       </form>
-    </Shell>
+    </Card>
   );
 }
 
@@ -364,92 +384,112 @@ export function ActionHandler() {
 function Working() {
   return (
     <div
-      className="w-full rounded-card border border-border bg-card p-6 shadow-card sm:p-10"
+      className="w-full rounded-card border border-border bg-card p-6 shadow-card sm:p-8"
       role="status"
       aria-live="polite"
       data-outcome="working"
     >
       <span className="sr-only">Checking your link…</span>
       <div className="animate-pulse" aria-hidden>
-        <div className="h-14 w-14 rounded-badge bg-border/60" />
-        <div className="mt-6 h-3 w-24 rounded bg-border/60" />
-        <div className="mt-4 h-8 w-3/4 rounded bg-border/60" />
-        <div className="mt-5 h-4 w-full rounded bg-border/40" />
+        <div className="h-10 w-10 rounded-badge bg-border/60" />
+        <div className="mt-6 h-6 w-2/3 rounded bg-border/60" />
+        <div className="mt-4 h-4 w-full rounded bg-border/40" />
         <div className="mt-2 h-4 w-5/6 rounded bg-border/40" />
       </div>
     </div>
   );
 }
 
-function Shell({
-  tone,
-  icon,
-  eyebrow,
+function Card({
   outcome,
   children,
 }: {
-  tone: "done" | "attention" | "neutral";
-  icon: string;
-  eyebrow: string;
   outcome: string;
   children: React.ReactNode;
 }) {
-  const accent =
-    tone === "done"
-      ? "text-money"
-      : tone === "attention"
-        ? "text-warning"
-        : "text-primary-bright";
-  const accentBg =
-    tone === "done"
-      ? "bg-money/10"
-      : tone === "attention"
-        ? "bg-warning/10"
-        : "bg-primary/10";
-  const accentRing =
-    tone === "done"
-      ? "ring-money/20"
-      : tone === "attention"
-        ? "ring-warning/20"
-        : "ring-primary/20";
-
   return (
     <div
-      className="w-full rounded-card border border-border bg-card p-6 shadow-card sm:p-10"
+      className="w-full rounded-card border border-border bg-card p-6 shadow-card sm:p-8"
       data-outcome={outcome}
     >
-      <div
-        className={`flex h-14 w-14 items-center justify-center rounded-badge ring-8 ${accentBg} ${accentRing} ${accent}`}
-      >
-        <Icon name={icon} className="h-7 w-7" />
-      </div>
-      <p className={`mt-6 text-label-md font-medium uppercase tracking-wider ${accent}`}>
-        {eyebrow}
-      </p>
       {children}
+    </div>
+  );
+}
+
+/**
+ * A small, quiet state marker.
+ *
+ * Its predecessor was a 56px glyph inside an 8px coloured ring — the halo that
+ * every generated confirmation page in the world opens with. At this size it
+ * labels the state without competing with the heading for the first look,
+ * which is the job a status marker actually has.
+ */
+function StatusMark({
+  tone,
+  icon,
+}: {
+  tone: "done" | "attention" | "neutral";
+  icon: string;
+}) {
+  const styles =
+    tone === "done"
+      ? "bg-money/10 text-money"
+      : tone === "attention"
+        ? "bg-warning/10 text-warning"
+        : "bg-primary/10 text-primary-bright";
+  return (
+    <div
+      className={`flex h-10 w-10 items-center justify-center rounded-badge ${styles}`}
+      aria-hidden
+    >
+      <Icon name={icon} className="h-5 w-5" />
     </div>
   );
 }
 
 function Heading({ children }: { children: React.ReactNode }) {
   return (
-    <h1 className="mt-3 text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">
+    <h1 className="mt-5 text-h3 font-semibold tracking-tight text-text-primary sm:text-h2">
       {children}
     </h1>
   );
 }
 
 function Body({ children }: { children: React.ReactNode }) {
+  return <p className="mt-3 text-body-lg text-text-secondary">{children}</p>;
+}
+
+/**
+ * The account being acted on, as a labelled row rather than a phrase inside a
+ * paragraph.
+ *
+ * Someone who follows a reset link needs to check one thing before typing: is
+ * this my account? A bolded address halfway through a sentence makes that a
+ * reading task. This makes it a glance, and it is the same shape the mobile
+ * app uses on its own email steps, so the two surfaces agree.
+ */
+function AccountRow({ email }: { email: string }) {
   return (
-    <p className="mt-4 text-body-lg leading-relaxed text-text-secondary">{children}</p>
+    <div className="mt-5 flex items-center gap-3 rounded-button border border-border bg-page/60 px-4 py-3">
+      <span className="shrink-0 text-text-tertiary" aria-hidden>
+        <Icon name="mail" className="h-4 w-4" />
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block text-label-md text-text-tertiary">Account</span>
+        <span className="block truncate text-body font-medium text-text-primary">
+          {email}
+        </span>
+      </span>
+    </div>
   );
 }
 
 function NextStep({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mt-6 flex items-start gap-3 rounded-card border border-border bg-bg-dark/40 p-4">
+    <div className="mt-5 flex items-start gap-3 rounded-button border border-border bg-page/60 p-4">
       <span className="mt-0.5 shrink-0 text-primary-bright" aria-hidden>
-        <Icon name="phone" className="h-5 w-5" />
+        <Icon name="phone" className="h-4 w-4" />
       </span>
       <p className="text-body text-text-secondary">{children}</p>
     </div>
@@ -459,25 +499,72 @@ function NextStep({ children }: { children: React.ReactNode }) {
 function Actions({
   primary,
   secondary,
+  tertiary,
 }: {
-  primary: { label: string; href: string };
+  primary?: { label: string; href: string };
   secondary: { label: string; href: string };
+  tertiary?: { label: string; href: string };
 }) {
+  const outline =
+    "inline-flex items-center justify-center gap-2 rounded-button border border-border-strong bg-transparent px-5 py-3 text-body font-semibold text-text-primary transition-colors hover:bg-page/60";
   return (
-    <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-      <Link
-        href={primary.href}
-        className="inline-flex items-center justify-center gap-2 rounded-button bg-primary px-5 py-3 text-body font-semibold text-white transition-opacity hover:opacity-95"
-      >
-        {primary.label}
-        <Icon name="arrow" className="h-4 w-4" />
-      </Link>
-      <Link
-        href={secondary.href}
-        className="inline-flex items-center justify-center gap-2 rounded-button border border-border bg-transparent px-5 py-3 text-body font-semibold text-text-primary transition-colors hover:bg-card/50"
-      >
+    <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+      {primary && (
+        <Link
+          href={primary.href}
+          className="inline-flex items-center justify-center gap-2 rounded-button bg-primary px-5 py-3 text-body font-semibold text-white transition-opacity hover:opacity-95"
+        >
+          {primary.label}
+          <Icon name="arrow" className="h-4 w-4" />
+        </Link>
+      )}
+      <Link href={secondary.href} className={outline}>
         {secondary.label}
       </Link>
+      {tertiary && (
+        <Link href={tertiary.href} className={outline}>
+          {tertiary.label}
+        </Link>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Length-first strength feedback, identical in bands and wording to the meter
+ * on the app's create-account step.
+ *
+ * It appears only once there is something to judge. A meter sitting at zero
+ * under an empty field is a scold before the user has done anything, and the
+ * rule underneath already says what is required.
+ */
+function StrengthMeter({ password }: { password: string }) {
+  if (password.length === 0) return null;
+  const score = passwordStrength(password);
+  const fill = [
+    "bg-error",
+    "bg-warning",
+    "bg-secondary",
+    "bg-money",
+  ][score];
+  const text = ["text-error", "text-warning", "text-secondary", "text-money"][
+    score
+  ];
+  return (
+    <div className="mt-3 flex items-center gap-3" aria-hidden>
+      <div className="flex flex-1 gap-1.5">
+        {[0, 1, 2].map((i) => (
+          <span
+            key={i}
+            className={`h-1 flex-1 rounded-full transition-colors ${
+              i < score ? fill : "bg-border"
+            }`}
+          />
+        ))}
+      </div>
+      <span className={`w-16 text-right text-body-sm font-medium ${text}`}>
+        {STRENGTH_LABELS[score]}
+      </span>
     </div>
   );
 }
@@ -515,7 +602,7 @@ function PasswordField({
       >
         {label}
       </label>
-      <div className="relative flex items-center rounded-button border border-border bg-bg-dark/40 transition-[border-color,box-shadow] focus-within:border-primary focus-within:shadow-[0_0_0_1px_var(--primary)]">
+      <div className="relative flex items-center rounded-button border border-border bg-page/60 transition-[border-color,box-shadow] focus-within:border-primary focus-within:shadow-[0_0_0_1px_var(--primary)]">
         <input
           id={id}
           name={id}
@@ -534,27 +621,35 @@ function PasswordField({
           onClick={onToggleReveal}
           aria-label={reveal ? "Hide password" : "Show password"}
           aria-pressed={reveal}
-          className="absolute right-2 rounded-button p-2 text-text-tertiary transition-colors hover:text-text-primary"
+          // 44px square: the minimum comfortable touch target, and the reason
+          // this control is usable one-handed on a phone.
+          className="absolute right-1 flex h-11 w-11 items-center justify-center rounded-button text-text-tertiary transition-colors hover:text-text-primary"
         >
-          <Icon name={reveal ? "lock" : "user"} className="h-5 w-5" />
+          <Icon name={reveal ? "eye-off" : "eye"} className="h-5 w-5" />
         </button>
       </div>
     </div>
   );
 }
 
-/** Reassurance strip under the card. The only address on the page. */
+/**
+ * The line under the card.
+ *
+ * It does NOT point at a mailbox. `support@help24.co.ke` has no inbound mail
+ * route on this domain today — the apex carries no MX record, so a sender
+ * falls back to the web host's address and the message times out. Handing
+ * someone who suspects their account is being attacked an address that bounces
+ * is worse than handing them nothing, so this routes to the support page,
+ * which works.
+ */
 export function Assurance() {
   return (
-    <p className="mt-6 px-2 text-center text-body-sm text-text-tertiary">
-      You are on {SITE.domain}, the official Help24 site. Did not request this?{" "}
-      <a
-        href={`mailto:${SITE.supportEmail}`}
-        className="font-medium text-primary-bright hover:underline"
-      >
+    <p className="mt-5 px-2 text-center text-body-sm text-text-tertiary">
+      Did not ask for this? Nothing on your account has changed.{" "}
+      <Link href="/support" className="font-medium text-primary-bright hover:underline">
         Tell us
-      </a>{" "}
-      and we will secure your account.
+      </Link>{" "}
+      and we will secure it.
     </p>
   );
 }

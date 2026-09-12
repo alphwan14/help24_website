@@ -1,0 +1,6 @@
+{
+  "//": "Scopes ES-module semantics to this directory alone. `node --test` reparses a typeless .ts file as ESM and warns each time; setting type:module at the SITE root would instead change how Next and PostCSS read every .js config file there, which is a real risk to buy a quieter log line. Nothing here is published or imported by the app.",
+  "name": "help24-website-tests",
+  "private": true,
+  "type": "module"
+}

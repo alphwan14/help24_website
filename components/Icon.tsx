@@ -48,6 +48,13 @@ const paths: Record<string, React.ReactNode> = {
   lock: (
     <path d="M5 11h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1z M8 11V7a4 4 0 0 1 8 0v4" />
   ),
+  /* The password reveal toggle. Its previous glyphs were `lock` for hidden and
+     `user` for shown — a person icon standing for "show the characters", which
+     is not a meaning anyone can read off it. */
+  eye: <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />,
+  "eye-off": (
+    <path d="M10.6 6.2A9.9 9.9 0 0 1 12 6c6.5 0 10 6 10 6a17.6 17.6 0 0 1-3 3.7 M6.6 6.7A17.6 17.6 0 0 0 2 12s3.5 6 10 6a9.6 9.6 0 0 0 4-.8 M3 3l18 18 M9.9 9.9a3 3 0 0 0 4.2 4.2" />
+  ),
   "no-ads": (
     <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z M5.6 5.6l12.8 12.8" />
   ),

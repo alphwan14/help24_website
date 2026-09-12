@@ -52,7 +52,7 @@ export function TwoSided() {
   const cards = posts.filter((p) => p.type === wanted).slice(0, 4);
 
   return (
-    <Section id="two-sided" className="border-t border-border">
+    <Section id="two-sided" nosnippet className="border-t border-border">
       <SectionLabel>Both sides</SectionLabel>
 
       {/* Full-width, two equal columns on a phone — a pair of pills sized by

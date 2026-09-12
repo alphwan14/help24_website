@@ -93,25 +93,18 @@ function softwareApplicationLd() {
   };
 }
 
-/**
- * The same FAQ the page renders, as structured data.
+/*
+ * THE FAQPage BLOCK THAT USED TO BE HERE IS GONE.
  *
- * Built from `DOWNLOAD_FAQ` rather than restated, so the answer Google shows
- * can never drift from the answer on the page. Mirrors what /help already does
- * with the Help Centre content.
+ * Google deprecated FAQ rich results; as of May 2026 the documentation is
+ * withdrawn and the feature is shown only for government and health sites. The
+ * markup produced no result and no reporting, and serialised every question and
+ * answer into the page a second time for every visitor.
+ *
+ * DOWNLOAD_FAQ still drives the visible FAQ, which is the part that was ever
+ * doing the work. SoftwareApplication below stays: it describes a real Android
+ * app, it is not deprecated, and it is the block that matters on this page.
  */
-function faqLd() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: DOWNLOAD_FAQ.map((item) => ({
-      "@type": "Question",
-      name: item.q,
-      acceptedAnswer: { "@type": "Answer", text: item.a },
-    })),
-  };
-}
-
 export default function DownloadPage() {
   return (
     <SitePage>
@@ -124,10 +117,6 @@ export default function DownloadPage() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(softwareApplicationLd()),
         }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd()) }}
       />
 
       {/* ── Hero ─────────────────────────────────────────────────────── */}

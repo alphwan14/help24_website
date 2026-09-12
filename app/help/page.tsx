@@ -2,7 +2,7 @@ import { SitePage } from "@/components/SitePage";
 import { PageHero } from "@/components/PageHero";
 import { HelpCentre } from "@/components/HelpCentre";
 import { pageMetadata } from "@/lib/seo";
-import { ALL_FAQS } from "@/lib/faq";
+
 
 export const metadata = pageMetadata({
   title: "Help Centre",
@@ -11,17 +11,21 @@ export const metadata = pageMetadata({
   path: "/help",
 });
 
+/*
+ * THE FAQPage BLOCK THAT USED TO BE HERE IS GONE.
+ *
+ * Google deprecated FAQ rich results. As of May 2026 the documentation is
+ * withdrawn and the feature is shown only for well-known government and health
+ * sites — which this is not. The markup therefore produced no result, no
+ * enhancement and no reporting, and cost every visitor the bytes of every
+ * question and answer serialised a second time into the page.
+ *
+ * The FAQ content itself is untouched. It is real, it is useful, and as ordinary
+ * headed prose it is exactly what both readers and the AI surfaces consume —
+ * neither of which needed the markup to find it. See lib/jsonld.ts for the full
+ * rule on which schema types this site emits.
+ */
 export default function HelpPage() {
-  const faqLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: ALL_FAQS.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
-    })),
-  };
-
   return (
     <SitePage>
       <PageHero
@@ -30,10 +34,6 @@ export default function HelpPage() {
         description="Search our guides or browse by topic. Still stuck? Our team is one message away."
       />
       <HelpCentre />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
-      />
     </SitePage>
   );
 }

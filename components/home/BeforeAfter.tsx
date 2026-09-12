@@ -41,7 +41,7 @@ export function BeforeAfter() {
   const agreed = Math.min(...quotes.map((q) => q.price));
 
   return (
-    <Section id="before-after" className="border-t border-border">
+    <Section id="before-after" nosnippet className="border-t border-border">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <SectionLabel>The difference</SectionLabel>

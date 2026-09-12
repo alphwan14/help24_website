@@ -132,7 +132,7 @@ export function TaskComposer() {
   };
 
   return (
-    <Section id="compose" className="border-t border-border">
+    <Section id="compose" nosnippet className="border-t border-border">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <SectionLabel>Try it</SectionLabel>

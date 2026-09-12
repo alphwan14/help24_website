@@ -93,6 +93,8 @@ export function LiveBoard({
 
   return (
     <div
+      // Seed posts — see the note in components/Section.tsx.
+      data-nosnippet
       className={`board-viewport relative ${drifting ? "overflow-hidden" : "overflow-y-auto"} ${className}`}
       style={{
         height,

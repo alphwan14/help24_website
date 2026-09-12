@@ -135,6 +135,8 @@ export function StoryDemo({ className = "" }: { className?: string }) {
   return (
     <div
       ref={frame}
+      // Seed people and prices — see the note in components/Section.tsx.
+      data-nosnippet
       className={`relative ${className}`}
     >
       {/* ── Frame header ───────────────────────────────────────────────── */}

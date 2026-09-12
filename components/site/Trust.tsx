@@ -135,7 +135,11 @@ function Act({
           </Link>
         ) : null}
       </div>
-      <div className={`min-w-0 ${flip ? "lg:order-1" : ""}`}>{children}</div>
+      {/* The illustration is seed data — see the note in components/Section.tsx.
+          The prose column beside it is a real claim and stays quotable. */}
+      <div data-nosnippet className={`min-w-0 ${flip ? "lg:order-1" : ""}`}>
+        {children}
+      </div>
     </div>
   );
 }

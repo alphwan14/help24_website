@@ -60,6 +60,8 @@ export const FOOTER_GROUPS: { title: string; links: NavLink[] }[] = [
     links: [
       { label: "How it works", href: "/how-it-works" },
       { label: "All services", href: "/services" },
+      { label: "Where we work", href: "/areas" },
+      { label: "Guides", href: "/guides" },
       { label: "For customers", href: "/for-customers" },
       { label: "For providers", href: "/for-providers" },
       { label: "Safety & Escrow", href: "/safety" },
@@ -109,21 +111,11 @@ export const APP_STORES = {
   },
 } as const;
 
-/** Routes emitted into the sitemap, with relative priority. */
-export const SITEMAP_ROUTES: { path: string; priority: number }[] = [
-  { path: "/", priority: 1.0 },
-  { path: "/download", priority: 0.9 },
-  { path: "/how-it-works", priority: 0.8 },
-  { path: "/services", priority: 0.8 },
-  { path: "/for-customers", priority: 0.8 },
-  { path: "/for-providers", priority: 0.8 },
-  { path: "/become-a-provider", priority: 0.8 },
-  { path: "/help", priority: 0.8 },
-  { path: "/safety", priority: 0.7 },
-  { path: "/support", priority: 0.7 },
-  { path: "/about", priority: 0.6 },
-  { path: "/contact", priority: 0.6 },
-  { path: "/privacy", priority: 0.5 },
-  { path: "/terms", priority: 0.5 },
-  { path: "/community-guidelines", priority: 0.5 },
-];
+/**
+ * The sitemap used to be a hand-maintained array here, next to the navigation.
+ * It is now derived in lib/routes.ts from the catalogues themselves, because a
+ * second list of "pages that should be in Google" is a list that goes stale the
+ * first time somebody adds a route and updates only one of them. That is not
+ * hypothetical — /components was crawlable and absent from this array for
+ * months, which is exactly the disagreement a single source removes.
+ */

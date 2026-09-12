@@ -5,6 +5,8 @@ import "./design-system.css";
 import { SITE } from "@/lib/site";
 import { LIGHT, PALETTE, tokensCss } from "@/lib/tokens";
 import { ThemeScript } from "@/components/theme/ThemeScript";
+import { JsonLd } from "@/components/JsonLd";
+import { organizationLd, websiteLd } from "@/lib/jsonld";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -68,36 +70,13 @@ export const viewport = {
   ],
 };
 
-const organizationLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: SITE.name,
-  url: SITE.url,
-  logo: `${SITE.url}/help24-icon.png`,
-  email: SITE.supportEmail,
-  description: SITE.description,
-  areaServed: "KE",
-  sameAs: [
-    "https://twitter.com/help24",
-    "https://www.linkedin.com/company/help24",
-    "https://www.instagram.com/help24",
-  ],
-};
-
-const websiteLd = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: SITE.name,
-  url: SITE.url,
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={poppins.variable}>
+    <html lang="en-KE" className={poppins.variable}>
       <head>
         {/*
           The design tokens, as CSS custom properties, generated from
@@ -116,14 +95,13 @@ export default function RootLayout({
         <ThemeScript />
       </head>
       <body className="bg-page font-sans text-text-primary">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}
-        />
+        {/*
+          The entity, once, on every page. Nested pages add their own
+          BreadcrumbList and Service blocks; those reference this one by @id
+          rather than restating it, so a consumer reading several Help24
+          pages assembles one organisation instead of ninety.
+        */}
+        <JsonLd data={[organizationLd(), websiteLd()]} />
         {children}
       </body>
     </html>

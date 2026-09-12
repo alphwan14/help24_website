@@ -146,13 +146,16 @@ export function Situations() {
           </ul>
 
           {/* ── The miniature ──────────────────────────────────────────── */}
+          {/* Seed people and prices — see the note in components/Section.tsx.
+              Scoped to this column so the real category list below stays
+              available to snippets. */}
           {/*
             Fixed height, because it changes three times per situation and the
             page below must not move while it does. No card around it — the
             offers are the only real product objects here and they carry their
             own borders, exactly as they do in the hero.
           */}
-          <div className="min-w-0">
+          <div className="min-w-0" data-nosnippet>
             <div className="relative h-[248px]">
               {/* Beat 1 · what happened */}
               <Beat show={phase === 0}>

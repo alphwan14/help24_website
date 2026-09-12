@@ -1,8 +1,8 @@
 /**
  * The location tier — and the rule that stops it becoming a page farm.
  *
- * THE PROBLEM THIS FILE SOLVES. The registry holds 34 cities and 30 services,
- * which multiply out to 1,020 possible /services/<service>/<city> URLs. Every
+ * THE PROBLEM THIS FILE SOLVES. The registry holds 34 cities and 31 services,
+ * which multiply out to 1,054 possible /services/<service>/<city> URLs. Every
  * one of them could be generated from a template in an afternoon, and Google's
  * current spam policies describe exactly that as scaled content abuse: "many
  * pages are generated for the primary purpose of manipulating search rankings

@@ -48,7 +48,7 @@ these pages rather than the thing holding them up. Nothing has to be rebuilt.
 ```
 /                                   homepage
 /services                           catalogue hub
-/services/<service>                 30 service pages
+/services/<service>                 31 service pages
 /services/<service>/<city>          32 service-in-city pages (gated, see §4)
 /areas                              coverage hub
 /areas/<city>                       6 city pages
@@ -120,7 +120,7 @@ behind a single prefix, decided here first.
 
 **The single most important rule in this document.**
 
-30 services × 34 cities = 1,020 possible service-in-city URLs. Generating them
+31 services × 34 cities = 1,054 possible service-in-city URLs. Generating them
 from a template is scaled content abuse under Google's current spam policies
 ("many pages are generated for the primary purpose of manipulating search
 rankings and not helping users"), and the consequence is sitewide.

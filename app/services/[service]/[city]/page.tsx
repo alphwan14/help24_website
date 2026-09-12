@@ -35,7 +35,7 @@ import { breadcrumbLd, serviceLd, type Crumb } from "@/lib/jsonld";
  * file. Adding a page means writing the note; there is no other route in.
  *
  * That constraint is doing real work. The naive version of this route is
- * `SERVICES × CITIES`, which is 1,020 URLs whose only difference is a place
+ * `SERVICES × CITIES`, which is 1,054 URLs whose only difference is a place
  * name — scaled content abuse as Google's spam policies currently define it,
  * and a sitewide risk rather than a per-page one. Thirty-odd pages that each
  * say something specifically true is the version that survives.

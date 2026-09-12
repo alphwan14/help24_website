@@ -182,7 +182,7 @@ test("no CITY_CONTENT entry without a page", () => {
  * THE LOAD-BEARING ONE.
  *
  * If this ever fails open — if a pair can exist without a note — the route
- * becomes a generator for 1,020 near-identical URLs, which is scaled content
+ * becomes a generator for 1,054 near-identical URLs, which is scaled content
  * abuse and a sitewide risk. The assertion is not about tidiness.
  */
 test("every service+city page has a hand-written local note", () => {

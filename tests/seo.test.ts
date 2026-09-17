@@ -32,7 +32,13 @@ import { CITIES } from "../lib/generated/places.ts";
 import { allIndexableRoutes, NOINDEX_ROUTES, STATIC_INDEXABLE } from "../lib/routes.ts";
 import { canonical, pageMetadata } from "../lib/seo.ts";
 import { SITE, SOCIALS } from "../lib/site.ts";
-import { breadcrumbLd, serviceLd, organizationLd, articleLd } from "../lib/jsonld.ts";
+import {
+  articleLd,
+  breadcrumbLd,
+  organizationLd,
+  serviceLd,
+  websiteLd,
+} from "../lib/jsonld.ts";
 
 /**
  * The app's own category list, copied here rather than imported.
@@ -413,6 +419,24 @@ test("a favicon Google Search can use is declared, and /favicon.ico exists", () 
     assert.ok(off + len <= ico.length, `favicon.ico entry ${i} runs past the end of the file`);
     assert.equal(ico.subarray(off + 1, off + 4).toString(), "PNG", `favicon.ico entry ${i} is not PNG`);
   }
+});
+
+test("the WebSite block states the site name Google should show", () => {
+  /*
+   * Results were titled "help24.co.ke" instead of "Help24". Google picks the
+   * site name from this block on the home page, and "Help24" is shared by
+   * several unrelated companies — so the unambiguous alternate has to be here.
+   */
+  const site = websiteLd() as Record<string, any>;
+  assert.equal(site["@type"], "WebSite");
+  assert.equal(site.name, "Help24");
+  assert.ok(site.alternateName.includes("Help24 Kenya"), "no disambiguating alternateName");
+  assert.equal(site.url, `${SITE.url}/`, "url must be the home page");
+  assert.deepEqual(site.publisher, { "@id": `${SITE.url}/#organization` });
+  // The organisation and the site must agree on who this is.
+  const org = organizationLd() as Record<string, any>;
+  assert.equal(org.name, site.name);
+  assert.ok(site.alternateName.includes(org.alternateName));
 });
 
 test("breadcrumb positions are 1-based and items are canonical", () => {

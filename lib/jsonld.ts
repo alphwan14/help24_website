@@ -85,13 +85,32 @@ export function organizationLd() {
   };
 }
 
+/**
+ * The site-name block — the one Google reads for the name above each result.
+ *
+ * WHY alternateName IS HERE. Google shows a site name per domain, chosen
+ * automatically, and says WebSite structured data on the home page is the
+ * strongest way to state a preference, with `alternateName` as the recommended
+ * fallback. "Help24" alone is a crowded name: unrelated companies in South
+ * Africa, India, Côte d'Ivoire and Finland all trade as Help24, including one
+ * with a "Help24" app on Google Play. When the preferred name is ambiguous,
+ * Google falls back to something else — and our results were showing the bare
+ * domain, "help24.co.ke", instead of the brand. "Help24 Kenya" is the
+ * unambiguous version, and the domain is the last resort we would rather it
+ * picked than a stranger's name.
+ *
+ * `url` carries the trailing slash because that is how Google's site-name
+ * documentation writes a home page. For the root it is the same URL as the
+ * slash-less canonical; URL normalisation makes an empty path "/".
+ */
 export function websiteLd() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "@id": `${SITE.url}/#website`,
     name: SITE.name,
-    url: SITE.url,
+    alternateName: [`${SITE.name} Kenya`, SITE.domain],
+    url: `${SITE.url}/`,
     inLanguage: "en-KE",
     publisher: { "@id": ORG_ID },
   };

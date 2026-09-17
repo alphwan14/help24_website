@@ -177,8 +177,19 @@ What must never happen: relaxing the gate to a boolean flag or a threshold.
 
 ## 5. Canonical strategy
 
-- One canonical host: `https://help24.co.ke`. `www` 307s to apex; HTTP 308s to
-  HTTPS. Both verified live.
+- One canonical host: `https://help24.co.ke`. `www` 308s to apex; HTTP 308s to
+  HTTPS. Both verified live on 17 September 2026.
+- **The `www` redirect must stay permanent (308).** It is a Vercel domain
+  setting, not code: help24-web → Settings → Domains → `www.help24.co.ke`. It
+  was 307 until September 2026. Google treats a temporary redirect as no
+  signal about which URL is canonical, so it kept the `www` homepage and
+  `/download` it had first found in July, and showed them with the old title
+  and the old favicon — favicons are per hostname — beside `help24.co.ke`
+  results carrying the new ones. The two looked like different companies.
+- Search Console must be a **Domain property** (DNS TXT at Cloudflare) to see
+  `www` at all. The meta-tag verification in the root layout can only verify
+  the `https://help24.co.ke/` URL-prefix property, which cannot inspect or
+  request indexing for a `www` URL.
 - No trailing slashes. `/services/` 308s to `/services`, and `canonical()` in
   `lib/seo.ts` strips one if given, so a canonical can never point at a URL that
   redirects.

@@ -10,7 +10,7 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 
 import {
   SERVICES,
@@ -31,7 +31,7 @@ import { GUIDES } from "../lib/guides.ts";
 import { CITIES } from "../lib/generated/places.ts";
 import { allIndexableRoutes, NOINDEX_ROUTES, STATIC_INDEXABLE } from "../lib/routes.ts";
 import { canonical, pageMetadata } from "../lib/seo.ts";
-import { SITE, SOCIALS } from "../lib/site.ts";
+import { PAYMENTS, SITE, SOCIALS } from "../lib/site.ts";
 import {
   articleLd,
   breadcrumbLd,
@@ -449,6 +449,60 @@ test("the WebSite block states the site name Google should show", () => {
   const org = organizationLd() as Record<string, any>;
   assert.equal(org.name, site.name);
   assert.ok(site.alternateName.includes(org.alternateName));
+});
+
+test("no user-facing copy names M-Pesa without Airtel Money", () => {
+  /*
+   * Airtel Money is named across the site ahead of its integration, at the
+   * product owner's instruction and on the record in PAYMENTS (lib/site.ts).
+   * The value of one constant is that it is ONE edit if the date moves, and
+   * that only holds while nobody hand-writes "M-Pesa" into new copy.
+   *
+   * The allowlist is every file where a lone "M-Pesa" is correct, with the
+   * reason. All of them describe something that exists rather than something
+   * promised, or are comments rather than copy.
+   */
+  const allowed = new Map([
+    ["lib/site.ts", "defines PAYMENTS and explains the exceptions"],
+    ["lib/faq.ts", "file comment about keeping answers accurate"],
+    ["lib/release.ts", "comment on why APK sideloading attracts repackaging"],
+    ["lib/services.ts", "the software-development page: a CLIENT's M-Pesa integration, not ours"],
+    ["components/ds/PostCard.tsx", "the offer badge mirrors the Flutter card and the number on file"],
+    ["components/gallery/Gallery.tsx", "the parity gallery renders that same badge"],
+    ["components/site/AppShowcase.tsx", "alt text describing a screenshot of a real payment screen"],
+    ["components/site/Hero.tsx", "comments quoting the old snippet and the old bullet"],
+    ["components/download/OfficialDownloadNotice.tsx", "comment on repackaging risk"],
+  ]);
+
+  const root = new URL("../", import.meta.url);
+  const offenders: string[] = [];
+  const walk = (dir: URL) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const child = new URL(entry.name + (entry.isDirectory() ? "/" : ""), dir);
+      const rel = decodeURIComponent(child.href.slice(root.href.length)).replace(/\/$/, "");
+      if (entry.isDirectory()) {
+        if (!/^(node_modules|\.next|\.next-dev|\.git|tests)$/.test(entry.name)) walk(child);
+      } else if (/\.tsx?$/.test(entry.name) && !allowed.has(rel)) {
+        const source = readFileSync(child, "utf8");
+        for (const hit of source.matchAll(/M-Pesa/g)) {
+          const around = source.slice(Math.max(0, hit.index - 110), hit.index + 110);
+          if (!/Airtel/i.test(around)) offenders.push(rel);
+        }
+      }
+    }
+  };
+  walk(root);
+
+  assert.deepEqual(
+    [...new Set(offenders)],
+    [],
+    "M-Pesa written by hand — use PAYMENTS.methods from lib/site.ts, or add the file to the allowlist above with a reason",
+  );
+});
+
+test("the payment wording names both rails from one place", () => {
+  assert.match(PAYMENTS.methods, /M-Pesa/);
+  assert.match(PAYMENTS.methods, /Airtel Money/);
 });
 
 test("breadcrumb positions are 1-based and items are canonical", () => {

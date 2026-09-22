@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PAYMENTS } from "@/lib/site";
 import { SitePage } from "@/components/SitePage";
 import { PageHero } from "@/components/PageHero";
 import {
@@ -13,7 +14,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "For Providers",
   description:
-    "Grow your business on Help24. Reach customers who need you, build a trusted reputation and get paid securely with M-Pesa.",
+    `Grow your business on Help24. Reach customers who need you, build a trusted reputation and get paid securely with ${PAYMENTS.methods}.`,
   path: "/for-providers",
 });
 
@@ -52,13 +53,13 @@ const steps = [
   },
   {
     title: "Deliver and earn",
-    body: "Do great work and get paid to your M-Pesa number.",
+    body: `Do great work and get paid to your ${PAYMENTS.methods} number.`,
   },
 ];
 
 const requirements = [
   "Be 18 or older with a valid phone number",
-  "An M-Pesa number for payouts",
+  `An ${PAYMENTS.methods} number for payouts`,
   "The skills and tools to deliver your service well",
   "A commitment to honest listings and great service",
 ];
@@ -69,7 +70,7 @@ export default function ForProvidersPage() {
       <PageHero
         eyebrow="For providers"
         title="Grow your business on Help24"
-        description="List what you do, answer the jobs that suit you, and get paid to M-Pesa when the work is done — all from your phone."
+        description={`List what you do, answer the jobs that suit you, and get paid to ${PAYMENTS.methods} when the work is done — all from your phone.`}
       />
 
       <ContentSection title="Why work through Help24">

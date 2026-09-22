@@ -28,6 +28,7 @@
 "use client";
 
 import { useRef } from "react";
+import { PAYMENTS } from "@/lib/site";
 import Link from "next/link";
 import { COPY, kes } from "@/lib/tokens";
 import { CITY_PINS, POSTS } from "@/lib/demo/seed";
@@ -75,7 +76,7 @@ export function Trust() {
           <Act
             index="03"
             title="Protected"
-            line="You pay by M-Pesa and Help24 holds it. The provider can see the money is there — but neither of you can move it until the job is done."
+            line={`You pay by ${PAYMENTS.methods} and Help24 holds it. The provider can see the money is there — but neither of you can move it until the job is done.`}
             anchor="escrow"
             link={{ href: "/safety", label: "What happens if something goes wrong" }}
           >

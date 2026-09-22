@@ -16,7 +16,7 @@
  * done." is the whole product. Six words of promise beats sixty of feature.
  */
 import Link from "next/link";
-import { LAUNCH } from "@/lib/site";
+import { LAUNCH, PAYMENTS } from "@/lib/site";
 import { Glyph } from "@/components/ds/glyphs";
 import { StoryDemo } from "./StoryDemo";
 
@@ -30,7 +30,7 @@ import { StoryDemo } from "./StoryDemo";
  */
 const ASSURANCES = [
   { icon: "check", label: "Free to post" },
-  { icon: "wallet", label: "Pay with M-Pesa" },
+  { icon: "wallet", label: `Pay with ${PAYMENTS.methods}` },
   { icon: "lock", label: "Money held until it's done" },
 ];
 

@@ -68,6 +68,35 @@ export const LAUNCH = {
  */
 export const SOCIALS: { label: string; href: string; mark: string }[] = [];
 
+/**
+ * How this site names the mobile-money rails.
+ *
+ * THIS IS AHEAD OF THE INTEGRATION, DELIBERATELY AND ON RECORD. As of
+ * 22 September 2026 the backend has exactly one payment module,
+ * `backend/src/mpesa`, and the app's payment screen calls MpesaService and
+ * waits for an M-Pesa PIN prompt. Airtel Money is modelled in the schema
+ * (migrations 104 and 112, whose own comment reads "Nothing fakes an Airtel
+ * payment in the meantime") but is not wired to anything yet. The product
+ * owner has committed to integrating it before the 19 October 2026 launch and
+ * asked for the copy to say so now.
+ *
+ * EVERY user-facing sentence about paying or being paid reads from here. If
+ * that date moves, or Airtel does not land, this constant is the ONE edit that
+ * corrects the whole site. Never write "M-Pesa" into new copy by hand.
+ *
+ * Two places stay M-Pesa-only on purpose, because they describe things that
+ * exist rather than things promised: the offer badge in
+ * components/ds/PostCard.tsx, which mirrors the Flutter app's own card and the
+ * number actually on file, and the alt text in components/site/AppShowcase.tsx,
+ * which describes a screenshot of a real payment screen.
+ */
+export const PAYMENTS = {
+  /** Inside a sentence: "pay securely by M-Pesa or Airtel Money". */
+  methods: "M-Pesa or Airtel Money",
+  /** Where a sentence has no room for both names. */
+  short: "mobile money",
+} as const;
+
 export type NavLink = { label: string; href: string; external?: boolean };
 
 /**

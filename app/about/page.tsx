@@ -2,7 +2,7 @@ import { SitePage } from "@/components/SitePage";
 import { PageHero } from "@/components/PageHero";
 import { ContentSection, FeatureGrid, CtaBand } from "@/components/content";
 import { pageMetadata } from "@/lib/seo";
-import { SITE } from "@/lib/site";
+import { SITE, PAYMENTS } from "@/lib/site";
 
 export const metadata = pageMetadata({
   title: "About Help24",
@@ -60,7 +60,8 @@ export default function AboutPage() {
           </p>
           <p>
             We started in Kenya, and we&apos;re building for Kenya first: mobile,
-            M-Pesa-native and designed for how people here actually work. Our
+            built around {PAYMENTS.methods}, and designed for how people here
+            actually work. Our
             vision is to become the most trusted way to get things done — across
             Kenya, and in time, across Africa.
           </p>

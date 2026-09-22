@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PAYMENTS } from "@/lib/site";
 import { Section, SectionLabel } from "@/components/Section";
 import { Icon } from "@/components/Icon";
 import { CategoryIcon } from "@/components/ds/CategoryIcon";
@@ -151,7 +152,7 @@ export function HowItWorksFor({ service }: { service: Service }) {
       body: "Nothing starts until you have accepted an offer. The number you agree is the number that gets held.",
     },
     {
-      title: "Pay by M-Pesa, released when it's done",
+      title: `Pay by ${PAYMENTS.methods}, released when it's done`,
       body: "Help24 holds the payment while the work happens. The provider can see it is there; neither side can move it until you confirm the job is finished.",
     },
   ];

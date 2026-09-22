@@ -1,3 +1,4 @@
+import { PAYMENTS } from "./site";
 /**
  * Editorial guides.
  *
@@ -201,7 +202,7 @@ export const GUIDES: Guide[] = [
         heading: "And the check that does not depend on anybody's answer",
         paragraphs: [
           "Do not pay in full up front. That is the one rule that holds regardless of trade, credential, references or how well the conversation went.",
-          "On Help24 the payment is held rather than handed over: you pay by M-Pesa, the provider can see the money is there, and neither side can move it until the work is confirmed done. That is the same protection a staged payment schedule gives you on a large job, applied to a one-hour one.",
+          `On Help24 the payment is held rather than handed over: you pay by ${PAYMENTS.methods}, the provider can see the money is there, and neither side can move it until the work is confirmed done. That is the same protection a staged payment schedule gives you on a large job, applied to a one-hour one.`,
         ],
       },
     ],

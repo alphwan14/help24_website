@@ -23,6 +23,7 @@
 "use client";
 
 import { useState } from "react";
+import { PAYMENTS } from "@/lib/site";
 import { COPY, kes } from "@/lib/tokens";
 import { Avatar } from "@/components/ds/Avatar";
 import { Badge } from "@/components/ds/Badge";
@@ -54,7 +55,7 @@ const STOPS: Stop[] = [
   },
   {
     title: "Held by Help24",
-    copy: "You pay by M-Pesa and Help24 holds it. The provider can see the money is there, which is why they will travel — but they cannot touch it.",
+    copy: `You pay by ${PAYMENTS.methods} and Help24 holds it. The provider can see the money is there, which is why they will travel — but they cannot touch it.`,
     at: 50,
     badge: { token: "warning", label: COPY.paymentProtected, icon: "lock" },
   },

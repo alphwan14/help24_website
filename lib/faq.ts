@@ -1,3 +1,4 @@
+import { PAYMENTS } from "./site";
 /**
  * Help Centre content. This is the single source of truth for both the
  * interactive /help page and its FAQPage structured data, and it is the web
@@ -58,19 +59,19 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
     id: "payments",
     icon: "wallet",
     title: "Payments",
-    blurb: "M-Pesa, fees, receipts and refunds.",
+    blurb: "M-Pesa, Airtel Money, fees, receipts and refunds.",
     accent: "success",
     items: [
       {
         q: "How do I pay on Help24?",
-        a: "Help24 supports M-Pesa and other methods. Once you agree a price with a provider, you can pay securely through the app — there is no need to handle cash.",
+        a: `Help24 supports ${PAYMENTS.methods}. Once you agree a price with a provider, you can pay securely through the app — there is no need to handle cash.`,
       },
       {
         q: "Is it safe to pay through the app?",
         a: "Yes. Paying in-app lets Help24 protect your money with payment protection (escrow) and keeps a record of the transaction. Never send money outside the app for a job arranged on Help24 — you lose that protection.",
       },
       {
-        q: "Where do I set my M-Pesa number?",
+        q: `Where do I set my ${PAYMENTS.methods} number?`,
         a: "Go to Profile → Payment Settings. Your number is used for payments and payouts. For your security, viewing or changing a saved number is protected behind your device lock or biometrics.",
       },
       {
@@ -183,7 +184,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         q: "How and when do I get paid?",
-        a: "When a customer pays through the app, the money is held with payment protection and released to your M-Pesa number when the work is completed or at agreed milestones. Set your payout number in Profile → Payment Settings.",
+        a: `When a customer pays through the app, the money is held with payment protection and released to your ${PAYMENTS.methods} number when the work is completed or at agreed milestones. Set your payout number in Profile → Payment Settings.`,
       },
       {
         q: "Can I promote my services?",

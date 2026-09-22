@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PAYMENTS } from "@/lib/site";
 import { SitePage } from "@/components/SitePage";
 import { PageHero } from "@/components/PageHero";
 import { ContentSection, Steps, CtaBand } from "@/components/content";
@@ -47,7 +48,7 @@ const customerSteps = [
   },
   {
     title: "Pay securely, get it done",
-    body: "Pay through the app with M-Pesa. Your money is held until you confirm the work is complete.",
+    body: `Pay through the app with ${PAYMENTS.methods}. Your money is held until you confirm the work is complete.`,
   },
 ];
 

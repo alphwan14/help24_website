@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PAYMENTS } from "@/lib/site";
 import { notFound } from "next/navigation";
 import { SitePage } from "@/components/SitePage";
 import { Section, SectionLabel } from "@/components/Section";
@@ -65,7 +66,7 @@ export function generateMetadata({
   const Workers = service.workers.charAt(0).toUpperCase() + service.workers.slice(1);
   return pageMetadata({
     title: `${Workers} in ${city.name} — Find ${withArticle(titleCaseWorker(service.worker))} Near You`,
-    description: `Post a ${service.category.toLowerCase()} job in ${city.name} on Help24 and get offers from ${service.workers} nearby. Agree the price before work starts and pay securely by M-Pesa.`,
+    description: `Post a ${service.category.toLowerCase()} job in ${city.name} on Help24 and get offers from ${service.workers} nearby. Agree the price before work starts and pay by ${PAYMENTS.methods}.`,
     path: `/services/${service.slug}/${city.id}`,
   });
 }

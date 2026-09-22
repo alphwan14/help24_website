@@ -1,4 +1,5 @@
 import { SitePage } from "@/components/SitePage";
+import { PAYMENTS } from "@/lib/site";
 import { PageHero } from "@/components/PageHero";
 import { ContentSection, FeatureGrid, Steps, CtaBand } from "@/components/content";
 import { pageMetadata } from "@/lib/seo";
@@ -6,7 +7,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "For Customers",
   description:
-    "Find trusted local service providers on Help24. Compare offers, agree a price and pay securely with M-Pesa — protected until the job is done.",
+    `Find trusted local service providers on Help24. Compare offers, agree a price and pay securely with ${PAYMENTS.methods} — protected until the job is done.`,
   path: "/for-customers",
 });
 
@@ -24,7 +25,7 @@ const reasons = [
   {
     icon: "shield",
     title: "Your money is protected",
-    body: "Pay in-app with M-Pesa. Funds are held securely and only released when you're satisfied.",
+    body: `Pay in-app with ${PAYMENTS.methods}. Funds are held securely and only released when you're satisfied.`,
   },
   {
     icon: "wallet",

@@ -7,7 +7,7 @@ import { AppShowcase } from "@/components/site/AppShowcase";
 import { Explore } from "@/components/site/Explore";
 import { Close } from "@/components/site/Close";
 import { pageMetadata } from "@/lib/seo";
-import { SITE } from "@/lib/site";
+import { SITE, PAYMENTS } from "@/lib/site";
 
 /**
  * The homepage's own metadata.
@@ -50,7 +50,7 @@ export const metadata = pageMetadata({
    * single sentence that separates Help24 from a classifieds board.
    */
   description:
-    "Post a job free, compare offers from providers near you, and agree the price before work starts. Your M-Pesa payment is held until the job is done.",
+    `Post a job free, compare offers from providers near you, and agree the price before work starts. Your ${PAYMENTS.methods} payment is held until the job is done.`,
   path: "/",
 });
 

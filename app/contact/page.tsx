@@ -4,7 +4,7 @@ import { PageHero } from "@/components/PageHero";
 import { Section } from "@/components/Section";
 import { Icon } from "@/components/Icon";
 import { pageMetadata } from "@/lib/seo";
-import { SITE } from "@/lib/site";
+import { SITE, PAYMENTS } from "@/lib/site";
 
 export const metadata = pageMetadata({
   title: "Contact Us",
@@ -106,7 +106,7 @@ export default function ContactPage() {
               {[
                 "The email address or phone number on your Help24 account",
                 "For a problem with a job, what the job was and roughly when it was posted",
-                "For a payment question, the M-Pesa reference if you have it",
+                `For a payment question, the ${PAYMENTS.methods} reference if you have it`,
                 "For anything on the app, your phone model and the app version from Settings",
                 "A screenshot, if there is something on screen you can show us",
               ].map((item) => (
@@ -120,7 +120,7 @@ export default function ContactPage() {
               ))}
             </ul>
             <p className="mt-6 text-body-sm leading-relaxed text-text-secondary">
-              Never send us a password, a PIN or an M-Pesa authorisation code. Help24 will never
+              Never send us a password, a PIN or a {PAYMENTS.short} authorisation code. Help24 will never
               ask for any of them. More on this in{" "}
               <Link href="/safety" className="text-primary-bright hover:underline">
                 staying safe on Help24

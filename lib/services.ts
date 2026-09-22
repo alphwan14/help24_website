@@ -1,3 +1,4 @@
+import { PAYMENTS } from "./site";
 /**
  * The service catalogue — the website's answer to "do you do X?", and the thing
  * every /services/* URL is built from.
@@ -91,11 +92,11 @@ export const SERVICES: Service[] = [
       "Leaks, blocked drains, taps, toilets, water tanks and pipework — the jobs that cannot wait until the weekend.",
     title: "Plumbers in Kenya — Find a Plumber Near You",
     description:
-      "Post a plumbing job on Help24 and get offers from plumbers near you. Leaking taps, blocked drains, burst pipes, toilets and water tanks. Agree the price first and pay securely by M-Pesa.",
+      `Post a plumbing job on Help24 and get offers from plumbers near you. Leaking taps, blocked drains, burst pipes and toilets. Agree the price first and pay by ${PAYMENTS.methods}.`,
     h1: "Find a plumber near you",
     intro: [
       "Plumbing is the category people reach for in a hurry. A kitchen sink that will not drain, a toilet cistern running all night, a burst pipe behind a wall — none of these improve with waiting, and all of them get more expensive the longer they run.",
-      "On Help24 you describe the problem, say where you are, and plumbers nearby send you their own price. Nobody is assigned to you and nobody starts before you have picked an offer and agreed a number. You pay through M-Pesa, Help24 holds the money, and it is released when you say the job is done.",
+      `On Help24 you describe the problem, say where you are, and plumbers nearby send you their own price. Nobody is assigned to you and nobody starts before you have picked an offer and agreed a number. You pay through ${PAYMENTS.methods}, Help24 holds the money, and it is released when you say the job is done.`,
       "Most plumbing posts are small: a tap, a trap, a cistern, a shower mixer. Those are worth posting precisely because they are small — they are the ones people put off for months because finding somebody for a one-hour job is more effort than the job itself.",
     ],
     tasks: [
@@ -144,7 +145,7 @@ export const SERVICES: Service[] = [
       "Sockets, lights, wiring, consumer units and the faults that trip your whole house.",
     title: "Electricians in Kenya — Find an Electrician Near You",
     description:
-      "Post an electrical job on Help24 and get offers from electricians near you. Faulty sockets, lighting, wiring, tripping breakers and consumer units. Agree the price first and pay securely by M-Pesa.",
+      `Post an electrical job on Help24 and get offers from electricians near you. Faulty sockets, lighting, wiring and tripping breakers. Agree the price first and pay by ${PAYMENTS.methods}.`,
     h1: "Find an electrician near you",
     intro: [
       "Electrical work is the category where the difference between a good fundi and a cheap one shows up later — in a breaker that keeps tripping, a socket that runs warm, or a joint in a ceiling void that nobody can find.",

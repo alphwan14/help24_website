@@ -1,4 +1,5 @@
 import { SitePage } from "@/components/SitePage";
+import { PAYMENTS } from "@/lib/site";
 import { PageHero } from "@/components/PageHero";
 import { StoreButtons } from "@/components/StoreButtons";
 import { ContentSection, Steps, FeatureGrid, CheckList, CtaBand } from "@/components/content";
@@ -7,7 +8,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Become a Provider",
   description:
-    "Start earning on Help24. Create your profile, find work near you and get paid securely with M-Pesa. Free to join.",
+    `Start earning on Help24. Create your profile, find work near you and get paid securely with ${PAYMENTS.methods}. Free to join.`,
   path: "/become-a-provider",
 });
 
@@ -18,7 +19,7 @@ const steps = [
   },
   {
     title: "Build your profile",
-    body: "Add your profession, skills, photos and a bio. Set your M-Pesa payout number.",
+    body: `Add your profession, skills, photos and a bio. Set your ${PAYMENTS.methods} payout number.`,
   },
   {
     title: "Start earning",
@@ -35,7 +36,7 @@ const reasons = [
   {
     icon: "wallet",
     title: "Secure, reliable payouts",
-    body: "Get paid to your M-Pesa number, protected by escrow until the job is done.",
+    body: `Get paid to your ${PAYMENTS.methods} number, protected by escrow until the job is done.`,
   },
   {
     icon: "badge",
@@ -46,7 +47,7 @@ const reasons = [
 
 const requirements = [
   "18 or older with a valid phone number",
-  "An M-Pesa number to receive payouts",
+  `An ${PAYMENTS.methods} number to receive payouts`,
   "The skills and tools to deliver your service",
   "A commitment to honest listings and great service",
 ];

@@ -90,7 +90,12 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 text-center sm:flex-row sm:text-left">
           <p className="text-body-sm text-text-secondary">
-            © {year} {SITE.name}. All rights reserved.
+            {/*
+              The one place the full name appears in visible copy. Google's
+              site-name guidance asks that the name in structured data match how
+              the home page refers to itself; this is that match.
+            */}
+            © {year} {SITE.siteName}. All rights reserved.
           </p>
           <div className="-my-1.5 flex gap-6">
             {[

@@ -429,8 +429,20 @@ test("the WebSite block states the site name Google should show", () => {
    */
   const site = websiteLd() as Record<string, any>;
   assert.equal(site["@type"], "WebSite");
-  assert.equal(site.name, "Help24");
-  assert.ok(site.alternateName.includes("Help24 Kenya"), "no disambiguating alternateName");
+  assert.equal(site.name, "Help24 Kenya", "the preferred name must be the unique one");
+  assert.ok(site.alternateName.includes("Help24"), "the short brand must stay an alternate");
+  /*
+   * THE ONE THAT MATTERS. alternateName once read ["Help24 Kenya",
+   * "help24.co.ke"]. Google treats a lowercase domain as a last-resort backup
+   * site name, so listing it invited the exact result we were trying to fix:
+   * search titled "help24.co.ke" instead of the brand.
+   */
+  for (const alt of site.alternateName) {
+    assert.ok(
+      !alt.includes("."),
+      `alternateName contains "${alt}" — never offer Google the domain as a name`,
+    );
+  }
   assert.equal(site.url, `${SITE.url}/`, "url must be the home page");
   assert.deepEqual(site.publisher, { "@id": `${SITE.url}/#organization` });
   // The organisation and the site must agree on who this is.

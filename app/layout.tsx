@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
-    siteName: SITE.name,
+    siteName: SITE.siteName,
     locale: "en_KE",
     url: SITE.url,
     title: `${SITE.name} — ${SITE.tagline}`,

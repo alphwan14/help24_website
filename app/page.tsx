@@ -7,6 +7,7 @@ import { AppShowcase } from "@/components/site/AppShowcase";
 import { Explore } from "@/components/site/Explore";
 import { Close } from "@/components/site/Close";
 import { pageMetadata } from "@/lib/seo";
+import { SITE } from "@/lib/site";
 
 /**
  * The homepage's own metadata.
@@ -27,7 +28,7 @@ export const metadata = pageMetadata({
    * brand from the one page most likely to be returned for the query "help24".
    * Caught by rendering it, not by reading the code.
    */
-  title: "Help24 — Find Trusted Local Service Providers in Kenya",
+  title: `${SITE.siteName} — Find Trusted Local Service Providers`,
   description:
     "Find trusted local service providers across Kenya — plumbers, electricians, cleaners, mechanics and more. Post a job free, compare offers and agree the price before work starts.",
   path: "/",

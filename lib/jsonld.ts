@@ -56,8 +56,8 @@ export function organizationLd() {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": ORG_ID,
-    name: SITE.name,
-    alternateName: "Help24 Kenya",
+    name: SITE.siteName,
+    alternateName: SITE.name,
     url: SITE.url,
     logo: `${SITE.url}/help24-icon.png`,
     image: `${SITE.url}/help24-icon-bleed.png`,
@@ -88,16 +88,20 @@ export function organizationLd() {
 /**
  * The site-name block — the one Google reads for the name above each result.
  *
- * WHY alternateName IS HERE. Google shows a site name per domain, chosen
- * automatically, and says WebSite structured data on the home page is the
- * strongest way to state a preference, with `alternateName` as the recommended
- * fallback. "Help24" alone is a crowded name: unrelated companies in South
- * Africa, India, Côte d'Ivoire and Finland all trade as Help24, including one
- * with a "Help24" app on Google Play. When the preferred name is ambiguous,
- * Google falls back to something else — and our results were showing the bare
- * domain, "help24.co.ke", instead of the brand. "Help24 Kenya" is the
- * unambiguous version, and the domain is the last resort we would rather it
- * picked than a stranger's name.
+ * WHY THE PREFERRED NAME IS "Help24 Kenya". Google shows one site name per
+ * domain, chooses it automatically, and says WebSite structured data on the
+ * home page is the strongest way to state a preference. Its guideline is to
+ * choose a name that is UNIQUE and not generic. "Help24" fails that through no
+ * fault of ours: unrelated companies trade under it in South Africa, India,
+ * Cote d'Ivoire and Finland, one of them with a "Help24" app on Google Play.
+ * Faced with an ambiguous preference Google falls back to something it is sure
+ * of, which is why results were titled "help24.co.ke" rather than a brand.
+ *
+ * THE DOMAIN USED TO BE IN alternateName, AND THAT WAS THE MISTAKE. It read
+ * ["Help24 Kenya", "help24.co.ke"]. Google's own guidance treats a lowercase
+ * domain as a last-resort backup name, so listing it handed Google written
+ * permission to keep doing the exact thing this block exists to stop. Never put
+ * the domain here; tests/seo.test.ts now forbids it.
  *
  * `url` carries the trailing slash because that is how Google's site-name
  * documentation writes a home page. For the root it is the same URL as the
@@ -108,8 +112,8 @@ export function websiteLd() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "@id": `${SITE.url}/#website`,
-    name: SITE.name,
-    alternateName: [`${SITE.name} Kenya`, SITE.domain],
+    name: SITE.siteName,
+    alternateName: [SITE.name],
     url: `${SITE.url}/`,
     inLanguage: "en-KE",
     publisher: { "@id": ORG_ID },

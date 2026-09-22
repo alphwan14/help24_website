@@ -255,6 +255,42 @@ rule and the one most often broken.
 - **`SearchAction`** — the sitelinks searchbox it powered was retired in 2024.
 - **`sameAs`** — see §8.
 
+### The site name: "Help24 Kenya", not "Help24"
+
+Google shows one site name per domain and picks it itself. Results were titled
+**help24.co.ke** rather than a brand, and two things caused that.
+
+The first is outside our control: Google's guideline is to choose a name that is
+unique and not generic, and "Help24" is not unique. Unrelated companies trade
+under it in South Africa, India, Cote d'Ivoire and Finland, one of them with a
+"Help24" app on Google Play. Help24 Kenya's own package, `com.help24.help24`,
+is not published there. Given an ambiguous preference, Google falls back to
+something it is sure of, which is the domain.
+
+The second was self-inflicted. `alternateName` briefly read
+`["Help24 Kenya", "help24.co.ke"]`. Google's guidance treats a lowercase domain
+as a last-resort backup name, so listing it was written permission to keep
+showing the domain. **Never put the domain in `alternateName`**; a test forbids
+any alternate containing a dot.
+
+The preferred name is now "Help24 Kenya" everywhere Google reads a name on the
+home page, because its guidance asks that structured data match how the page
+refers to itself:
+
+| Signal | Value |
+| --- | --- |
+| `WebSite.name` | Help24 Kenya |
+| `WebSite.alternateName` | Help24 |
+| `Organization.name` | Help24 Kenya |
+| `og:site_name` | Help24 Kenya |
+| Home page `<title>` | Help24 Kenya — Find Trusted Local Service Providers |
+| Footer line | © 2026 Help24 Kenya. All rights reserved. |
+
+`SITE.name` stays "Help24" for buttons, running copy and inner-page title
+suffixes, where the longer form reads as a legal entity rather than a product.
+Only the home page has to be internally consistent for this feature.
+
+
 ### The `sameAs` removal
 
 The Organization block previously claimed `twitter.com/help24`,

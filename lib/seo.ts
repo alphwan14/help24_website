@@ -63,7 +63,7 @@ export function pageMetadata({
       title: ogTitle,
       description,
       url,
-      siteName: SITE.name,
+      siteName: SITE.siteName,
       locale: "en_KE",
       type: "website",
       images: [OG_IMAGE],

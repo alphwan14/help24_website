@@ -10,6 +10,23 @@
 
 export const SITE = {
   name: "Help24",
+  /**
+   * The name Google shows above a search result, and the name this company
+   * uses where it has to be unambiguous.
+   *
+   * WHY IT IS NOT JUST `name`. Google picks one site name per domain and
+   * applies a guideline: choose a UNIQUE name that is not generic. "Help24"
+   * fails that test through no fault of ours — unrelated companies trade under
+   * it in South Africa, India, Cote d'Ivoire and Finland, one with a "Help24"
+   * app on Google Play. Google's answer to an ambiguous preference is to fall
+   * back to something it is sure of, which is why results were titled
+   * "help24.co.ke". "Help24 Kenya" is unique and is a true description.
+   *
+   * `name` stays "Help24" for buttons, inner-page title suffixes and running
+   * copy, where the longer form would read as a legal entity rather than a
+   * product.
+   */
+  siteName: "Help24 Kenya",
   url: "https://help24.co.ke",
   domain: "help24.co.ke",
   tagline: "Kenya's trusted marketplace for local services",

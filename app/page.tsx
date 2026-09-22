@@ -28,9 +28,29 @@ export const metadata = pageMetadata({
    * brand from the one page most likely to be returned for the query "help24".
    * Caught by rendering it, not by reading the code.
    */
-  title: `${SITE.siteName} — Find Trusted Local Service Providers`,
+  /*
+   * TITLE: the brand, then concrete categories.
+   *
+   * "Find Trusted Local Service Providers" is a category of company, not a
+   * thing anybody searches for, and it told a reader nothing they could act on.
+   * Naming real trades is what Taskrabbit and Bark do on their home pages, and
+   * it is what people actually type. Under 60 characters so it rarely
+   * truncates, and if Google drops the leading brand — it may, because the site
+   * name is already shown on its own line above the title — what is left still
+   * reads as a sentence.
+   */
+  title: `${SITE.siteName}: Local Services — Plumbers, Cleaners & More`,
+  /*
+   * DESCRIPTION: the mechanism, in the order somebody experiences it.
+   *
+   * The old one repeated the title's job — trust, Kenya, a list of trades — and
+   * ran to 177 characters, so the part that actually distinguishes Help24 was
+   * the part that got truncated. This one says nothing the title says. It ends
+   * on escrow, because "your payment is held until the job is done" is the
+   * single sentence that separates Help24 from a classifieds board.
+   */
   description:
-    "Find trusted local service providers across Kenya — plumbers, electricians, cleaners, mechanics and more. Post a job free, compare offers and agree the price before work starts.",
+    "Post a job free, compare offers from providers near you, and agree the price before work starts. Your M-Pesa payment is held until the job is done.",
   path: "/",
 });
 

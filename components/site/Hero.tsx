@@ -74,6 +74,25 @@ export function Hero() {
               Find someone <span className="h24-gradient-word">nearby</span>. Get it done.
             </p>
 
+            {/*
+              THE SENTENCE THE PAGE DID NOT HAVE.
+              
+              The headline is a question and an answer, and it is the right
+              opening — but between them they never say what this site IS. A
+              first-time visitor had to infer it, and so did Google: asked for a
+              snippet, it stitched one out of the two button labels and the
+              trust bullets, and published "Get Help Earn with Help24. Free to
+              post; Pay with M-Pesa" as Help24's description of itself.
+              
+              One plain sentence fixes both readers. It stays deliberately
+              quiet — body size, under the headline, above the buttons — because
+              its job is to be understood, not to compete with the hero.
+            */}
+            <p className="mt-5 max-w-xl text-body-lg leading-relaxed text-text-secondary">
+              Help24 is Kenya&apos;s marketplace for local services, from plumbing and
+              cleaning to repairs, moving and everyday tasks.
+            </p>
+
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Link
                 href="/download"

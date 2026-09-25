@@ -1,18 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-
-  "_comment_regions": [
-    "Same region as the admin dashboard and the Supabase project.",
-    "",
-    "Most of this site is static and served from the CDN regardless, so this",
-    "matters less here than it does for the dashboard. It matters for the parts",
-    "that are not: the auth action handler and /auth/continue both talk to",
-    "Supabase on the server, and those are exactly the moments a visitor is",
-    "waiting on a redirect with nothing to look at.",
-    "",
-    "Keep this in step with admin-dashboard/vercel.json — two properties",
-    "drifting to two regions is how one of them silently gets slower.",
-    "See that file for how to verify the Supabase region."
-  ],
   "regions": ["fra1"]
 }

@@ -376,7 +376,7 @@ const AskField = forwardRef<HTMLInputElement, AskFieldProps>(function AskField(
         <button
           type="button"
           onClick={onSubmit}
-          className="absolute right-1.5 inline-flex items-center gap-1 rounded-button bg-primary px-3 py-2 text-label-lg font-semibold text-white transition-opacity hover:opacity-95"
+          className="absolute right-1.5 inline-flex items-center gap-1 rounded-button bg-action px-3 py-2 text-label-lg font-semibold text-on-action transition-opacity hover:opacity-95"
         >
           Post
           <Glyph name="arrowRight" size={13} />
@@ -551,7 +551,7 @@ function JobProgress({ step, amount }: { step: number; amount: number }) {
                   reached
                     ? isDone
                       ? "border-money bg-money text-white"
-                      : "border-primary bg-primary text-white"
+                      : "border-primary bg-action text-on-action"
                     : "border-border bg-card text-text-tertiary"
                 }`}
               >
@@ -602,7 +602,7 @@ function NoSample() {
       </p>
       <Link
         href="/download"
-        className="mt-1 inline-flex items-center gap-1.5 rounded-button bg-primary px-4 py-2.5 text-body font-semibold text-white transition-opacity hover:opacity-95"
+        className="mt-1 inline-flex items-center gap-1.5 rounded-button bg-action px-4 py-2.5 text-body font-semibold text-on-action transition-opacity hover:opacity-95"
       >
         Get the app
         <Glyph name="arrowRight" size={14} />

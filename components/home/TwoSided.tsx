@@ -70,7 +70,7 @@ export function TwoSided() {
             aria-pressed={side === s}
             onClick={() => setSide(s)}
             className={`rounded-pill px-3 py-2.5 text-body-sm font-semibold transition-colors duration-200 sm:px-5 sm:text-body ${
-              side === s ? "bg-primary text-white" : "text-text-secondary hover:text-text-primary"
+              side === s ? "bg-action text-on-action" : "text-text-secondary hover:text-text-primary"
             }`}
           >
             {COPY_FOR[s].label}
@@ -86,7 +86,7 @@ export function TwoSided() {
           </p>
           <Link
             href={copy.href}
-            className="mt-7 inline-flex items-center gap-2 rounded-button bg-primary px-6 py-3.5 text-body font-semibold text-white transition-opacity hover:opacity-95"
+            className="mt-7 inline-flex items-center gap-2 rounded-button bg-action px-6 py-3.5 text-body font-semibold text-on-action transition-opacity hover:opacity-95"
           >
             {copy.cta}
             <Glyph name="arrowRight" size={16} />

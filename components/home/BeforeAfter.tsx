@@ -61,7 +61,7 @@ export function BeforeAfter() {
               aria-pressed={mode === m}
               onClick={() => setMode(m)}
               className={`rounded-pill px-3 py-2.5 text-body-sm font-semibold transition-colors duration-200 sm:px-5 sm:text-body ${
-                mode === m ? "bg-primary text-white" : "text-text-secondary hover:text-text-primary"
+                mode === m ? "bg-action text-on-action" : "text-text-secondary hover:text-text-primary"
               }`}
             >
               {m === "before" ? "Before" : "With Help24"}

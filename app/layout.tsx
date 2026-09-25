@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import "./design-system.css";
 import { SITE } from "@/lib/site";
@@ -8,10 +8,21 @@ import { ThemeScript } from "@/components/theme/ThemeScript";
 import { JsonLd } from "@/components/JsonLd";
 import { organizationLd, websiteLd } from "@/lib/jsonld";
 
-const poppins = Poppins({
+/**
+ * Inter, not Poppins.
+ *
+ * The app bundles Inter now. Poppins is a geometric display face and Inter a
+ * neo-grotesque UI face; at body sizes on a dense marketplace listing they are
+ * not interchangeable, and "one product" is the whole argument for this work.
+ *
+ * `next/font/google` downloads at BUILD time and self-hosts the result, so
+ * there is no runtime request to Google and nothing about the hosting approach
+ * changes — only the face. The four weights match what ships inside the APK.
+ */
+const inter = Inter({
   weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
-  variable: "--font-poppins",
+  variable: "--font-sans",
   display: "swap",
 });
 
@@ -76,7 +87,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-KE" className={poppins.variable}>
+    <html lang="en-KE" className={inter.variable} suppressHydrationWarning>
       <head>
         {/*
           The design tokens, as CSS custom properties, generated from

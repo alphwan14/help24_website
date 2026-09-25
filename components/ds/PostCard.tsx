@@ -309,7 +309,7 @@ function CardCta({
   return (
     <As
       {...control}
-      className="inline-flex items-center rounded-full bg-primary px-4 py-2 text-card-title font-semibold text-white transition-opacity hover:opacity-95"
+      className="inline-flex items-center rounded-full bg-action px-4 py-2 text-card-title font-semibold text-on-action transition-opacity hover:opacity-95"
       style={{ minHeight: CARD_METRICS.buttonMinHeight }}
     >
       {COPY.cta[post.type]}

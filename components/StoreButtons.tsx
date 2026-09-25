@@ -44,7 +44,7 @@ function StoreButton({
       aria-disabled="true"
       className="relative flex min-w-[190px] cursor-not-allowed items-center gap-3 rounded-button border border-border bg-card px-5 py-3 text-text-tertiary"
     >
-      <span className="absolute -right-2 -top-2 rounded-badge bg-primary px-2 py-0.5 text-label-sm font-semibold text-white">
+      <span className="absolute -right-2 -top-2 rounded-badge bg-action px-2 py-0.5 text-label-sm font-semibold text-on-action">
         Soon
       </span>
       {inner}

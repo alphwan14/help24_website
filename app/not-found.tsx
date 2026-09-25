@@ -33,7 +33,7 @@ export default function NotFound() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 rounded-button bg-primary px-5 py-3 text-body font-semibold text-white transition-opacity hover:opacity-95"
+              className="inline-flex items-center gap-2 rounded-button bg-action px-5 py-3 text-body font-semibold text-on-action transition-opacity hover:opacity-95"
             >
               Back home
               <Icon name="arrow" className="h-4 w-4" />

@@ -15,7 +15,6 @@ import {
   PALETTE,
   POST_TYPES,
   RADIUS,
-  STATUS_COLOR_CONFLICT,
   TYPE,
   URGENCY,
   cardMoneyLabel,
@@ -87,30 +86,7 @@ export function Gallery() {
         </ul>
       </Block>
 
-      <Block
-        title="Two definitions of red, amber and green"
-        note="The app declares each of these twice and renders both. Urgency chips use the right-hand column; escrow, status and money use the left. Neither was picked over the other."
-      >
-        <div className="grid gap-3 sm:grid-cols-3">
-          {Object.entries(STATUS_COLOR_CONFLICT).map(([role, pair]) => (
-            <div key={role} className="rounded-card border border-border bg-card p-4">
-              <p className="text-body-sm font-medium capitalize text-text-primary">{role}</p>
-              <div className="mt-3 space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="h-5 w-5 rounded-tag" style={{ background: pair.theme }} />
-                  <code className="text-label-md text-text-secondary">AppTheme {pair.theme}</code>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="h-5 w-5 rounded-tag" style={{ background: pair.urgency }} />
-                  <code className="text-label-md text-text-secondary">urgencyColor {pair.urgency}</code>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </Block>
-
-      <Block title="Radius scale" note={`Poppins, weights ${TYPE.weights.join(" / ")}.`}>
+      <Block title="Radius scale" note={`${TYPE.family}, weights ${TYPE.weights.join(" / ")}.`}>
         <div className="flex flex-wrap gap-4">
           {Object.entries(RADIUS).map(([name, px]) => (
             <div key={name} className="text-center">
@@ -170,7 +146,7 @@ export function Gallery() {
           <Badge token="warning" icon="lock">
             {COPY.paymentProtected}
           </Badge>
-          <Badge token="urgency-urgent" icon="timer">
+          <Badge token="error" icon="timer">
             12 min left
           </Badge>
         </div>

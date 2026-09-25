@@ -108,7 +108,7 @@ export default function AuthContinuePage({
         <div className="mt-7 flex flex-col gap-3 sm:flex-row">
           <Link
             href={outcome.primary.href}
-            className="inline-flex items-center justify-center gap-2 rounded-button bg-primary px-5 py-3 text-body font-semibold text-white transition-opacity hover:opacity-95"
+            className="inline-flex items-center justify-center gap-2 rounded-button bg-action px-5 py-3 text-body font-semibold text-on-action transition-opacity hover:opacity-95"
           >
             {outcome.primary.label}
             <Icon name="arrow" className="h-4 w-4" />

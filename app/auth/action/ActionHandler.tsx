@@ -363,7 +363,7 @@ export function ActionHandler() {
         <button
           type="submit"
           disabled={saving}
-          className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-button bg-primary px-5 py-3.5 text-body font-semibold text-white transition-opacity hover:opacity-95 disabled:opacity-60"
+          className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-button bg-action px-5 py-3.5 text-body font-semibold text-on-action transition-opacity hover:opacity-95 disabled:opacity-60"
         >
           {saving ? "Saving…" : "Save new password"}
         </button>
@@ -512,7 +512,7 @@ function Actions({
       {primary && (
         <Link
           href={primary.href}
-          className="inline-flex items-center justify-center gap-2 rounded-button bg-primary px-5 py-3 text-body font-semibold text-white transition-opacity hover:opacity-95"
+          className="inline-flex items-center justify-center gap-2 rounded-button bg-action px-5 py-3 text-body font-semibold text-on-action transition-opacity hover:opacity-95"
         >
           {primary.label}
           <Icon name="arrow" className="h-4 w-4" />

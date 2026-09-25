@@ -112,7 +112,7 @@ export function Header() {
           {/* Always visible, every screen size. See the file header. */}
           <Link
             href="/download"
-            className="inline-flex items-center gap-1.5 rounded-button bg-primary px-4 py-2.5 text-body font-semibold text-white transition-opacity hover:opacity-95"
+            className="inline-flex items-center gap-1.5 rounded-button bg-action px-4 py-2.5 text-body font-semibold text-on-action transition-opacity hover:opacity-95"
           >
             Get Help
           </Link>

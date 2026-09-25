@@ -96,7 +96,7 @@ export function Hero() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Link
                 href="/download"
-                className="inline-flex items-center justify-center gap-2 rounded-button bg-primary px-7 py-4 text-body-lg font-semibold text-white shadow-card transition-transform duration-200 ease-spring hover:-translate-y-0.5 active:translate-y-0"
+                className="inline-flex items-center justify-center gap-2 rounded-button bg-action px-7 py-4 text-body-lg font-semibold text-on-action shadow-card transition-transform duration-200 ease-spring hover:-translate-y-0.5 active:translate-y-0"
               >
                 Get Help
                 <Glyph name="arrowRight" size={17} />

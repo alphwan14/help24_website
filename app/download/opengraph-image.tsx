@@ -4,7 +4,7 @@ import { ANDROID_RELEASE, formatBytes } from "@/lib/release";
 import { SITE } from "@/lib/site";
 // satori has no CSS custom properties, so this is the one renderer that needs
 // the token VALUES rather than `var(--…)`. They still come from lib/tokens.ts.
-import { PALETTE, withAlpha } from "@/lib/tokens";
+import { PALETTE, RADIUS, withAlpha } from "@/lib/tokens";
 
 /**
  * The social card for /download.
@@ -112,12 +112,15 @@ export default async function Image() {
           <div
             style={{
               display: "flex",
-              backgroundColor: PALETTE.primary,
-              color: PALETTE.white,
+              // The ACTION, not the accent. `primary` resolves to the amber a
+              // label can be SET IN; white on it measures 2.16:1 here, which is
+              // the same wall the app hit and the reason `action` exists.
+              backgroundColor: PALETTE.action,
+              color: PALETTE["on-action"],
               fontSize: 28,
               fontWeight: 600,
               padding: "18px 34px",
-              borderRadius: "14px",
+              borderRadius: `${RADIUS.button}px`,
             }}
           >
             Download for Android

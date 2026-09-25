@@ -123,7 +123,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
             onClick={() => apply(o.value)}
             className={`flex h-7 w-7 items-center justify-center rounded-full transition-colors duration-200 ${
               active
-                ? "bg-primary text-white"
+                ? "bg-action text-on-action"
                 : "text-text-secondary hover:bg-card-hover hover:text-text-primary"
             }`}
           >

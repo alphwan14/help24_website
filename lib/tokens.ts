@@ -1,148 +1,196 @@
 /**
- * Help24 design tokens — THE single source of truth for the website.
+ * Help24 design tokens — the website's view of the app's design system.
  *
- * Every value here was read out of the Flutter app (mobile-app/lib) so the web
- * and the phone are the same product. The Flutter side is read-only: nothing in
- * this repo writes back to it, and when the app changes, this file is what gets
- * updated.
+ * ── What changed, and why it matters ────────────────────────────────────────
+ * This file used to open by calling itself "THE single source of truth for the
+ * website", and three lines later explain that every value in it "was read out
+ * of the Flutter app". Both were true, and together they were the defect: the
+ * transcription was a HUMAN. So when the app re-toned, the website went on
+ * confidently serving a palette the product had already retired — `#6265F0`
+ * indigo, `#22D3EE` cyan, and a block faithfully reproducing duplicate status
+ * colours the app had deleted.
  *
- * Provenance is recorded per group. Where the app contains two competing
- * definitions of "the same" colour, BOTH are kept and named separately rather
- * than silently merged — see URGENCY vs STATUS below.
+ * Nothing in either file was wrong. The integration was.
  *
- * Nothing downstream may hard-code a hex value. Components read Tailwind
- * classes (generated from PALETTE in tailwind.config.ts) or the CSS custom
+ * The values now arrive from `design-tokens.generated.json`, written out of
+ * `mobile-app/lib/theme/tokens.dart` by
+ * `mobile-app/test/design_tokens_export_test.dart`. That test also FAILS on
+ * drift, so the app and this file cannot disagree without the app's suite going
+ * red. Do not edit the generated file; regenerate it:
+ *
+ *     cd mobile-app && flutter test test/design_tokens_export_test.dart \
+ *       --dart-define=update_tokens=true
+ *
+ * ── Why the names here did not change ───────────────────────────────────────
+ * The app's vocabulary is role-based (`actionFill`, `contentPrimary`); this
+ * file's is surface-based (`card`, `primary`). Adopting the app's names would
+ * have rewritten ~1,598 Tailwind colour classes for no user-visible gain. So
+ * the NAMES stay a stable internal API and only the VALUES are synchronised —
+ * through [ROLE] below, which is the one mapping a human maintains.
+ *
+ * Nothing downstream may hard-code a hex. Components read Tailwind classes
+ * (generated from the palette in tailwind.config.ts) or the CSS custom
  * properties emitted by `tokensCss()` in app/layout.tsx.
  */
+import generated from "./design-tokens.generated.json";
 
 /* ────────────────────────────────────────────────────────────────────────────
  * COLOUR
  * ──────────────────────────────────────────────────────────────────────────── */
 
-/**
- * Flat palette. The keys are the Tailwind colour names AND the CSS custom
- * property names (`--primary`, `--bg-dark`, …), so there is exactly one
- * spelling of every colour across the whole site.
- */
-export const PALETTE = {
-  /* Surfaces — AppTheme.dark* (lib/theme/app_theme.dart:6-10) */
-  "bg-dark": "#0A0A0A", // scaffoldBackgroundColor — the near-black page
-  surface: "#141414", // darkSurface — bottom nav, footer
-  card: "#1C1C1E", // darkCard — every feed card, input fill
-  "card-hover": "#252528", // darkCardHover
-  border: "#2C2C30", // darkBorder — the 1px card boundary
+const APP = generated.color;
 
-  /**
-   * WEB-ONLY SURFACES. The app has no equivalent because the app has one
-   * theme; the website has two and needs two names the app never needed.
-   *
-   * `page` is the ground the whole site stands on. In dark it is exactly
-   * `bg-dark`, the app's scaffold colour. In light it is warm paper. New code
-   * should say `page`; `bg-dark` stays because twenty existing class names
-   * spell it that way and renaming them would be churn with nothing to show.
-   *
-   * `border-strong` is the boundary meant to be SEEN rather than felt.
-   *
-   * It outlines the secondary button, and that is what sets its value: a white
-   * button on warm paper differs from its background by about 1.03:1, so the
-   * outline is not decoration — it is the only thing that says a control is
-   * there. WCAG asks 3:1 of anything doing that job, which is why the light
-   * value is a mid warm grey (3.0:1) rather than the pale hairline that looks
-   * more tasteful in isolation and disappears in use.
-   */
-  page: "#0A0A0A",
-  /* Not the app's `darkBorder` one step up, which is what this was: at
-     #3A3A42 it measured 1.8:1 on the page and could not do the one job it is
-     named for. This clears 3:1 on all three dark surfaces. */
-  "border-strong": "#6B6B76",
-
-  /* Accents — AppTheme (app_theme.dart:19-23) */
-  primary: "#6265F0", // primaryAccent — buttons, active pill, category chip, Post FAB
-  /**
-   * Web-only variant. `primary` on `bg-dark` measures 4.37:1, below the 4.5
-   * AA threshold, so it cannot carry small TEXT on this site even though the
-   * app uses it that way at 11px. Fills use `primary`; standalone text and
-   * links use this (6.3:1). Deliberately NOT sent back to the app.
-   */
-  "primary-bright": "#818CF8",
-  secondary: "#22D3EE", // secondaryAccent — gradient tail only
-
-  /**
-   * Money green. successGreen. This is the colour on `KES 500`,
-   * `Budget KES 1,000` and `From KES 300` in PostCard's bottom row
-   * (widgets/post_card.dart:411).
-   */
-  money: "#10B981",
-  success: "#10B981", // same value, semantic alias for non-money success states
-  warning: "#F59E0B", // warningOrange — escrow hold, "Payment Protected", Sponsored
-  error: "#EF4444", // errorRed
-
-  /**
-   * Urgency. Read from PostModel.urgencyColor (models/post_model.dart:646-655)
-   * — these are the values that actually render on a feed card, and they are
-   * NOT AppTheme.errorRed / warningOrange / successGreen. See the note on
-   * STATUS_COLOR_CONFLICT below.
-   */
-  "urgency-urgent": "#E53935",
-  "urgency-soon": "#FF9800",
-  "urgency-flexible": "#4CAF50",
-
-  /* Post type badge — PostModel.typeBadgeColor (post_model.dart:678-684) */
-  "type-request": "#2196F3", // the blue on the Request badge outline
-  "type-offer": "#4CAF50",
-  "type-job": "#9C27B0",
-
-  /* Text — AppTheme.darkText* (app_theme.dart:26-28) */
-  "text-primary": "#F9FAFB",
-  "text-secondary": "#9CA3AF",
-  "text-tertiary": "#6B7280", // "muted"
-
-  /* Filter pill, unselected — widgets/filter_pill.dart:46-48 */
-  "pill-inactive": "#242428",
-  "pill-inactive-border": "#3A3A42",
-
-  white: "#FFFFFF",
-} as const;
-
-export type PaletteKey = keyof typeof PALETTE;
+/** Every colour role the app defines. */
+type AppRole = keyof typeof generated.color.light;
 
 /**
- * KNOWN CONFLICT, carried deliberately rather than resolved.
+ * THE MAP. Website token → app role, and the only place the two vocabularies
+ * meet.
  *
- * The app defines each of red / amber / green TWICE, and both definitions are
- * live on the same screen:
+ * ── Three entries carry the brand change ────────────────────────────────────
+ * `primary`, `primary-bright` and `secondary` all resolve to the SAME amber
+ * accent. That is deliberate, and it is the point of the exercise rather than a
+ * collision to resolve:
  *
- *   role          AppTheme (theme file)      PostModel.urgencyColor (model)
- *   red           errorRed      #EF4444      urgent    #E53935
- *   amber         warningOrange #F59E0B      soon      #FF9800
- *   green         successGreen  #10B981      flexible  #4CAF50
+ *   • indigo `#6265F0` and cyan `#22D3EE` appear in no Help24 asset. The brand
+ *     mark contains ink, amber and warm paper, and the app now uses those.
+ *   • `primary-bright` existed ONLY because indigo measured 4.37:1 on dark and
+ *     needed a lighter twin. A theme-resolved accent removes the reason for it,
+ *     so the name survives as an alias rather than as a concept. Fifty-eight
+ *     call sites keep working and mean something slightly better than before.
+ *   • `secondary` was a second competing accent. Help24 has one. It cost 13
+ *     call sites to collapse.
  *
- * A feed card can show a `Soon` tag (#FF9800) and a `Payment Protected` tag
- * (#F59E0B) side by side. That is the app's current behaviour, so the website
- * reproduces it: urgency uses the `urgency-*` tokens, everything else uses the
- * AppTheme tokens. The escrow module uses `warning` / `money` because the
- * app's escrow surfaces do.
+ * ── Why `action` is not `primary` ───────────────────────────────────────────
+ * This is the one place the web vocabulary was genuinely missing a word. The
+ * accent cannot also be the button, and that is measured, not stylistic:
+ *
+ *     white on `accentText`, dark theme ........ 2.16:1   ✗
+ *     `contentOnAction` on `actionFill` ........ 17.18:1  ✓
+ *
+ * `primary` was doing three jobs — the accent text, the `/10` tint behind a
+ * badge, and the solid button fill. The first two are what `accentText` is for;
+ * the third is what `action` is for. The app hit this same wall, which is why
+ * `actionFill` and `accentText` are separate roles there.
  */
-export const STATUS_COLOR_CONFLICT = {
-  red: { theme: PALETTE.error, urgency: PALETTE["urgency-urgent"] },
-  amber: { theme: PALETTE.warning, urgency: PALETTE["urgency-soon"] },
-  green: { theme: PALETTE.money, urgency: PALETTE["urgency-flexible"] },
-} as const;
+const ROLE = {
+  /* Surfaces */
+  page: "page",
+  /** Compatibility alias for `page`, kept because class names spell it. */
+  "bg-dark": "page",
+  /** The quieter band: footer, inset panels. */
+  surface: "surfaceSunken",
+  card: "surface",
+  "card-hover": "surfaceRaised",
+  border: "borderHairline",
+  /** The boundary meant to be SEEN — a secondary button's outline. 3:1. */
+  "border-strong": "borderStrong",
+
+  /* The one action. See the note above. */
+  action: "actionFill",
+  "on-action": "contentOnAction",
+
+  /* The accent, as a FILL and as a tint — for marks that carry no text. */
+  accent: "accentFill",
+  "accent-subtle": "accentSubtle",
+  "on-accent": "contentOnAccent",
+
+  /* The accent, as TEXT. Legible in both themes, which is the whole job. */
+  primary: "accentText",
+  "primary-bright": "accentText",
+  secondary: "accentText",
+
+  /* Semantic roles. Text-safe values: these names are set in LETTERS far more
+     often than they are used as fills, and the app's `*Text` variants are the
+     ones measured for that. `*Fill` is reached through `accent`-style tokens
+     when a solid is genuinely wanted. */
+  money: "positiveText",
+  success: "positiveText",
+  warning: "cautionText",
+  error: "criticalText",
+  info: "infoText",
+
+  /* Content */
+  "text-primary": "contentPrimary",
+  "text-secondary": "contentSecondary",
+  "text-tertiary": "contentTertiary",
+
+  /* Controls */
+  "pill-inactive": "neutralSubtle",
+  "pill-inactive-border": "borderHairline",
+} as const satisfies Record<string, AppRole>;
+
+type WebToken = keyof typeof ROLE;
+
+/** One theme, resolved through [ROLE]. */
+function themePalette(theme: "light" | "dark"): Record<WebToken, string> & {
+  white: string;
+} {
+  const src = APP[theme];
+  const out = {} as Record<WebToken, string>;
+  for (const key of Object.keys(ROLE) as WebToken[]) {
+    out[key] = src[ROLE[key]];
+  }
+  // Not a token: an absolute. White on a known dark fill is a legitimate
+  // choice that must not follow the theme.
+  return { ...out, white: "#FFFFFF" };
+}
+
+/**
+ * The palettes. Both are COMPLETE — neither is a diff over the other.
+ *
+ * Light used to be a partial override map on top of a dark base, which made
+ * dark the file's implicit default while the site rendered light. Whatever
+ * `tokensCss()` emits first is the theme a reader assumes is primary, and the
+ * two should not disagree.
+ */
+export const LIGHT = themePalette("light");
+export const DARK = themePalette("dark");
+
+export type PaletteKey = keyof typeof LIGHT;
+
+/**
+ * DARK, under its historical name.
+ *
+ * Retained for the one surface that renders outside a browser and therefore
+ * cannot resolve a CSS custom property: the OG image (satori), which is
+ * dark-only. Everything that runs in a browser should read a Tailwind class or
+ * a custom property instead, so that it follows the theme.
+ */
+export const PALETTE = DARK;
 
 /* ────────────────────────────────────────────────────────────────────────────
  * SHAPE + TYPE
  * ──────────────────────────────────────────────────────────────────────────── */
 
-/** Radius scale, in px. Sources noted per entry. */
+/**
+ * Radius scale, in px. The NAMES are the website's (183 `rounded-*` classes
+ * spell them); the VALUES come from the app's scale.
+ *
+ * The app converged on five rungs — 8 / 12 / 16 / 24 / 999 — after finding 19
+ * distinct radii across 291 call sites, most of which were not really different
+ * radii at all but one intention ("half my own height") written many ways. The
+ * eight names below therefore resolve onto five values, and two pairs are now
+ * deliberately identical:
+ *
+ *   tag + badge   → 8    small chips and tags are one thing
+ *   thumb + button → 12  controls and thumbnails are one thing
+ *   chip + pill + full → 999  a capsule is a capsule
+ *
+ * Duplicates are kept rather than collapsed because collapsing them means
+ * editing call sites to no visible end — the same reason the colour token
+ * names did not change. See `docs/design/web-token-sync.md`.
+ */
 export const RADIUS = {
-  tag: 6, // _SmallTag — urgency/highlight chips (post_card.dart:557)
-  badge: 8, // type + category badge (post_card.dart:162, 654)
-  thumb: 10, // card media thumbnail (post_card.dart:368)
-  button: 12, // elevatedButtonTheme / inputDecorationTheme (app_theme.dart:154)
-  card: 16, // FeedCardTokens.radius, cardTheme (feed_card_tokens.dart:6)
-  chip: 20, // chipTheme stadium (app_theme.dart:196)
-  pill: 24, // FilterPill._radius (filter_pill.dart:29)
-  full: 9999, // avatars
+  tag: 8, // AppRadius.sm
+  badge: 8, // AppRadius.sm
+  thumb: 12, // AppRadius.md
+  button: 12, // AppRadius.md
+  card: 16, // AppRadius.lg
+  sheet: 24, // AppRadius.sheet — the top of a modal surface
+  chip: 999, // AppRadius.pill
+  pill: 999, // AppRadius.pill
+  full: 999, // AppRadius.pill
 } as const;
 
 /*
@@ -171,25 +219,27 @@ export const CARD_METRICS = {
 } as const;
 
 /**
- * Typography. The app is `GoogleFonts.poppinsTextTheme` over an explicit
- * TextTheme (app_theme.dart:46-121). These are the weights actually used —
- * 400 body, 500 labels/name, 600 headings/buttons, 700 display + money + title.
+ * Typography.
+ *
+ * ── The face comes from the app ─────────────────────────────────────────────
+ * The website was on Poppins because the app was. The app bundles **Inter** now
+ * — Poppins is a geometric display face and Inter a neo-grotesque UI face, and
+ * at body sizes on a dense marketplace listing they are not interchangeable.
+ * `next/font/google` already downloads at build time and self-hosts, so only
+ * the face changes and nothing about the hosting does.
+ *
+ * ── The SIZES are deliberately NOT the app's ────────────────────────────────
+ * `AppTypeScale` tops out at 28px because it is designed for a phone. A 1440px
+ * marketing page is a different problem, and forcing the phone's ramp onto it
+ * would be a redesign wearing a synchronisation's clothes. The website keeps
+ * its own scale (see `fontSize` in tailwind.config.ts); what it shares with the
+ * app is the typeface, the weights and the restraint about them.
+ *
+ * Weights match what is actually bundled for the app: 400 / 500 / 600 / 700.
  */
 export const TYPE = {
-  family: "Poppins",
+  family: generated.type.family,
   weights: [400, 500, 600, 700] as const,
-  /** size / weight pairs that a card is built from. */
-  card: {
-    title: { size: 15, weight: 700, lineHeight: 1.24 }, // post_card.dart:196-201
-    name: { size: 14, weight: 500 },
-    money: { size: 14, weight: 700 }, // post_card.dart:410-414
-    description: { size: 12.5, weight: 400, lineHeight: 1.3 },
-    location: { size: 11.5, weight: 400 },
-    badge: { size: 11, weight: 600 }, // type badge
-    categoryBadge: { size: 11, weight: 500 },
-    tag: { size: 10.5, weight: 600 }, // _SmallTag
-    timestamp: { size: 12, weight: 500 },
-  },
 } as const;
 
 /* ────────────────────────────────────────────────────────────────────────────
@@ -263,10 +313,23 @@ export function categoryByName(name: string): Category {
  * the labels from `PostModel.urgencyText` and the colours from
  * `PostModel.urgencyColor`.
  */
+/*
+ * The `urgency-*` tokens these used to point at are gone.
+ *
+ * They were half of a block this file called STATUS_COLOR_CONFLICT: six values
+ * that existed ONLY to faithfully reproduce duplicate palettes the app was
+ * carrying, where a card could show a `Soon` tag in `#FF9800` beside a
+ * `Payment Protected` tag in `#F59E0B` — two ambers, two pixels apart. The app
+ * deleted those duplicates. Reproducing a conflict that no longer exists is
+ * not fidelity.
+ *
+ * Urgency now reads through the SEMANTIC roles, exactly as the app's `AppChip`
+ * does: urgent is critical, soon is caution, flexible is positive.
+ */
 export const URGENCY = [
-  { key: "urgent", label: "Urgent", token: "urgency-urgent" },
-  { key: "soon", label: "Soon", token: "urgency-soon" },
-  { key: "flexible", label: "Flexible", token: "urgency-flexible" },
+  { key: "urgent", label: "Urgent", token: "error" },
+  { key: "soon", label: "Soon", token: "warning" },
+  { key: "flexible", label: "Flexible", token: "success" },
 ] as const;
 
 export type UrgencyKey = (typeof URGENCY)[number]["key"];
@@ -280,10 +343,21 @@ export function urgency(key: UrgencyKey) {
  * `typeDisplayLabel` and `typeBadgeColor`. The website surfaces request and
  * offer; `job` is carried so the token set stays complete.
  */
+/*
+ * POST TYPE IS NOT COLOUR-CODED ANY MORE.
+ *
+ * `type-request` / `type-offer` / `type-job` were Material 2014 blue, green and
+ * purple — three hues that told a reader nothing they could not read in the
+ * word itself, and that competed with the semantic roles for attention. The app
+ * now renders the type typographically: `REQUEST · Plumbing`, small, tertiary,
+ * with the category glyph. The website follows.
+ *
+ * The token is `text-tertiary` for all three because the LABEL is the signal.
+ */
 export const POST_TYPES = [
-  { key: "request", label: "Request", token: "type-request" },
-  { key: "offer", label: "Offer", token: "type-offer" },
-  { key: "job", label: "Job", token: "type-job" },
+  { key: "request", label: "Request", token: "text-tertiary" },
+  { key: "offer", label: "Offer", token: "text-tertiary" },
+  { key: "job", label: "Job", token: "text-tertiary" },
 ] as const;
 
 export type PostTypeKey = (typeof POST_TYPES)[number]["key"];
@@ -381,122 +455,6 @@ export function cardMoneyLabel(
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
- * THEME
- * ──────────────────────────────────────────────────────────────────────────── */
-
-/**
- * The light theme, as overrides on PALETTE.
- *
- * PALETTE above IS the dark theme — every value in it was read out of the
- * Flutter app, and dark is where the website and the phone are literally the
- * same colours. That parity is not negotiable, so light is expressed as a diff
- * rather than by forking the palette in two: a token absent from this map is
- * identical in both themes, and a token present here has been chosen for light
- * on purpose.
- *
- * IT IS NOT AN INVERSION. Three things are decided differently here:
- *
- *   PAPER, NOT WHITE. The ground is #FBF9F6 and the secondary band is #F4F0E9
- *   — a warm, faintly yellow grey. Cards are true white and therefore lift off
- *   it without needing a shadow to prove they are cards. A pure-white page
- *   with pure-white cards has to draw borders everywhere to stay legible, and
- *   that is what makes a light theme feel like a form.
- *
- *   TEXT-SAFE ACCENTS. #10B981 money-green is 4.9:1 on near-black and 2.1:1 on
- *   white. Amber is worse. Every colour this site puts LETTERS in is therefore
- *   darkened for light — the fills stay recognisably the same hue, the text
- *   drops a step or two down the ramp. This is the problem `primary-bright`
- *   was invented for on dark, solved the same way and in the same place.
- *
- *   BORDERS DO MORE WORK. On dark a card separates from the page by being
- *   lighter than it. On light it separates by being whiter AND by having a
- *   real edge, so `border` here is a colour you can see rather than a hairline
- *   that only registers against black.
- */
-export const LIGHT: Partial<Record<PaletteKey, string>> = {
-  /* Surfaces — warm paper, not sterile white. */
-  page: "#FBF9F6",
-  "bg-dark": "#FBF9F6", // the compatibility alias, kept in step with `page`
-  surface: "#F4F0E9", // the quieter band: footer, inset panels
-  card: "#FFFFFF",
-  "card-hover": "#FBF8F3",
-  border: "#E6E0D6",
-  "border-strong": "#8F897E",
-
-  /* Accents. The indigo FILL goes a shade deeper so white letters clear AA on
-     it (5.6:1); `primary-bright` stops meaning "lighter" and starts meaning
-     "the accent you may set text in", which is what it always was. */
-  primary: "#5457E8",
-  "primary-bright": "#4338CA",
-  secondary: "#0E7490",
-
-  /*
-     Money and status, darkened until they can carry 12–14px text on white AND
-     on their own tint.
-
-     THE SECOND CONDITION IS THE BINDING ONE. These colours mostly appear as a
-     badge: the label in the colour, on a 10–12% wash of the same colour. That
-     wash lightens the background just enough to cost roughly a tenth of a
-     point, so a value chosen against plain white lands just under AA on the
-     chip it is actually used in. Amber and green are both here for that reason
-     and not because they failed on white — they did not. */
-  money: "#047857",
-  success: "#047857",
-  warning: "#AB4E08",
-  error: "#DC2626",
-
-  /* Urgency keeps the app's hues, one step down the ramp each — same tint
-     arithmetic as above; Urgent already cleared it and is untouched. */
-  "urgency-urgent": "#C62828",
-  "urgency-soon": "#AB4E08",
-  "urgency-flexible": "#2B7530",
-
-  /* Post type badge. */
-  "type-request": "#1565C0",
-  "type-offer": "#2B7530",
-  "type-job": "#7B1FA2",
-
-  /* Text. Near-black rather than black — #141317 on #FBF9F6 measures 17.6:1,
-     and true black on warm paper reads as a printing error.
-
-     All three are measured against the DARKEST ground they can land on, which
-     is `surface`, not `page`: tertiary at #78747F cleared AA on paper and
-     missed it by a tenth on the situations band, which is exactly the sort of
-     near-miss that only shows up if you check the worst case rather than the
-     representative one. */
-  "text-primary": "#141317",
-  "text-secondary": "#55525C", // 7.3:1 on page, 7.6:1 on card, 6.7:1 on surface
-  "text-tertiary": "#6E6A76",
-
-  /* Filter pill, unselected. */
-  "pill-inactive": "#F1ECE3",
-  "pill-inactive-border": "#DFD7C9",
-};
-
-/**
- * WHAT WAS MEASURED, AND WHAT IS KNOWINGLY LEFT.
- *
- * Every pair the site actually paints was checked against WCAG — text at 4.5:1
- * and control boundaries at 3:1 — including the case that catches people out:
- * a badge label sits on a 10–12% wash of ITS OWN colour, not on the card, and
- * that wash costs about a tenth of a point. Several light values here are one
- * step darker than they look like they need to be for exactly that reason.
- *
- * Everything the WEBSITE owns passes in both themes. Three pairs do not, all of
- * them in dark, and all of them values read straight out of the Flutter app:
- *
- *   text-tertiary on a card        3.5:1   the app's "muted"
- *   Urgent on its own 12% tint     3.6:1   PostModel.urgencyColor
- *   Job badge on its own 10% tint  2.6:1   PostModel.typeBadgeColor
- *
- * They are carried rather than corrected because this file is a mirror of the
- * app and silently diverging would make it a worse mirror. What the website
- * does instead is refuse to put WORDS in them: `text-tertiary` is for glyphs
- * and placeholders only (there is a `primary-bright`-shaped fix available for
- * the badges if the app ever wants it, and `primary-bright` is precisely what
- * that fix looked like the last time it was needed).
- */
 
 /**
  * Elevation, per theme.
@@ -581,13 +539,16 @@ function themeBlock(map: Record<string, string>, shadows: Record<string, string>
  * before first paint, so neither override arrives late enough to flash.
  */
 export function tokensCss(): string {
-  const light = { ...PALETTE, ...LIGHT };
   const radii = Object.entries(RADIUS)
     .map(([name, px]) => `--radius-${name}:${px}px`)
     .join(";");
 
-  const lightBlock = themeBlock(light, SHADOWS.light);
-  const darkBlock = themeBlock(PALETTE, SHADOWS.dark);
+  // Both palettes are complete, so neither is spread over the other. Light
+  // used to be `{...PALETTE, ...LIGHT}` — a diff over a dark base — which meant
+  // a token missing from the override map silently shipped its dark value on a
+  // light page. There is nothing to forget now.
+  const lightBlock = themeBlock(LIGHT, SHADOWS.light);
+  const darkBlock = themeBlock(DARK, SHADOWS.dark);
 
   return [
     `:root{color-scheme:light;${lightBlock};${radii}}`,

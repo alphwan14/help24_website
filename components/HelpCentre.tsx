@@ -98,7 +98,7 @@ export function HelpCentre() {
           </p>
           <Link
             href="/support"
-            className="mt-6 inline-flex items-center gap-2 rounded-button bg-primary px-5 py-3 text-body font-semibold text-white transition-opacity hover:opacity-95"
+            className="mt-6 inline-flex items-center gap-2 rounded-button bg-action px-5 py-3 text-body font-semibold text-on-action transition-opacity hover:opacity-95"
           >
             Contact Support
             <Icon name="arrow" className="h-4 w-4" />

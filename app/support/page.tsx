@@ -33,7 +33,7 @@ export default function SupportPage() {
         <div className="flex flex-wrap items-center justify-center gap-3">
           <a
             href={`mailto:${SITE.supportEmail}`}
-            className="inline-flex items-center gap-2 rounded-button bg-primary px-5 py-3 text-body font-semibold text-white transition-opacity hover:opacity-95"
+            className="inline-flex items-center gap-2 rounded-button bg-action px-5 py-3 text-body font-semibold text-on-action transition-opacity hover:opacity-95"
           >
             <Icon name="mail" className="h-4 w-4" />
             Email support

@@ -277,7 +277,7 @@ export function TaskComposer() {
             type="button"
             onClick={place}
             disabled={!ready}
-            className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-button bg-primary px-6 py-3.5 text-body font-semibold text-white transition-opacity hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-40"
+            className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-button bg-action px-6 py-3.5 text-body font-semibold text-on-action transition-opacity hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Put it on the board
             <Glyph name="arrowRight" size={16} />
@@ -303,7 +303,7 @@ export function TaskComposer() {
               </p>
               <Link
                 href="/download"
-                className="mt-4 inline-flex items-center gap-2 rounded-button bg-primary px-5 py-3 text-body font-semibold text-white transition-opacity hover:opacity-95"
+                className="mt-4 inline-flex items-center gap-2 rounded-button bg-action px-5 py-3 text-body font-semibold text-on-action transition-opacity hover:opacity-95"
               >
                 Get the app to {COPY.post.toLowerCase()} it
                 <Glyph name="arrowRight" size={16} />

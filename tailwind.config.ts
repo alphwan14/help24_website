@@ -39,7 +39,7 @@ const config: Config = {
       colors,
       borderRadius,
       fontFamily: {
-        sans: ["var(--font-poppins)", "system-ui", "sans-serif"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
       },
       fontSize: {
         /* Headings: H1 32/700, H2 28/600, H3 24/600, H4 20/600, H5 18/600 */

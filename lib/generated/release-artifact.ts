@@ -21,14 +21,14 @@ export const RELEASE_ARTIFACT = {
   versionCode: 1,
   /** Android application id, for support and store listings. */
   applicationId: "com.help24.help24",
-  /** Date the release was published on GitHub (UTC). */
-  releaseDate: "2026-07-28",
+  /** Date this APK became downloadable on GitHub (UTC): release or upload, whichever is later. */
+  releaseDate: "2026-10-03",
   /** GitHub's browser download URL for the asset. */
   apkUrl: "https://github.com/alphwan14/help24/releases/download/v1.0.0/app-release.apk",
   /** Exact artifact size in bytes. Every displayed size derives from this. */
-  apkSizeBytes: 71413904,
+  apkSizeBytes: 29531031,
   /** Lowercase hex SHA-256 of the artifact. */
-  sha256: "1ef8f9e2506001eb5b7278515465dbdf7dceefe1b004ff00632e7496ae1a4712",
+  sha256: "29fd24d72fc87b29a18711f09e6176b6bad91b9fcc9d8628d8506a0ed464c073",
   /** `minSdkVersion` from the APK manifest. */
   minimumSdk: 24,
   /** `targetSdkVersion` from the APK manifest. */

@@ -26,9 +26,9 @@ export const RELEASE_ARTIFACT = {
   /** GitHub's browser download URL for the asset. */
   apkUrl: "https://github.com/alphwan14/help24/releases/download/v1.0.0/app-release.apk",
   /** Exact artifact size in bytes. Every displayed size derives from this. */
-  apkSizeBytes: 29531031,
+  apkSizeBytes: 72824521,
   /** Lowercase hex SHA-256 of the artifact. */
-  sha256: "29fd24d72fc87b29a18711f09e6176b6bad91b9fcc9d8628d8506a0ed464c073",
+  sha256: "95237bed80f1755a0582bd1e8c7830c5714f5f74005d455e7e7a4ab5c3e5c51a",
   /** `minSdkVersion` from the APK manifest. */
   minimumSdk: 24,
   /** `targetSdkVersion` from the APK manifest. */

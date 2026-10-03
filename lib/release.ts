@@ -278,7 +278,7 @@ export const DOWNLOAD_FAQ: FaqItem[] = [
   },
   {
     q: "How do I get updates?",
-    a: "Help24 tells you in the app when a new version is available, and you download it from this page the same way. Installing over the top keeps your account, messages and saved items — you never need to uninstall first. Once we're on Google Play, updates become automatic.",
+    a: "Help24 tells you in the app when a new version is available, and you download it from this page the same way. Usually you just install over the top. If you installed Help24 before 3 October 2026, Android may say the app wasn't installed or conflicts with an existing package — that early version was signed differently, so uninstall it first, then install this one and sign in. Your account, posts, messages and saved items are stored online, so they're all still there when you sign in. Once we're on Google Play, updates become automatic.",
   },
   {
     q: "Is Help24 free?",

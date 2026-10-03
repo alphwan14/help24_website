@@ -253,8 +253,9 @@ if (!minimumAndroid) {
 
 /**
  * ABIs, in the order Android itself lists them. Read from `native-code:`,
- * which reflects what is actually in `lib/` rather than what the build
- * intended — a universal APK that quietly lost an ABI would show up here.
+ * which lists every directory under `lib/` that holds ANY library — so on its
+ * own it cannot tell a universal APK from one that lost an ABI. See the engine
+ * check below.
  */
 const architectures = (badging.match(/native-code: (.+)/)?.[1] ?? "")
   .split(/\s+/)
@@ -263,6 +264,53 @@ const architectures = (badging.match(/native-code: (.+)/)?.[1] ?? "")
 
 if (architectures.length === 0) {
   fail("the APK declares no native ABIs — that cannot be right for a Flutter build.");
+}
+
+/**
+ * Entry names from the zip's central directory. An APK is never zip64, so the
+ * classic end-of-central-directory record is always present.
+ */
+function zipEntryNames(buf) {
+  let eocd = -1;
+  for (let i = buf.length - 22; i >= Math.max(0, buf.length - 0xffff - 22); i--) {
+    if (buf.readUInt32LE(i) === 0x06054b50) {
+      eocd = i;
+      break;
+    }
+  }
+  if (eocd === -1) fail("the APK has no zip end-of-central-directory record.");
+  const names = [];
+  let p = buf.readUInt32LE(eocd + 16);
+  for (let n = buf.readUInt16LE(eocd + 10); n > 0; n--) {
+    if (buf.readUInt32LE(p) !== 0x02014b50) fail("the APK's zip central directory is corrupt.");
+    const nameLength = buf.readUInt16LE(p + 28);
+    names.push(buf.toString("utf8", p + 46, p + 46 + nameLength));
+    p += 46 + nameLength + buf.readUInt16LE(p + 30) + buf.readUInt16LE(p + 32);
+  }
+  return names;
+}
+
+/**
+ * Every ABI the APK declares must carry the Flutter engine AND the app.
+ *
+ * Plugins ship their own `.so` for every ABI, so `native-code` lists an ABI
+ * even when `flutter build apk --target-platform android-arm64` left it with
+ * no engine. That is how a 29 MB arm64-only build went out as v1.0.0 on
+ * 3 October 2026 while this page called it "Universal": a phone whose primary
+ * ABI is armeabi-v7a installs it from that directory and dies at launch, and
+ * Play Protect rejected it on install as unsafe.
+ */
+const entries = new Set(zipEntryNames(bytes));
+const incomplete = architectures.filter(
+  (abi) => !entries.has(`lib/${abi}/libflutter.so`) || !entries.has(`lib/${abi}/libapp.so`),
+);
+if (incomplete.length > 0) {
+  fail(
+    `the APK declares ${architectures.join(", ")} but has no Flutter engine ` +
+      `(libflutter.so + libapp.so) for ${incomplete.join(", ")}.\n` +
+      "It was built for fewer ABIs than it claims and will crash on launch on " +
+      "those phones. Publish a build made with plain `flutter build apk --release`.",
+  );
 }
 
 // The tag is the version's home. A mismatch means the wrong artifact was

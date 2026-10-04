@@ -109,11 +109,11 @@ export interface AndroidRelease {
 export const ANDROID_RELEASE: AndroidRelease = {
   ...RELEASE_ARTIFACT,
   releaseNotes: [
-    "Send photos, documents and places in a chat while offline — they go out by themselves when you reconnect",
-    "Double-tap any photo to zoom in on the detail you tapped",
-    "Plain-language messages when you're offline or something goes wrong, including M-Pesa payments",
-    "My posts updates the moment you publish or delete a post",
-    "A tidier post preview, and location messages that clear once the problem is fixed",
+    "A redesigned chat, with the job you're discussing pinned at the top",
+    "Delivered ticks — see when a message reaches the other person's phone, as well as when it's read",
+    "Chat photos and documents are private to the two people in the conversation",
+    "Documents open instantly after the first time, even offline",
+    "Tap a photo while it uploads to cancel it, and resend anything that didn't go",
   ],
 };
 

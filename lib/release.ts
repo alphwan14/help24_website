@@ -109,11 +109,11 @@ export interface AndroidRelease {
 export const ANDROID_RELEASE: AndroidRelease = {
   ...RELEASE_ARTIFACT,
   releaseNotes: [
-    "Smarter recommendations — the Discover feed ranks by distance, profession and urgency",
-    "A calm feed that no longer reorders itself while you read it",
-    "More accurate location, so nearby really means nearby",
-    "Faster messaging and better offline behaviour",
-    "Performance, security and reliability improvements throughout",
+    "Send photos, documents and places in a chat while offline — they go out by themselves when you reconnect",
+    "Double-tap any photo to zoom in on the detail you tapped",
+    "Plain-language messages when you're offline or something goes wrong, including M-Pesa payments",
+    "My posts updates the moment you publish or delete a post",
+    "A tidier post preview, and location messages that clear once the problem is fixed",
   ],
 };
 

@@ -109,11 +109,11 @@ export interface AndroidRelease {
 export const ANDROID_RELEASE: AndroidRelease = {
   ...RELEASE_ARTIFACT,
   releaseNotes: [
-    "A redesigned chat, with the job you're discussing pinned at the top",
-    "Delivered ticks — see when a message reaches the other person's phone, as well as when it's read",
-    "Chat photos and documents are private to the two people in the conversation",
-    "Documents open instantly after the first time, even offline",
-    "Tap a photo while it uploads to cancel it, and resend anything that didn't go",
+    "Your chats work without a connection — messages, names, photos and shared places stay on your phone, even after a restart",
+    "No more \"?\" in place of names when the signal drops",
+    "Messages that arrive while the app is closed are there when you open it, even offline",
+    "\"Waiting for network\" and \"Connecting…\" instead of errors, with everything you've already seen kept on screen",
+    "Notifications follow your account when you sign in on a phone someone else used before",
   ],
 };
 

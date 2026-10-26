@@ -109,11 +109,10 @@ export interface AndroidRelease {
 export const ANDROID_RELEASE: AndroidRelease = {
   ...RELEASE_ARTIFACT,
   releaseNotes: [
-    "Your chats work without a connection — messages, names, photos and shared places stay on your phone, even after a restart",
-    "No more \"?\" in place of names when the signal drops",
-    "Messages that arrive while the app is closed are there when you open it, even offline",
-    "\"Waiting for network\" and \"Connecting…\" instead of errors, with everything you've already seen kept on screen",
-    "Notifications follow your account when you sign in on a phone someone else used before",
+    "New Sign-in methods screen (Profile → Account): see whether your account uses Google, email or phone, and add the others — all on the same account, with your jobs, chats and payments",
+    "Adding a phone number now always adds it to the account you're signed in to",
+    "Your email and phone number are no longer shared with other people in the app — they see your name, photo and whether you take M-Pesa",
+    "Setting up your profile on a weak connection now waits and tells you, instead of failing quietly",
   ],
 };
 

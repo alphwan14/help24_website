@@ -109,10 +109,9 @@ export interface AndroidRelease {
 export const ANDROID_RELEASE: AndroidRelease = {
   ...RELEASE_ARTIFACT,
   releaseNotes: [
-    "Agent codes: if a Help24 agent helped you sign up, add their code so they're thanked for it — when you set up your profile, from their link or QR code, or later in Profile → Who helped you join?",
-    "Agent links like help24.co.ke/a/H24-7K3Q now open the app directly, with the code filled in",
-    "Tapping an alert about a request that matches your work takes you straight to the request",
-    "The app now tells Help24 which version it runs, so old versions can be retired without stranding anyone",
+    "Discover no longer stops at 20 posts: keep scrolling and it loads every listing on Help24, then tells you when you're all caught up — on All, Requests, Offers and Jobs",
+    "If the next posts can't load on a weak connection, tap to retry without losing your place",
+    "Includes everything from 1.0.6: agent codes, agent links that open the app, and request alerts that open the request",
   ],
 };
 

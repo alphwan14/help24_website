@@ -109,10 +109,9 @@ export interface AndroidRelease {
 export const ANDROID_RELEASE: AndroidRelease = {
   ...RELEASE_ARTIFACT,
   releaseNotes: [
-    "New Sign-in methods screen (Profile → Account): see whether your account uses Google, email or phone, and add the others — all on the same account, with your jobs, chats and payments",
-    "Adding a phone number now always adds it to the account you're signed in to",
-    "Your email and phone number are no longer shared with other people in the app — they see your name, photo and whether you take M-Pesa",
-    "Setting up your profile on a weak connection now waits and tells you, instead of failing quietly",
+    "Faster, steadier start: the app now confirms your sign-in once when it opens instead of three times, so your profile, chats and posts load sooner on a slow connection",
+    "Switching accounts on one phone is cleaner — the app always confirms the new account before loading anything, never reusing the previous one's session",
+    "Includes everything from 1.0.4: the Sign-in methods screen (Profile → Account), and your email and phone number kept private from other people in the app",
   ],
 };
 

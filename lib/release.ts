@@ -109,9 +109,10 @@ export interface AndroidRelease {
 export const ANDROID_RELEASE: AndroidRelease = {
   ...RELEASE_ARTIFACT,
   releaseNotes: [
-    "Faster, steadier start: the app now confirms your sign-in once when it opens instead of three times, so your profile, chats and posts load sooner on a slow connection",
-    "Switching accounts on one phone is cleaner — the app always confirms the new account before loading anything, never reusing the previous one's session",
-    "Includes everything from 1.0.4: the Sign-in methods screen (Profile → Account), and your email and phone number kept private from other people in the app",
+    "Agent codes: if a Help24 agent helped you sign up, add their code so they're thanked for it — when you set up your profile, from their link or QR code, or later in Profile → Who helped you join?",
+    "Agent links like help24.co.ke/a/H24-7K3Q now open the app directly, with the code filled in",
+    "Tapping an alert about a request that matches your work takes you straight to the request",
+    "The app now tells Help24 which version it runs, so old versions can be retired without stranding anyone",
   ],
 };
 

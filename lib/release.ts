@@ -109,9 +109,9 @@ export interface AndroidRelease {
 export const ANDROID_RELEASE: AndroidRelease = {
   ...RELEASE_ARTIFACT,
   releaseNotes: [
-    "Discover no longer stops at 20 posts: keep scrolling and it loads every listing on Help24, then tells you when you're all caught up — on All, Requests, Offers and Jobs",
-    "If the next posts can't load on a weak connection, tap to retry without losing your place",
-    "Includes everything from 1.0.6: agent codes, agent links that open the app, and request alerts that open the request",
+    "Tapping \"A new request matches your work\" now opens the request, ready for your offer — instead of an error",
+    "Agent codes stay out of your way: after your first 3 days you won't see agent-code messages, and the option leaves your Profile",
+    "Includes everything from 1.0.7: Discover keeps loading until you've seen every listing",
   ],
 };
 

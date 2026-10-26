@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.help24.help24",
+      "sha256_cert_fingerprints": [
+        "48:F1:D7:2B:00:74:EB:6E:F0:55:D7:D6:97:79:42:FA:28:68:FF:2E:9D:A1:43:92:A1:1E:51:60:0F:28:A6:E6"
+      ]
+    }
+  }
+]

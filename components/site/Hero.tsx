@@ -16,7 +16,7 @@
  * done." is the whole product. Six words of promise beats sixty of feature.
  */
 import Link from "next/link";
-import { LAUNCH, PAYMENTS } from "@/lib/site";
+import { PAYMENTS } from "@/lib/site";
 import { Glyph } from "@/components/ds/glyphs";
 import { StoryDemo } from "./StoryDemo";
 
@@ -52,14 +52,6 @@ export function Hero() {
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,29rem)] lg:gap-14">
           {/* ── The claim ──────────────────────────────────────────────── */}
           <div className="min-w-0">
-            <p className="mb-6 inline-flex items-center gap-2 rounded-pill border border-border bg-card px-3 py-1.5 text-label-md font-medium text-text-secondary">
-              <Glyph name="timer" size={13} className="text-primary-bright" />
-              Launching{" "}
-              <time dateTime={LAUNCH.iso} className="font-semibold text-text-primary">
-                {LAUNCH.label}
-              </time>
-            </p>
-
             {/*
               `clamp` rather than breakpoints, because this line has to survive
               a 320px screen without either wrapping into four lines or growing

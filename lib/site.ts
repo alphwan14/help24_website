@@ -38,19 +38,6 @@ export const SITE = {
 } as const;
 
 /**
- * Launch. Stated once, read by the hero badge and the waitlist section.
- *
- * There is no countdown on the site. A ticking clock is a pressure device, and
- * the one number a visitor actually needs — the date — does not need animating.
- */
-export const LAUNCH = {
-  /** Machine-readable, for <time datetime>. Nairobi is UTC+3. */
-  iso: "2026-10-19",
-  label: "19 October 2026",
-  short: "19 Oct 2026",
-} as const;
-
-/**
  * Help24's own social accounts. EMPTY ON PURPOSE.
  *
  * This list used to hold twitter.com/help24, linkedin.com/company/help24 and
@@ -77,8 +64,8 @@ export const SOCIALS: { label: string; href: string; mark: string }[] = [];
  * waits for an M-Pesa PIN prompt. Airtel Money is modelled in the schema
  * (migrations 104 and 112, whose own comment reads "Nothing fakes an Airtel
  * payment in the meantime") but is not wired to anything yet. The product
- * owner has committed to integrating it before the 19 October 2026 launch and
- * asked for the copy to say so now.
+ * owner has committed to integrating it and asked for the copy to say so
+ * now.
  *
  * EVERY user-facing sentence about paying or being paid reads from here. If
  * that date moves, or Airtel does not land, this constant is the ONE edit that

@@ -1,17 +1,11 @@
 /**
  * The footer.
  *
- * WHAT CAME OUT OF IT. A second email-capture form, sitting a screen below the
- * first one, posting to the same endpoint. Two forms for one list is not twice
- * the signups — it is a page that looks unsure what it is asking for, and a
- * visitor who has already joined being asked again. The waitlist section owns
- * that job now; the footer's job is to be a map.
- *
- * It is a map with the launch date on it, because that is the one fact worth
- * repeating at the bottom of every page.
+ * WHAT CAME OUT OF IT. A second email-capture form, and later the launch
+ * date: the app is out, and the footer's job is to be a map.
  */
 import Link from "next/link";
-import { SITE, SOCIALS, FOOTER_GROUPS, LAUNCH } from "@/lib/site";
+import { SITE, SOCIALS, FOOTER_GROUPS } from "@/lib/site";
 import { BrandLockup } from "./Brand";
 
 export function Footer() {
@@ -30,12 +24,6 @@ export function Footer() {
             </Link>
             <p className="mt-4 max-w-xs text-body text-text-secondary">
               Find someone nearby. Agree a price. Get it done.
-            </p>
-            <p className="mt-3 text-body-sm text-text-secondary">
-              Launching{" "}
-              <time dateTime={LAUNCH.iso} className="font-semibold text-text-primary">
-                {LAUNCH.label}
-              </time>
             </p>
 
             {/* Renders nothing while SOCIALS is empty — see the note above. */}

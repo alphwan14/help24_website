@@ -241,19 +241,14 @@ export function compatibility(
  *
  * Stated explicitly because sideloading teaches people to accept APKs from
  * wherever, and a marketplace app handling M-Pesa payments is exactly the kind
- * of thing that attracts repackaged, trojanised copies. Naming the only two
- * legitimate sources gives someone a way to check.
+ * of thing that attracts repackaged, trojanised copies. Naming the one
+ * legitimate source gives someone a way to check.
  */
 export const OFFICIAL_SOURCES = [
   {
     label: `${new URL(QR_TARGET_URL).host}/download`,
     href: QR_TARGET_URL,
     detail: "This page — always the current release",
-  },
-  {
-    label: "github.com/alphwan14/help24/releases",
-    href: "https://github.com/alphwan14/help24/releases",
-    detail: "The signed artifacts themselves, with checksums",
   },
 ] as const;
 
@@ -284,7 +279,7 @@ export const DOWNLOAD_FAQ: FaqItem[] = [
   },
   {
     q: "Is it safe to install an app from outside the Play Store?",
-    a: "It is when you know where it came from. This APK is built and signed by Help24, published from our own repository, and its SHA-256 checksum is listed on this page so you can verify the exact file you downloaded. Only ever install Help24 from help24.co.ke or our official GitHub releases.",
+    a: "It is when you know where it came from. This APK is built and signed by Help24, and its SHA-256 checksum is listed on this page so you can verify the exact file you downloaded. Only ever install Help24 from help24.co.ke.",
   },
   {
     q: "Which phones does it work on?",

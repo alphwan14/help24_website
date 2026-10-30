@@ -2,7 +2,7 @@ import { Icon } from "@/components/Icon";
 import { OFFICIAL_SOURCES } from "@/lib/release";
 
 /**
- * The only two places Help24 may be downloaded from.
+ * The only place Help24 may be downloaded from.
  *
  * WHY THIS IS PROMINENT RATHER THAN FINE PRINT
  * --------------------------------------------
@@ -35,7 +35,7 @@ export function OfficialDownloadNotice() {
             Official download only
           </h2>
           <p className="mt-2 text-body leading-relaxed text-text-secondary">
-            Help24 is published from two places and nowhere else. If you were
+            Help24 is published from one place and nowhere else. If you were
             sent an APK from any other site, mirror or chat forward,{" "}
             <strong className="font-semibold text-text-primary">
               do not install it

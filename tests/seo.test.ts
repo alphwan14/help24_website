@@ -28,6 +28,7 @@ import {
   isCityPage,
 } from "../lib/places.ts";
 import { GUIDES } from "../lib/guides.ts";
+import { NEIGHBOURHOOD_NOTES } from "../lib/neighbourhoods.ts";
 import { CITIES } from "../lib/generated/places.ts";
 import { allIndexableRoutes, NOINDEX_ROUTES, STATIC_INDEXABLE } from "../lib/routes.ts";
 import { canonical, pageMetadata } from "../lib/seo.ts";
@@ -584,6 +585,7 @@ test("no page claims a provider count, rating or price", () => {
   const corpus = [
     ...SERVICES.flatMap((s) => [...s.intro, ...s.tasks, ...s.priceFactors, s.description]),
     ...Object.values(LOCAL_NOTES).flat(),
+    ...Object.values(NEIGHBOURHOOD_NOTES).flat(),
     ...Object.values(CITY_CONTENT).flatMap((c) => [...c.intro, ...c.common]),
   ];
   const claims = [

@@ -148,8 +148,8 @@ export function breadcrumbLd(crumbs: Crumb[]) {
  * `provider` is Help24 because Help24 is what provides the marketplace service
  * being described; the description on every page says in plain words that the
  * work itself is done by independent providers, so the markup and the visible
- * text agree. `areaServed` narrows to a city on the city pages and is the
- * country elsewhere.
+ * text agree. `areaServed` is the country on national pages, the city on
+ * city pages, and a Place inside the city on neighbourhood pages.
  */
 export function serviceLd({
   name,
@@ -161,8 +161,39 @@ export function serviceLd({
   description: string;
   path: string;
   /** City name, or undefined for the national page. */
-  areaServed?: { city: string; county: string; lat?: number; lng?: number };
+  areaServed?: {
+    city: string;
+    county: string;
+    lat?: number;
+    lng?: number;
+    /**
+     * A registry neighbourhood inside `city`. The registry holds no
+     * coordinates for neighbourhoods, so the geo stays on the City that
+     * contains it. Stamping the city centre on Changamwe would state a
+     * location that is wrong by kilometres.
+     */
+    neighbourhood?: string;
+  };
 }) {
+  const city = areaServed && {
+    "@type": "City",
+    name: areaServed.city,
+    containedInPlace: {
+      "@type": "AdministrativeArea",
+      name: `${areaServed.county} County`,
+      containedInPlace: { "@type": "Country", name: "Kenya" },
+    },
+    ...(areaServed.lat !== undefined && areaServed.lng !== undefined
+      ? {
+          geo: {
+            "@type": "GeoCoordinates",
+            latitude: areaServed.lat,
+            longitude: areaServed.lng,
+          },
+        }
+      : null),
+  };
+
   return {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -170,26 +201,11 @@ export function serviceLd({
     description,
     serviceType: name,
     provider: { "@id": ORG_ID },
-    areaServed: areaServed
-      ? {
-          "@type": "City",
-          name: areaServed.city,
-          containedInPlace: {
-            "@type": "AdministrativeArea",
-            name: `${areaServed.county} County`,
-            containedInPlace: { "@type": "Country", name: "Kenya" },
-          },
-          ...(areaServed.lat !== undefined && areaServed.lng !== undefined
-            ? {
-                geo: {
-                  "@type": "GeoCoordinates",
-                  latitude: areaServed.lat,
-                  longitude: areaServed.lng,
-                },
-              }
-            : null),
-        }
-      : { "@type": "Country", name: "Kenya" },
+    areaServed: !city
+      ? { "@type": "Country", name: "Kenya" }
+      : areaServed?.neighbourhood
+        ? { "@type": "Place", name: areaServed.neighbourhood, containedInPlace: city }
+        : city,
     availableChannel: {
       "@type": "ServiceChannel",
       serviceUrl: canonical(path),

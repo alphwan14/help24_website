@@ -27,6 +27,7 @@ import { SITE } from "./site";
 import { canonical } from "./seo";
 import { SERVICES } from "./services";
 import { CITY_PAGES, SERVICE_CITY_PAIRS } from "./places";
+import { SERVICE_NEIGHBOURHOOD_PAGES } from "./neighbourhoods";
 import { GUIDES } from "./guides";
 
 export interface IndexableRoute {
@@ -103,6 +104,13 @@ export function allIndexableRoutes(): IndexableRoute[] {
   // Only the pairs that have a hand-written local note. See lib/places.ts.
   for (const pair of SERVICE_CITY_PAIRS) {
     routes.push({ url: canonical(`/services/${pair.service}/${pair.city}`) });
+  }
+
+  // Only the neighbourhoods with a written note. See lib/neighbourhoods.ts.
+  for (const p of SERVICE_NEIGHBOURHOOD_PAGES) {
+    routes.push({
+      url: canonical(`/services/${p.service}/${p.city}/${p.neighbourhood}`),
+    });
   }
 
   for (const city of CITY_PAGES) {

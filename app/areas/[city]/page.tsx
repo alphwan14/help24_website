@@ -15,6 +15,7 @@ import {
   cityById,
   servicesForCity,
 } from "@/lib/places";
+import { neighbourhoodBySlug, neighbourhoodPagesInCity } from "@/lib/neighbourhoods";
 import { pageMetadata } from "@/lib/seo";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbLd, type Crumb } from "@/lib/jsonld";
@@ -62,6 +63,13 @@ export default function CityPage({ params }: { params: { city: string } }) {
     .filter((s): s is NonNullable<typeof s> => Boolean(s));
   const withPageSlugs = new Set(withPages.map((s) => s.slug));
   const isLaunchCity = (LAUNCH_CITY_IDS as readonly string[]).includes(city.id);
+  const areaPages = neighbourhoodPagesInCity(city.id).flatMap((p) => {
+    const s = serviceBySlug(p.service);
+    const n = neighbourhoodBySlug(city.id, p.neighbourhood);
+    if (!s || !n) return [];
+    const Workers = s.workers.charAt(0).toUpperCase() + s.workers.slice(1);
+    return [{ href: `/services/${s.slug}/${city.id}/${n.slug}`, label: `${Workers} in ${n.name}` }];
+  });
 
   const trail: Crumb[] = [
     { name: "Home", path: "/" },
@@ -176,6 +184,25 @@ export default function CityPage({ params }: { params: { city: string } }) {
               </li>
             ))}
           </ul>
+          {areaPages.length > 0 && (
+            <>
+              <h3 className="mt-10 text-body-lg font-semibold text-text-primary">
+                Written up by neighbourhood
+              </h3>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {areaPages.map((p) => (
+                  <li key={p.href}>
+                    <Link
+                      href={p.href}
+                      className="inline-block rounded-badge border border-primary/40 bg-primary/10 px-3 py-1.5 text-body-sm font-medium text-primary-bright transition-colors hover:bg-primary/15"
+                    >
+                      {p.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
         </Section>
       )}
 

@@ -50,6 +50,7 @@ these pages rather than the thing holding them up. Nothing has to be rebuilt.
 /services                           catalogue hub
 /services/<service>                 31 service pages
 /services/<service>/<city>          32 service-in-city pages (gated, see §4)
+/services/<service>/<city>/<nbhd>   10 service-in-neighbourhood pages (gated, see §4a)
 /areas                              coverage hub
 /areas/<city>                       6 city pages
 /guides                             editorial hub
@@ -60,7 +61,7 @@ these pages rather than the thing holding them up. Nothing has to be rebuilt.
 /privacy  /terms  /community-guidelines
 ```
 
-**89 indexable URLs.**
+**99 indexable URLs** (November 2026; the count grows with every note).
 
 Slugs come from the app's own registries, never invented for the web. `/areas/mombasa`
 carries the same string the database stores, so a web URL and a post's location
@@ -72,12 +73,18 @@ Shorter, reads naturally in "areas we cover", and does not imply a country tier
 that would only ever have one member. In code the registry's sub-places are
 called neighbourhoods to avoid colliding with the URL word.
 
-### Why no neighbourhood tier
+### The neighbourhood tier, and why it is gated rather than generated
 
-Nairobi alone has 69 neighbourhoods in the registry. `/services/<service>/<city>/<neighbourhood>`
-would be several thousand URLs whose only difference is a place name. The
-neighbourhoods appear as **real names in the copy** of their city's page
-instead, which earns the semantic coverage without the URLs.
+Nairobi alone has 69 neighbourhoods in the registry. An ungated
+`/services/<service>/<city>/<neighbourhood>` would be several thousand URLs
+whose only difference is a place name. Until November 2026 there was no
+neighbourhood tier at all. The neighbourhoods appeared only as names in the
+copy of their city's page.
+
+The tier now exists, under the same gate as the city tier, one level down (§4a).
+Searches like "plumber Changamwe" are real and specific. A page can win them
+honestly only when it says something true of that trade in that neighbourhood
+that is not true of the whole city.
 
 ---
 
@@ -86,7 +93,7 @@ instead, which earns the semantic coverage without the URLs.
 Declared once in `lib/routes.ts`, which the sitemap reads and `tests/seo.test.ts`
 enforces. Three states:
 
-### INDEX — all 89 routes above
+### INDEX — all routes above
 
 Public, useful, in the sitemap.
 
@@ -164,14 +171,72 @@ are not sent to a page with nothing on it.
 
 In order of value:
 
-1. **Write more local notes.** Each one is a page. The ceiling is 12 local
-   services × 6 city pages = 72, and 32 exist.
+1. **Write more local notes.** Each one is a page. The ceiling is 20 local
+   services × 6 city pages = 120, and 32 exist. Each city note also unlocks
+   that city's neighbourhoods for that trade (§4a).
 2. **Map more cities in the app's registry.** A city that gains neighbourhoods
    gains a page automatically, and becomes eligible for service pages.
 3. **Add live supply when it exists.** Provider counts, real reviews and
    response times become sections on pages that already stand up without them.
 
 What must never happen: relaxing the gate to a boolean flag or a threshold.
+
+## 4a. The neighbourhood gate
+
+Implemented in `lib/neighbourhoods.ts`, tested in `tests/neighbourhoods.test.ts`.
+
+> A `/services/<service>/<city>/<neighbourhood>` page exists **if and only
+> if** a `NEIGHBOURHOOD_NOTES` entry exists for that exact triple, the
+> neighbourhood is in the app's registry under that city, and the parent
+> `/services/<service>/<city>` page exists.
+
+The parent condition means the breadcrumb above a neighbourhood page is never a
+404. It also means a city note has to be written before any of that trade's
+neighbourhood pages can exist.
+
+The bar is higher than at the city tier. A neighbourhood note has to be true of
+the neighbourhood, and **not merely true of the city**. If a paragraph would sit
+as well on the parent page, it belongs there. Good material includes the
+housing stock, how water and power actually reach the buildings, access
+(causeways, lanes a lorry cannot enter, building rules), and county or utility
+boundaries.
+
+What the tests hold:
+
+- every note passes every gate condition, and a failing note names the
+  condition it failed rather than silently disappearing
+- at least two paragraphs, each at least 160 characters
+- the note names its own neighbourhood, not just the city
+- **the template detector.** Every registry place name is masked, then every
+  pair of notes at both tiers is compared on shared four-word runs. Real notes
+  overlap by at most about 2%. A name-swapped copy overlaps 100%, and one with
+  four phrases reworded still overlaps about 66%. The test fails above 15%.
+- titles, descriptions and headings never say *best, top, cheapest,
+  affordable, emergency, trusted, guaranteed, 24/7*. Help24 cannot yet show any
+  of those to be true, and a title is a claim like any other.
+- the sitemap carries exactly the gated pages at that depth, and nothing else
+- the JSON-LD marks the neighbourhood as a `Place` inside the `City`, with no
+  coordinates of its own. The registry has none, and the city centre is not
+  Changamwe.
+
+**Slugs are derived** from the registry name (`Nairobi CBD` → `nairobi-cbd`),
+so renaming a neighbourhood in the registry changes a URL and needs a 301.
+
+### Deciding what to write next
+
+```
+npm run seo:coverage
+npm run seo:coverage -- --queries ~/Downloads/Queries.csv
+```
+
+Without arguments, it reports what exists and which city notes are missing.
+Each missing city note blocks a whole column of neighbourhood pages.
+
+With a Search Console Performance export, it matches each query to a service
+and a place, and lists the **unwritten pages that are already earning
+impressions**, highest first. That is measured demand, so use it instead of
+guessing at search volume. Names that exist in two cities (Huruma, Pipeline,
+Milimani) are flagged rather than guessed.
 
 ---
 
@@ -210,17 +275,17 @@ NOINDEX and the intent gets a curated landing page instead.
 
 ## 6. Sitemap
 
-One file at `/sitemap.xml`, 89 URLs, generated from `lib/routes.ts`.
+One file at `/sitemap.xml`, 99 URLs, generated from `lib/routes.ts`.
 
 - **No `<priority>`, no `<changefreq>`.** Google's documentation states plainly
   that it ignores both. They were bytes inviting somebody to tune them.
 - **`<lastmod>` only on the guides.** Google uses `lastmod` where it is
-  "consistently and verifiably accurate". Stamping 89 URLs with the build date
+  "consistently and verifiably accurate". Stamping every URL with the build date
   trains it to ignore the field. The guides have real content dates; nothing
   else does. A test enforces this.
 - **No sitemap index.** The limit is 50,000 URLs. Splitting into
   pages/services/locations would buy separate Search Console reporting and cost
-  an extra file to keep in step — worth it at a few thousand URLs, not at 89.
+  an extra file to keep in step — worth it at a few thousand URLs, not at a hundred.
 - Only canonical URLs. No noindexed route, no `/auth`, `/api` or `/components`.
   Tested.
 
@@ -473,7 +538,7 @@ Everything else has to be done by a person.
 1. Confirm the **domain property** for `help24.co.ke` (DNS TXT), not only the
    URL-prefix property. A domain property covers `www`, HTTP and every
    subdomain.
-2. Submit `https://help24.co.ke/sitemap.xml`. Confirm it reports 89 discovered
+2. Submit `https://help24.co.ke/sitemap.xml`. Confirm it reports 99 discovered
    URLs.
 3. URL-inspect and **Request Indexing** for, in order: `/`, `/services`,
    `/services/plumbing`, `/services/plumbing/mombasa`, `/areas/mombasa`,
@@ -538,7 +603,7 @@ Honest, because pretending otherwise wastes somebody's month.
 
 ## 15. Maintenance
 
-- `npm test` — 69 assertions covering the catalogue, the gate, canonicals, the
+- `npm test` — 84 tests covering the catalogue, both gates, canonicals, the
   sitemap and every JSON-LD block. Run before every deploy.
 - `npm run sync:places` — regenerates `lib/generated/places.ts` from the Flutter
   app's registry. Run after a location registry change.
@@ -546,6 +611,9 @@ Honest, because pretending otherwise wastes somebody's month.
   filled. The test fails until the app has the category too.
 - Adding a service-in-city page: write the `LOCAL_NOTES` entry. That is the
   whole procedure.
+- Adding a service-in-neighbourhood page: write the `NEIGHBOURHOOD_NOTES`
+  entry in `lib/neighbourhoods.ts`. The parent city note must exist first.
+  `npm run seo:coverage` says which ones are worth writing.
 - Adding a guide: add to `GUIDES` with real dates.
 - **Changing a slug is a breaking change.** Add a 301 in `next.config.mjs`
   before shipping it.

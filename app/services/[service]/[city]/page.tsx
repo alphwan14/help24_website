@@ -22,6 +22,7 @@ import {
   localNote,
   servicesForCity,
 } from "@/lib/places";
+import { neighbourhoodsForService } from "@/lib/neighbourhoods";
 import { pageMetadata } from "@/lib/seo";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbLd, serviceLd, type Crumb } from "@/lib/jsonld";
@@ -86,6 +87,10 @@ export default function ServiceCityPage({
   const Workers = service.workers.charAt(0).toUpperCase() + service.workers.slice(1);
   const isLaunchCity = (LAUNCH_CITY_IDS as readonly string[]).includes(city.id);
   const neighbourhoods = city.neighbourhoods ?? [];
+  // Registry name → URL slug, for the neighbourhoods with a page for this trade.
+  const withPages = new Map(
+    neighbourhoodsForService(service.slug, city.id).map((n) => [n.name, n.slug]),
+  );
   const siblings = servicesForCity(city.id)
     .filter((s) => s !== service.slug)
     .map((s) => serviceBySlug(s))
@@ -164,15 +169,33 @@ export default function ServiceCityPage({
             app carries.
           </p>
           <ul className="mt-8 flex flex-wrap gap-2">
-            {neighbourhoods.map((n) => (
-              <li
-                key={n}
-                className="rounded-badge border border-border bg-card px-3 py-1.5 text-body-sm text-text-secondary"
-              >
-                {n}
-              </li>
-            ))}
+            {neighbourhoods.map((n) => {
+              // Linked only where a neighbourhood page exists for this trade.
+              const page = withPages.get(n);
+              return page ? (
+                <li key={n}>
+                  <Link
+                    href={`/services/${service.slug}/${city.id}/${page}`}
+                    className="inline-block rounded-badge border border-primary/40 bg-primary/10 px-3 py-1.5 text-body-sm font-medium text-primary-bright transition-colors hover:bg-primary/15"
+                  >
+                    {n}
+                  </Link>
+                </li>
+              ) : (
+                <li
+                  key={n}
+                  className="rounded-badge border border-border bg-card px-3 py-1.5 text-body-sm text-text-secondary"
+                >
+                  {n}
+                </li>
+              );
+            })}
           </ul>
+          {withPages.size > 0 && (
+            <p className="mt-4 text-body-sm text-text-secondary">
+              Highlighted areas have their own {service.category.toLowerCase()} page.
+            </p>
+          )}
           <p className="mt-6 max-w-prose text-body-sm leading-relaxed text-text-secondary">
             {isLaunchCity
               ? `${city.name} is one of the three cities Help24's launch effort is going into. `

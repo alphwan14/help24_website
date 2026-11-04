@@ -14,7 +14,8 @@
     "generate:og-icon": "node scripts/generate-og-icon.mjs",
     "generate:logo": "node scripts/generate-logo.mjs",
     "sync:release": "node scripts/sync-release.mjs",
-    "sync:places": "node scripts/sync-places.mjs"
+    "sync:places": "node scripts/sync-places.mjs",
+    "seo:coverage": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tests/resolve-ts.mjs scripts/seo-coverage.mjs"
   },
   "dependencies": {
     "firebase": "^12.18.0",

@@ -11,7 +11,7 @@ export const metadata = pageMetadata({
   path: "/terms",
 });
 
-const LAST_UPDATED = "25 July 2026";
+const LAST_UPDATED = "4 November 2026";
 
 const mail = <a href={`mailto:${SITE.supportEmail}`}>{SITE.supportEmail}</a>;
 
@@ -65,6 +65,7 @@ const sections: LegalSection[] = [
     id: "payments",
     heading: "4. Payments & Payment Protection",
     body: (
+      <>
       <p>
         When you pay through Help24, we may hold your money safely (in escrow)
         until the work is completed or released according to your agreement. Fees
@@ -73,6 +74,14 @@ const sections: LegalSection[] = [
         the transaction. Payment protection only applies to payments made through
         the app.
       </p>
+      <p className="mt-3">
+        When a provider marks a job as done, the customer has 48 hours to approve
+        it or open a dispute in the app. We send reminders during that time. If the
+        customer does neither, the job is approved automatically and the payment is
+        released to the provider. Opening a dispute before then stops the release
+        while our team reviews the case.
+      </p>
+      </>
     ),
   },
   {

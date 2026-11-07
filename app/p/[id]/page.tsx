@@ -47,10 +47,12 @@ export default async function ProviderCardPage({ params, searchParams }: Props) 
   const fallback = encodeURIComponent(`${SITE.url}/download`);
   const openInApp = `intent://${appLink}#Intent;scheme=https;package=com.help24.help24;S.browser_fallback_url=${fallback};end`;
 
-  // Measured by channel only: which card was opened is the provider's
-  // business, not the analytics tool's.
+  // Collected first-party (lib/analytics.ts → /api/e → Help24's own
+  // database), so the card's owner can be counted: "is this provider handing
+  // their card out?" is the question Phase A is judged on. It never reaches a
+  // third party, and no cookie or visitor identifier is involved.
   const track = `${trackerScript(ANDROID_RELEASE.version)}
-window.help24Track('provider_card_open', { source: ${JSON.stringify(fromQr ? "qr" : "link")} });`;
+window.help24Track('provider_card_open', { source: ${JSON.stringify(fromQr ? "qr" : "link")}, provider_id: ${JSON.stringify(card.id)} });`;
 
   return (
     <SitePage>
@@ -108,6 +110,7 @@ window.help24Track('provider_card_open', { source: ${JSON.stringify(fromQr ? "qr
                 <a
                   href={openInApp}
                   data-track="provider_card_open_app"
+                  data-track-provider={card.id}
                   className="mt-3 inline-flex w-full items-center justify-center rounded-button border-2 border-primary bg-card px-6 py-4 text-body-lg font-semibold text-primary"
                 >
                   Open in Help24

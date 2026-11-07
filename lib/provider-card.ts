@@ -17,10 +17,10 @@
  * repository.
  */
 
-const DATA_URL = "https://taohzhnvaitrpxcyjflq.supabase.co/rest/v1";
+export const DATA_URL = "https://taohzhnvaitrpxcyjflq.supabase.co/rest/v1";
 // The publishable key the app ships with — public by design, used here only
 // server-side so the page itself carries no vendor address.
-const DATA_KEY = "sb_publishable_WQYHVfGzH-VKqkM2WLT-8A_NjQ6WeZD";
+export const DATA_KEY = "sb_publishable_WQYHVfGzH-VKqkM2WLT-8A_NjQ6WeZD";
 const API_URL = "https://api.help24.co.ke";
 
 /** Refresh at most every 5 minutes: a renamed provider shows the new name soon. */

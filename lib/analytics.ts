@@ -11,13 +11,19 @@
  * server-rendered anchors. The page stays a Server Component end to end and
  * the whole feature costs less than a single React import.
  *
- * WHY IT WRITES TO `dataLayer`
- * ----------------------------
- * No analytics vendor is installed yet, and picking one now would be a guess.
- * `window.dataLayer` is the shape GTM, GA4 and most others already consume, so
- * events queue up in an array from day one and whichever tool is added later
- * finds a backlog waiting rather than a blank slate. Nothing is sent anywhere
- * until that tool exists — this is instrumentation, not collection.
+ * WHERE THE EVENTS GO
+ * -------------------
+ * To Help24 itself. Each event is beaconed to this site's own `/api/e`
+ * (app/api/e/route.ts), which writes it to Help24's database through
+ * `record_site_event()` (migration 137 in the app repository). First-party on
+ * purpose: Vercel's free analytics counts page views only, and a third-party
+ * analytics script would bring cookies and a consent notice to the one page
+ * that must load instantly. Nothing here sets a cookie or reads an identifier,
+ * and a browser that asks not to be tracked (Do Not Track / Global Privacy
+ * Control) sends nothing.
+ *
+ * Events are still pushed to `window.dataLayer` too — the shape GTM and GA4
+ * consume — so adding such a tool later needs no change here.
  *
  * WHAT IS DELIBERATELY NOT HERE
  * -----------------------------
@@ -29,7 +35,7 @@
  * side, for free. This is the correct place to do nothing.
  */
 
-/** The events this page emits. Kept small on purpose. */
+/** The events this site emits. Kept small on purpose; mirrored by lib/site-events.ts. */
 export type DownloadEvent =
   /** The user asked for an artifact. Carries which platform. */
   | "download_click"
@@ -50,7 +56,8 @@ export const TRACK_ATTR = "data-track";
  * The inline tracker.
  *
  * Runs once, at the end of the document. Everything it records is derived from
- * the user agent and the URL — no cookies, no identifiers, no network calls.
+ * the user agent and the URL — no cookies, no identifiers. The only network
+ * call is the first-party beacon to /api/e.
  *
  * `platform` and `browser` are coarse buckets rather than parsed versions: the
  * question this page has to answer is "did Android users succeed and desktop
@@ -75,17 +82,31 @@ export const TRACKER_SCRIPT = `
   }
   var base = { platform: platform(), browser: browser(), app_version: '__VERSION__' };
   window.dataLayer = window.dataLayer || [];
+  var optedOut = navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.globalPrivacyControl === true;
+  function beacon(payload) {
+    if (optedOut) return;
+    try {
+      var body = JSON.stringify({
+        e: payload.event, p: payload.provider_id || null, s: payload.source || null,
+        pl: payload.platform, b: payload.browser, v: payload.app_version, path: location.pathname
+      });
+      if (navigator.sendBeacon && navigator.sendBeacon('/api/e', new Blob([body], { type: 'application/json' }))) return;
+      fetch('/api/e', { method: 'POST', body: body, keepalive: true, headers: { 'Content-Type': 'application/json' } });
+    } catch (_) {}
+  }
   window.help24Track = function (event, props) {
     var payload = { event: event }, k;
     for (k in base) payload[k] = base[k];
     for (k in props || {}) payload[k] = props[k];
     window.dataLayer.push(payload);
+    beacon(payload);
   };
   document.addEventListener('click', function (e) {
     var el = e.target && e.target.closest && e.target.closest('[${TRACK_ATTR}]');
     if (!el) return;
     window.help24Track(el.getAttribute('${TRACK_ATTR}'), {
-      platform_id: el.getAttribute('${TRACK_ATTR}-platform') || undefined
+      platform_id: el.getAttribute('${TRACK_ATTR}-platform') || undefined,
+      provider_id: el.getAttribute('${TRACK_ATTR}-provider') || undefined
     });
   });
   if (/(^|[?&])src=qr(&|$)/.test(location.search)) window.help24Track('qr_scan');

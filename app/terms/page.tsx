@@ -11,7 +11,9 @@ export const metadata = pageMetadata({
   path: "/terms",
 });
 
-const LAST_UPDATED = "4 November 2026";
+// Keep in step with TermsAcceptance.currentVersion in the app: the app asks
+// everyone to accept again when that version changes.
+const LAST_UPDATED = "10 November 2026";
 
 const mail = <a href={`mailto:${SITE.supportEmail}`}>{SITE.supportEmail}</a>;
 
@@ -67,12 +69,12 @@ const sections: LegalSection[] = [
     body: (
       <>
       <p>
-        When you pay through Help24, we may hold your money safely (in escrow)
-        until the work is completed or released according to your agreement. Fees
-        may apply as stated in the app and are always shown before you confirm.
-        Refunds are subject to our refund policy and the specific circumstances of
-        the transaction. Payment protection only applies to payments made through
-        the app.
+        When you pay through Help24, we hold your money safely (in escrow) until
+        you approve the work, and the provider receives the full agreed price. The
+        customer pays a payment protection fee of 5% of the job, at least KES 30 and
+        never more than KES 1,000. The fee and the total are always shown before
+        you confirm. Payment protection only applies to payments made through the
+        app; we cannot protect cash or M-Pesa sent directly to a provider.
       </p>
       <p className="mt-3">
         When a provider marks a job as done, the customer has 48 hours to approve
@@ -80,6 +82,22 @@ const sections: LegalSection[] = [
         customer does neither, the job is approved automatically and the payment is
         released to the provider. Opening a dispute before then stops the release
         while our team reviews the case.
+      </p>
+      <p className="mt-3">
+        <strong>Refunds.</strong> If a dispute is decided in the customer&apos;s
+        favour, the customer gets back everything Help24 holds for the job,
+        including the payment protection fee. If part of the work was done, the
+        held money may be split between the customer and the provider. Refunds are
+        sent by M-Pesa.
+      </p>
+      <p className="mt-3">
+        <strong>Materials Advance.</strong> On jobs of KES 10,000 or more with a
+        verified provider, the customer may choose to let 40% of the job go to the
+        provider early, for materials. Nothing is sent until the customer taps Send
+        in the app, and the total is the same as paying normally. Money already
+        sent for materials cannot be held back; if the job fails, the customer gets
+        back everything Help24 still holds, fee included, and our team follows up
+        with the provider.
       </p>
       </>
     ),

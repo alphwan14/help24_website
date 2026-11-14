@@ -109,9 +109,10 @@ export interface AndroidRelease {
 export const ANDROID_RELEASE: AndroidRelease = {
   ...RELEASE_ARTIFACT,
   releaseNotes: [
-    "Tapping \"A new request matches your work\" now opens the request, ready for your offer — instead of an error",
-    "Agent codes stay out of your way: after your first 3 days you won't see agent-code messages, and the option leaves your Profile",
-    "Includes everything from 1.0.7: Discover keeps loading until you've seen every listing",
+    "A new, light app icon. With themed icons on (Android 13 and later), it takes your wallpaper's colours",
+    "Notifications show the amber Help24 mark in your status bar instead of a square",
+    "The splash screen follows your phone's theme: light in light mode, dark in dark mode",
+    "A new in-app notification: a message that arrives while Help24 is open drops in as a pill, opens to show it, then folds away",
   ],
 };
 

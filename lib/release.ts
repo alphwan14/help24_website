@@ -109,10 +109,10 @@ export interface AndroidRelease {
 export const ANDROID_RELEASE: AndroidRelease = {
   ...RELEASE_ARTIFACT,
   releaseNotes: [
-    "A new, light app icon. With themed icons on (Android 13 and later), it takes your wallpaper's colours",
-    "Notifications show the amber Help24 mark in your status bar instead of a square",
-    "The splash screen follows your phone's theme: light in light mode, dark in dark mode",
-    "A new in-app notification: a message that arrives while Help24 is open drops in as a pill, opens to show it, then folds away",
+    "Future versions install from inside Help24: tap Update, and Help24 downloads the new version, checks it is the published file, and opens Android's installer",
+    "Photos in your conversation with Help24 fill the screen, and open from your phone after the first time",
+    "Your Profile opens complete, with nothing filling in after it appears",
+    "Includes everything from 1.0.12: the light app icon, the amber notification icon and the splash that follows your phone's theme",
   ],
 };
 

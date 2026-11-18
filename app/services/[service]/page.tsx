@@ -82,7 +82,6 @@ export default function ServicePage({ params }: { params: { service: string } })
       />
 
       <section className="relative overflow-hidden border-b border-border bg-atmosphere">
-        <div className="bg-grid pointer-events-none absolute inset-0 opacity-40" aria-hidden />
         <div className="relative mx-auto max-w-6xl px-4 pb-14 pt-8 sm:px-6 sm:pb-16 sm:pt-10 lg:px-8">
           <Breadcrumbs trail={trail} />
           <div className="flex max-w-3xl flex-col items-start text-left">

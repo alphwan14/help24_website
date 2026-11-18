@@ -31,7 +31,7 @@ export const SITE = {
   domain: "help24.co.ke",
   tagline: "Kenya's trusted marketplace for local services",
   description:
-    "Help24 connects you with trusted local service providers across Kenya — from urgent repairs to everyday tasks. Agree a price, pay securely, get it done.",
+    "Help24 connects you with trusted local service providers across Kenya, from urgent repairs to everyday tasks. Agree a price, pay securely, get it done.",
   supportEmail: "support@help24.co.ke",
   // Target response time surfaced on the Support page and in-app copy.
   supportResponseHours: 24,

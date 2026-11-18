@@ -143,7 +143,7 @@ const OUTCOMES: Record<OutcomeKey, Outcome> = {
     title: "Your email address has been restored",
     body:
       "The change to your account email has been reversed. If you did not ask " +
-      "for it, reset your password now — someone else may have had access.",
+      "for it, reset your password now. Someone else may have had access.",
     next: RETURN_TO_APP,
     primary: BACK_HOME,
     secondary: GET_APP,

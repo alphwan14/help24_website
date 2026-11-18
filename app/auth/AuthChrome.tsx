@@ -58,7 +58,7 @@ export function AuthChrome({ children }: { children: React.ReactNode }) {
       <footer className="border-t border-border/60">
         <div className="mx-auto flex max-w-2xl flex-col items-center gap-2 px-4 py-6 text-center sm:flex-row sm:justify-between sm:gap-4 sm:px-6 sm:text-left">
           <p className="text-body-sm text-text-tertiary">
-            {SITE.domain} · Help24 Kenya
+            {SITE.domain}, Help24 Kenya
           </p>
           <nav className="flex items-center gap-4" aria-label="Legal">
             <Link

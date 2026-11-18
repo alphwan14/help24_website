@@ -27,7 +27,7 @@ const COPY_FOR: Record<
   need: {
     label: "I need help",
     heading: "Post what you need. Providers come to you.",
-    body: "Write the job, set a budget, and wait. Providers near you send an offer with their own price, and you pick — nobody starts work before you have agreed a number.",
+    body: "Write the job, set a budget, and wait. Providers near you send an offer with their own price, and you pick. Nobody starts work before you have agreed a number.",
     cta: "Get the app",
     href: "/download",
     boardLabel: "Sample requests on Help24",
@@ -35,7 +35,7 @@ const COPY_FOR: Record<
   offer: {
     label: "I offer services",
     heading: "List what you do. Jobs come to you.",
-    body: "Your services sit on the same board customers browse. When a request matches what you do, you send an offer at your price — no bidding war, no lead fees, no paying to be seen.",
+    body: "Your services sit on the same board customers browse. When a request matches what you do, you send an offer at your price, no bidding war, no lead fees, no paying to be seen.",
     cta: "Become a provider",
     href: "/for-providers",
     boardLabel: "Sample offers on Help24",

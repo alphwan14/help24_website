@@ -7,7 +7,7 @@ import { SITE } from "@/lib/site";
 export const metadata = pageMetadata({
   title: "Terms of Service",
   description:
-    "The terms that govern your use of Help24 — your responsibilities, our role as a marketplace, payments and payment protection.",
+    "The terms that govern your use of Help24: your responsibilities, our role as a marketplace, payments and payment protection.",
   path: "/terms",
 });
 
@@ -139,7 +139,7 @@ export default function TermsPage() {
       <PageHero
         eyebrow="Legal"
         title="Terms of Service"
-        description="The ground rules that keep Help24 fair and safe for everyone — customers and providers alike."
+        description="The ground rules that keep Help24 fair and safe for everyone, customers and providers alike."
         align="left"
       />
       <LegalBody sections={sections} lastUpdated={LAST_UPDATED} />

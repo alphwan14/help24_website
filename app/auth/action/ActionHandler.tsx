@@ -101,7 +101,7 @@ const SUCCESS: Record<Mode, { title: string; body: string; next: string }> = {
   recoverEmail: {
     title: "Your email address has been restored",
     body: "The change to your account email has been reversed.",
-    next: "If you did not ask for that change, reset your password now — someone else may have had access.",
+    next: "If you did not ask for that change, reset your password now. Someone else may have had access.",
   },
   verifyAndChangeEmail: {
     title: "Your email address has been updated",

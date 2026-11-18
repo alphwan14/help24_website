@@ -39,7 +39,7 @@ export const metadata = pageMetadata({
    * name is already shown on its own line above the title — what is left still
    * reads as a sentence.
    */
-  title: `${SITE.siteName}: Local Services — Plumbers, Cleaners & More`,
+  title: `${SITE.siteName}: Local Services, Plumbers, Cleaners & More`,
   /*
    * DESCRIPTION: the mechanism, in the order somebody experiences it.
    *

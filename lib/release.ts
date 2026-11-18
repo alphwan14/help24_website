@@ -142,7 +142,7 @@ export const PLATFORMS: Platform[] = [
   {
     id: "android-apk",
     name: "Android",
-    tagline: `Direct download · ${ANDROID_RELEASE.minimumAndroid} and above`,
+    tagline: `Direct download for ${ANDROID_RELEASE.minimumAndroid} and above`,
     icon: "android",
     url: ANDROID_RELEASE.apkUrl,
     available: true,
@@ -162,7 +162,7 @@ export const PLATFORMS: Platform[] = [
   {
     id: "app-store",
     name: "App Store",
-    tagline: "iPhone and iPad — in development",
+    tagline: "iPhone and iPad: in development",
     icon: "apple",
     url: null,
     available: false,
@@ -249,7 +249,7 @@ export const OFFICIAL_SOURCES = [
   {
     label: `${new URL(QR_TARGET_URL).host}/download`,
     href: QR_TARGET_URL,
-    detail: "This page — always the current release",
+    detail: "This page: always the current release",
   },
 ] as const;
 
@@ -268,15 +268,15 @@ export interface FaqItem {
 export const DOWNLOAD_FAQ: FaqItem[] = [
   {
     q: "How do I install the APK?",
-    a: "Tap Download for Android, then open the file when it finishes. Because Help24 isn't on Google Play yet, Android will ask you once for permission to install from this source — tap Settings, turn the switch on, then go back. The install takes a few seconds and Help24 appears in your app drawer like any other app.",
+    a: "Tap Download for Android, then open the file when it finishes. Because Help24 isn't on Google Play yet, Android will ask you once for permission to install from this source, tap Settings, turn the switch on, then go back. The install takes a few seconds and Help24 appears in your app drawer like any other app.",
   },
   {
     q: "How do I get updates?",
-    a: "Help24 tells you in the app when a new version is available, and you download it from this page the same way. Usually you just install over the top. If you installed Help24 before 3 October 2026, Android may say the app wasn't installed or conflicts with an existing package — that early version was signed differently, so uninstall it first, then install this one and sign in. Your account, posts, messages and saved items are stored online, so they're all still there when you sign in. Once we're on Google Play, updates become automatic.",
+    a: "Help24 tells you in the app when a new version is available, and you download it from this page the same way. Usually you just install over the top. If you installed Help24 before 3 October 2026, Android may say the app wasn't installed or conflicts with an existing package. That early version was signed differently, so uninstall it first, then install this one and sign in. Your account, posts, messages and saved items are stored online, so they're all still there when you sign in. Once we're on Google Play, updates become automatic.",
   },
   {
     q: "Is Help24 free?",
-    a: "Yes. The app is free to download and free to use — posting a request, browsing offers, messaging and applying for jobs all cost nothing. Help24 charges a service fee only when money actually moves through a completed job, and you always see that amount before you agree to anything.",
+    a: "Yes. The app is free to download and free to use: posting a request, browsing offers, messaging and applying for jobs all cost nothing. Help24 charges a service fee only when money actually moves through a completed job, and you always see that amount before you agree to anything.",
   },
   {
     q: "Is it safe to install an app from outside the Play Store?",
@@ -284,7 +284,7 @@ export const DOWNLOAD_FAQ: FaqItem[] = [
   },
   {
     q: "Which phones does it work on?",
-    a: `Any phone running ${ANDROID_RELEASE.minimumAndroid} or later — that covers the large majority of Android devices in use. The download includes support for every processor type Android runs on, so there is no variant to choose between. An iPhone version is in development.`,
+    a: `Any phone running ${ANDROID_RELEASE.minimumAndroid} or later. That covers the large majority of Android devices in use. The download includes support for every processor type Android runs on, so there is no variant to choose between. An iPhone version is in development.`,
   },
 ];
 
@@ -308,7 +308,7 @@ export const TRUST_POINTS: TrustPoint[] = [
   {
     icon: "no-ads",
     title: "No ads, no bundled software",
-    body: "The APK contains the app and nothing else — no third-party installers, no toolbars.",
+    body: "The APK contains the app and nothing else: no third-party installers, no toolbars.",
   },
   {
     icon: "lock",

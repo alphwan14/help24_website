@@ -66,7 +66,7 @@ const ALL: Frame[] = [
   {
     src: "/walkthrough/payment.png",
     step: "Pay",
-    line: "Cost, fee and total — before you authorise anything.",
+    line: "Cost, fee and total: before you authorise anything.",
     alt: "The Help24 payment screen: service cost, platform fee and total to secure, a note that an M-Pesa prompt will be sent, and a Pay Securely button.",
   },
   {

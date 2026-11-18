@@ -145,7 +145,7 @@ export function HowItWorksFor({ service }: { service: Service }) {
     },
     {
       title: `Nearby ${service.workers} send offers`,
-      body: `Providers near you quote their own price. Nobody is assigned to you — you see the offers and you choose.`,
+      body: `Providers near you quote their own price. Nobody is assigned to you. You see the offers and you choose.`,
     },
     {
       title: "Agree the price first",

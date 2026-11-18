@@ -68,7 +68,7 @@ document.addEventListener('click', function (e) {
           <BrandMark className="mb-6 h-16 w-auto" priority />
           <h1 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">You&apos;re invited to Help24</h1>
           <p className="mt-4 text-body-lg leading-relaxed text-text-secondary">
-            A Help24 agent shared this with you. Find trusted local help, or offer your own services — and let your agent be
+            A Help24 agent shared this with you. Find trusted local help, or offer your own services, and let your agent be
             thanked for helping you join.
           </p>
 
@@ -112,7 +112,7 @@ document.addEventListener('click', function (e) {
               <span className="font-bold text-text-primary">3.</span>
               <p className="flex-1 text-sm text-text-secondary">
                 Or type <span className="font-mono font-semibold text-text-primary">{code}</span> in “Agent code” when you set
-                up your profile — or later in Profile → Who helped you join? You have 3 days after joining.
+                up your profile, or later in Profile → Who helped you join? You have 3 days after joining.
               </p>
             </li>
           </ol>

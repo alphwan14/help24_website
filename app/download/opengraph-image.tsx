@@ -19,7 +19,7 @@ import { PALETTE, RADIUS, withAlpha } from "@/lib/tokens";
  * card cannot advertise a release the page isn't serving.
  */
 
-export const alt = `Download ${SITE.name} for Android — v${ANDROID_RELEASE.version}`;
+export const alt = `Download ${SITE.name} for Android v${ANDROID_RELEASE.version}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -126,8 +126,8 @@ export default async function Image() {
             Download for Android
           </div>
           <div style={{ display: "flex", fontSize: 26, color: PALETTE["text-tertiary"] }}>
-            v{ANDROID_RELEASE.version} ·{" "}
-            {formatBytes(ANDROID_RELEASE.apkSizeBytes)} ·{" "}
+            v{ANDROID_RELEASE.version},{" "}
+            {formatBytes(ANDROID_RELEASE.apkSizeBytes)},{" "}
             {ANDROID_RELEASE.minimumAndroid}+
           </div>
         </div>

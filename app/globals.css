@@ -43,20 +43,6 @@
   }
 }
 
-/* ── Ground textures ───────────────────────────────────────────────────────
- *
- * Both are drawn from `--text-primary` rather than from white, so they invert
- * with the theme automatically: faint light lines on dark, faint dark lines on
- * paper. A grid hard-coded to white simply vanishes in light mode, which is
- * how most retrofitted themes lose their texture.
- */
-.bg-grid {
-  background-image:
-    linear-gradient(rgb(var(--text-primary-rgb) / 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(var(--text-primary-rgb) / 0.045) 1px, transparent 1px);
-  background-size: 64px 64px;
-}
-
 /**
  * The hero's atmosphere.
  *

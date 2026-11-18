@@ -7,7 +7,7 @@ import { SITE } from "@/lib/site";
 export const metadata = pageMetadata({
   title: "Community Guidelines",
   description:
-    "The standards that keep Help24 safe, fair and trustworthy for everyone — customers and providers alike.",
+    "The standards that keep Help24 safe, fair and trustworthy for everyone, customers and providers alike.",
   path: "/community-guidelines",
 });
 
@@ -58,7 +58,7 @@ const sections: LegalSection[] = [
       <p>
         Paying through the app protects both sides with payment protection and
         keeps a clear record. Never move payments off-platform for a job arranged
-        on Help24 — doing so removes your protection and may indicate a scam.
+        on Help24. Doing so removes your protection and may indicate a scam.
       </p>
     ),
   },

@@ -44,7 +44,7 @@ const customerSteps = [
   },
   {
     title: "Compare and choose",
-    body: "Providers near you respond with their own price and a message. Compare the offers, look at each profile, and pick one — nobody is assigned to you.",
+    body: "Providers near you respond with their own price and a message. Compare the offers, look at each profile, and pick one. Nobody is assigned to you.",
   },
   {
     title: "Pay securely, get it done",
@@ -89,7 +89,7 @@ export default function HowItWorksPage() {
             <Link href="/#escrow" className="text-primary-bright hover:underline">
               Watch it move
             </Link>{" "}
-            on the homepage, or read the detail — including disputes and refunds — on{" "}
+            on the homepage, or read the detail, including disputes and refunds, on{" "}
             <Link href="/safety" className="text-primary-bright hover:underline">
               Safety &amp; Escrow
             </Link>

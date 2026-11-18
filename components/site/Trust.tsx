@@ -76,7 +76,7 @@ export function Trust() {
           <Act
             index="03"
             title="Protected"
-            line={`You pay by ${PAYMENTS.methods} and Help24 holds it. The provider can see the money is there — but neither of you can move it until the job is done.`}
+            line={`You pay by ${PAYMENTS.methods} and Help24 holds it. The provider can see the money is there, but neither of you can move it until the job is done.`}
             anchor="escrow"
             link={{ href: "/safety", label: "What happens if something goes wrong" }}
           >
@@ -259,7 +259,7 @@ function Quotes() {
         })}
       </ul>
       <p className="mt-4 text-body text-text-secondary">
-        You picked {CHOSEN.name.split(" ")[0]} — not the cheapest.
+        You picked {CHOSEN.name.split(" ")[0]}, not the cheapest.
       </p>
     </div>
   );

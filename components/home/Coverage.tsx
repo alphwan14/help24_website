@@ -40,11 +40,11 @@ export function Coverage() {
           </h2>
           <p className="mt-3 max-w-prose text-body sm:text-body-lg text-text-secondary">
             The app carries every Kenyan city, all 47 county headquarters and the neighbourhoods of
-            the big urban centres — but these three are where the launch effort is going, and where
+            the big urban centres. But these three are where the launch effort is going, and where
             the sample posts on this page come from.
           </p>
         </div>
-        <DemoChip title="The categories listed here are the ones in this page's sample data — not a count of providers available in that city." />
+        <DemoChip title="The categories listed here are the ones in this page's sample data, not a count of providers available in that city." />
       </div>
 
       <div className="mt-10 grid gap-10 md:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] md:items-center md:gap-14 lg:gap-20">

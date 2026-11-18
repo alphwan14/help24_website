@@ -70,7 +70,7 @@ export default function ForProvidersPage() {
       <PageHero
         eyebrow="For providers"
         title="Grow your business on Help24"
-        description={`List what you do, answer the jobs that suit you, and get paid to ${PAYMENTS.methods} when the work is done — all from your phone.`}
+        description={`List what you do, answer the jobs that suit you, and get paid to ${PAYMENTS.methods} when the work is done, all from your phone.`}
       />
 
       <ContentSection title="Why work through Help24">

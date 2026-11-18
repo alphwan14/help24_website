@@ -279,7 +279,7 @@ export const POSTS: FeedPost[] = [
   {
     id: "p9",
     type: "offer",
-    title: "Carpentry — fitted wardrobes, kitchen units, repairs",
+    title: "Carpentry: fitted wardrobes, kitchen units, repairs",
     description:
       "Fifteen years making and fitting units. Free measure-up and drawing before you commit to anything.",
     category: "Carpentry",
@@ -295,7 +295,7 @@ export const POSTS: FeedPost[] = [
   {
     id: "p10",
     type: "offer",
-    title: "Event photography — weddings, graduations, corporate",
+    title: "Event photography: weddings, graduations, corporate",
     description:
       "Full-day coverage with edited gallery inside a week. Travel across Nyanza included in the price.",
     category: "Photography",
@@ -440,7 +440,7 @@ export function benchmarkSentence(category: string, city: string): string {
     ? `${category.toLowerCase()} jobs in ${city}`
     : `jobs like this in ${city}`;
   const fmt = (n: number) => n.toLocaleString("en-KE");
-  return `Estimate — ${scope} are usually budgeted around KES ${fmt(low)} to ${fmt(high)}${suffix}.`;
+  return `Estimate: ${scope} are usually budgeted around KES ${fmt(low)} to ${fmt(high)}${suffix}.`;
 }
 
 /** Slider bounds for a category/city: a little either side of the guide range. */
@@ -484,7 +484,7 @@ export const CITY_PINS: {
     city: "Kisumu",
     lon: 34.768,
     lat: -0.0917,
-    blurb: "Lakeside — Milimani, Mamboleo, Nyalenda",
+    blurb: "Lakeside: Milimani, Mamboleo, Nyalenda",
     side: "right",
   },
   {

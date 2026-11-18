@@ -26,7 +26,7 @@ import { breadcrumbLd, type Crumb } from "@/lib/jsonld";
  */
 
 export const metadata = pageMetadata({
-  title: "Where Help24 Works — Cities and Towns Across Kenya",
+  title: "Where Help24 Works: Cities and Towns Across Kenya",
   description:
     "Help24 covers every Kenyan city and all 47 county headquarters. See the neighbourhoods in Mombasa, Nairobi, Kisumu, Nakuru, Eldoret and Thika, and how posting a local job works.",
   path: "/areas",
@@ -67,7 +67,7 @@ export default function AreasPage() {
         </h2>
         <p className="mt-3 max-w-prose text-body-lg text-text-secondary">
           These are the three cities the launch effort is going into. Posts anywhere else in
-          Kenya still reach whoever is nearby — there are simply fewer providers there today.
+          Kenya still reach whoever is nearby. There are simply fewer providers there today.
         </p>
         <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {launch.map((c) => (
@@ -78,7 +78,7 @@ export default function AreasPage() {
               >
                 <span className="text-h4 font-semibold text-text-primary">{c.name}</span>
                 <span className="mt-1 block text-body-sm text-text-secondary">
-                  {c.county} County · {c.neighbourhoods?.length} areas
+                  {c.county} County, {c.neighbourhoods?.length} areas
                 </span>
                 <span className="mt-3 block text-body-sm leading-relaxed text-text-secondary">
                   {c.neighbourhoods?.slice(0, 6).join(", ")}
@@ -96,7 +96,7 @@ export default function AreasPage() {
           Cities with neighbourhood-level coverage
         </h2>
         <p className="mt-3 max-w-prose text-body-lg text-text-secondary">
-          Posting to a neighbourhood rather than a city is what keeps offers realistic — the
+          Posting to a neighbourhood rather than a city is what keeps offers realistic. The
           people who see your job are the ones who can actually get to you.
         </p>
         <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -108,7 +108,7 @@ export default function AreasPage() {
               >
                 <span className="text-h4 font-semibold text-text-primary">{c.name}</span>
                 <span className="mt-1 block text-body-sm text-text-secondary">
-                  {c.county} County · {c.neighbourhoods?.length} areas
+                  {c.county} County, {c.neighbourhoods?.length} areas
                 </span>
               </Link>
             </li>
@@ -130,7 +130,7 @@ export default function AreasPage() {
           <div>
             <h3 className="text-body-lg font-semibold text-text-primary">Other cities</h3>
             <p className="mt-3 text-body leading-relaxed text-text-secondary">
-              {unlinkedCities.map((c) => c.name).join(" · ")}
+              {unlinkedCities.map((c) => c.name).join(", ")}
             </p>
           </div>
           <div>
@@ -138,7 +138,7 @@ export default function AreasPage() {
               County headquarters
             </h3>
             <p className="mt-3 text-body leading-relaxed text-text-secondary">
-              {TOWNS.map((t) => t.name).join(" · ")}
+              {TOWNS.map((t) => t.name).join(", ")}
             </p>
           </div>
         </div>

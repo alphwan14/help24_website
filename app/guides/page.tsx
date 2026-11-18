@@ -20,7 +20,7 @@ import { breadcrumbLd, type Crumb } from "@/lib/jsonld";
  */
 
 export const metadata = pageMetadata({
-  title: "Guides — Hiring Local Services in Kenya",
+  title: "Guides: Hiring Local Services in Kenya",
   description:
     "Practical guides to hiring in Kenya: writing a job request that gets good offers, checking a fundi's licences and references, and what to agree before work starts.",
   path: "/guides",
@@ -39,7 +39,7 @@ export default function GuidesPage() {
       <PageHero
         eyebrow="Guides"
         title="Hiring, without the guesswork"
-        description="Short, practical guides to getting work done well in Kenya — written from what Help24 sees go right and wrong between customers and providers."
+        description="Short, practical guides to getting work done well in Kenya, written from what Help24 sees go right and wrong between customers and providers."
         align="left"
       >
         <Breadcrumbs trail={trail} />

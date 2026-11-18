@@ -27,7 +27,7 @@ export function DemoChip({
     >
       <span className="h-1.5 w-1.5 rounded-full bg-text-tertiary" aria-hidden />
       Demo
-      <span className="sr-only">— {title}</span>
+      <span className="sr-only">: {title}</span>
     </span>
   );
 }

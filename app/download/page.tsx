@@ -148,7 +148,7 @@ export default function DownloadPage() {
                     hesitation, rather than in the spec table further down. */}
                 <CompatibilityRow />
                 <p className="text-body-sm text-text-secondary">
-                  Version {ANDROID_RELEASE.version} · released{" "}
+                  Version {ANDROID_RELEASE.version}, released{" "}
                   {formatReleaseDate(ANDROID_RELEASE.releaseDate)}
                 </p>
               </div>
@@ -156,7 +156,7 @@ export default function DownloadPage() {
               {/* iOS visitors are told the truth immediately rather than
                   being offered an APK they cannot install. */}
               <p className="only-ios mt-6 rounded-card border border-border bg-card px-4 py-3 text-body text-text-secondary">
-                You&apos;re on iPhone — this download is for Android. Help24 for
+                You&apos;re on iPhone. This download is for Android. Help24 for
                 iOS is in development;{" "}
                 <a
                   href={`mailto:${SITE.supportEmail}?subject=Notify%20me%20about%20Help24%20for%20iOS`}

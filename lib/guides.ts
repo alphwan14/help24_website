@@ -73,7 +73,7 @@ export const GUIDES: Guide[] = [
         paragraphs: [
           "One photo does more for the accuracy of an offer than a paragraph of careful writing. It settles the model, the fitting, the access, the state of the surrounding surfaces and the scale of the job all at once.",
           "Take two if you can: one close enough to show the thing, and one far enough back to show what surrounds it. The wide shot is the one people forget, and it is the one that tells a provider whether they can reach the work.",
-          "For anything with a brand on it — an appliance, an air conditioner, a phone — photograph the model sticker. It is usually inside the door, behind the drawer, or on the back.",
+          "For anything with a brand on it (an appliance, an air conditioner, a phone), photograph the model sticker. It is usually inside the door, behind the drawer, or on the back.",
         ],
       },
       {
@@ -90,7 +90,7 @@ export const GUIDES: Guide[] = [
         ],
         list: [
           "The floor you are on, and whether there is a working lift",
-          "Estate or building rules — gate sign-in, restricted working hours, a lift that must be booked",
+          "Estate or building rules: gate sign-in, restricted working hours, a lift that must be booked",
           "Whether you rent, and whether a landlord has to approve the work",
           "Whether there is power and water on site",
           "Days or times that genuinely do not work for you",
@@ -99,7 +99,7 @@ export const GUIDES: Guide[] = [
       {
         heading: "Be honest about urgency",
         paragraphs: [
-          "Marking everything urgent costs you money and credibility. Urgency is a real price factor — somebody dropping their evening to come out is charging for their evening — and a request marked urgent that then waits three days for a reply teaches providers not to believe the label.",
+          "Marking everything urgent costs you money and credibility. Urgency is a real price factor: somebody dropping their evening to come out is charging for their evening, and a request marked urgent that then waits three days for a reply teaches providers not to believe the label.",
           "Post the genuinely urgent things as urgent: water running that you cannot stop, no power, a door that will not lock, a car stranded somewhere it cannot stay. Everything else is better posted as flexible, where you will usually get a better price for waiting a day.",
         ],
       },
@@ -113,7 +113,7 @@ export const GUIDES: Guide[] = [
       {
         heading: "What not to put in",
         paragraphs: [
-          "Leave out your exact house number, your gate code and anything else that identifies your home precisely — the neighbourhood is enough for people to decide whether they can take the job, and the detail can go to the person you actually choose.",
+          "Leave out your exact house number, your gate code and anything else that identifies your home precisely. The neighbourhood is enough for people to decide whether they can take the job, and the detail can go to the person you actually choose.",
           "Leave out your phone number too. Messaging runs through Help24 until you have agreed a job, which is what keeps a record of what was agreed if anything later goes wrong.",
         ],
       },
@@ -121,7 +121,7 @@ export const GUIDES: Guide[] = [
         heading: "A worked example",
         paragraphs: [
           "Weak: \"Need a plumber urgently.\"",
-          "Better: \"Kitchen sink in a ground-floor flat in Bamburi is not draining — water sits in the basin and drains very slowly over about an hour. Nothing under the sink is leaking. Photo attached of the trap. Mains water, flat is occupied, any time this week works. Happy for you to buy whatever parts are needed.\"",
+          "Better: \"Kitchen sink in a ground-floor flat in Bamburi is not draining: water sits in the basin and drains very slowly over about an hour. Nothing under the sink is leaking. Photo attached of the trap. Mains water, flat is occupied, any time this week works. Happy for you to buy whatever parts are needed.\"",
           "The second one takes forty seconds longer to write and is the difference between guesses and quotes.",
         ],
       },
@@ -152,7 +152,7 @@ export const GUIDES: Guide[] = [
         heading: "Electrical work: EPRA",
         paragraphs: [
           "The Energy and Petroleum Regulatory Authority licenses electrical workers and electrical contractors in Kenya, in classes tied to the qualifications held and the scale of work permitted. Class requirements run from basic technical qualifications up to degree-level engineering.",
-          "For replacing a socket or hanging a light fitting, this is not the thing to hold a job up over. For a rewire, a new consumer unit, a three-phase supply, or anything touching the meter, ask which class of EPRA licence the person holds — and ask a contractor rather than an individual for anything at building scale.",
+          "For replacing a socket or hanging a light fitting, this is not the thing to hold a job up over. For a rewire, a new consumer unit, a three-phase supply, or anything touching the meter, ask which class of EPRA licence the person holds, and ask a contractor rather than an individual for anything at building scale.",
         ],
       },
       {
@@ -167,7 +167,7 @@ export const GUIDES: Guide[] = [
         heading: "Private security: PSRA",
         paragraphs: [
           "Private security in Kenya is regulated by the Private Security Regulatory Authority, which registers private security service providers. If you are engaging guards for a home, a site or a business on any ongoing basis, ask whether the guard or their company is registered.",
-          "There is a second thing worth knowing here. Kenya sets statutory minimum wages for security guards, and a quote far below the going rate usually means the guard is not receiving it. That is not a bargain — it is a person who will be looking for other work while they are supposed to be watching your premises.",
+          "There is a second thing worth knowing here. Kenya sets statutory minimum wages for security guards, and a quote far below the going rate usually means the guard is not receiving it. That is not a bargain. It is a person who will be looking for other work while they are supposed to be watching your premises.",
         ],
       },
       {
@@ -182,7 +182,7 @@ export const GUIDES: Guide[] = [
         paragraphs: [
           "For anybody who will be alone with your children or with an elderly or unwell relative, the documents are not the main protection. Meeting them at your home before the first booking is, and so is taking identification and calling the references yourself.",
           "Ask for two families they have worked for and call both. People who are good at this expect to be asked and will offer the numbers before you do. Somebody who is reluctant has told you something.",
-          "Where any nursing task is involved — wound care, injections, catheters, oxygen — that is clinical work and the training and registration for it should be checked and verified, not taken on trust.",
+          "Where any nursing task is involved (wound care, injections, catheters, oxygen), that is clinical work and the training and registration for it should be checked and verified, not taken on trust.",
         ],
       },
       {
@@ -195,7 +195,7 @@ export const GUIDES: Guide[] = [
           "Can I speak to the last customer you did this for?",
           "What exactly is included in this price, and what is not?",
           "Who buys the materials?",
-          "What happens if it is not right — do you come back?",
+          "What happens if it is not right: do you come back?",
         ],
       },
       {
@@ -223,7 +223,7 @@ export const GUIDES: Guide[] = [
       {
         heading: "Scope: what is included, and what is not",
         paragraphs: [
-          "Scope is the one that causes the most trouble, because both sides think it is obvious and they are each thinking of something different. \"Paint the bedroom\" — does that include the ceiling? The skirting? The inside of the wardrobe? The door?",
+          "Scope is the one that causes the most trouble, because both sides think it is obvious and they are each thinking of something different. \"Paint the bedroom\": does that include the ceiling? The skirting? The inside of the wardrobe? The door?",
           "Write it down, even as a message. Not a contract, just a list of what is being done. The act of listing it is what surfaces the disagreement while it is still cheap.",
           "Be equally explicit about exclusions. If the quote does not include moving furniture, or taking the old unit away, or working weekends, that belongs in the same message.",
         ],
@@ -232,29 +232,29 @@ export const GUIDES: Guide[] = [
         heading: "Price: one number, and what it covers",
         paragraphs: [
           "Agree a single number before work starts, and agree whether it is a price for the job or a rate for the time. Those two diverge sharply the moment anything goes wrong, which is exactly when you will find out which one you agreed.",
-          "On Help24, the price you accept is the number the payment is held against. That is not just bookkeeping — it means a later request for more money is a conversation rather than a fait accompli with your money already gone.",
+          "On Help24, the price you accept is the number the payment is held against. That is not just bookkeeping. It means a later request for more money is a conversation rather than a fait accompli with your money already gone.",
         ],
       },
       {
         heading: "Materials: who buys them",
         paragraphs: [
           "Either the provider buys the materials and the quote includes them, or you buy them and the quote is labour only. Both work. What does not work is discovering on the morning that each of you assumed the other.",
-          "If the provider is buying, agree roughly what — brand, grade, finish. \"Paint\" covers a range of products with very different lifespans, and so does \"tile\", \"cable\" and \"timber\".",
+          "If the provider is buying, agree roughly what: brand, grade, finish. \"Paint\" covers a range of products with very different lifespans, and so does \"tile\", \"cable\" and \"timber\".",
           "If you are buying, ask for a list before the day. Being one fitting short is what turns a half-day job into two half-days.",
         ],
       },
       {
         heading: "Timing: start, duration, and what happens to your house meanwhile",
         paragraphs: [
-          "Agree a start date and a realistic duration. For anything more than a day, agree what the site looks like at the end of each day — whether you have water, whether you have power, whether you can use the kitchen.",
+          "Agree a start date and a realistic duration. For anything more than a day, agree what the site looks like at the end of each day: whether you have water, whether you have power, whether you can use the kitchen.",
           "For work in an occupied home, that conversation is worth more than the schedule. A bathroom that is unusable for four days is a manageable inconvenience if you knew, and a crisis if you did not.",
         ],
       },
       {
         heading: "Making good: the part that is always someone else's job",
         paragraphs: [
-          "Chasing a wall for a cable, lifting tiles to reach a pipe, drilling through render for an air conditioner — all of these leave damage that is a normal part of the work and that somebody has to repair.",
-          "Ask directly: does the price include making good the plaster and the paint? Often the answer is no, and that is a reasonable answer — but it is a different total, and it needs a second trade booked.",
+          "Chasing a wall for a cable, lifting tiles to reach a pipe, drilling through render for an air conditioner: all of these leave damage that is a normal part of the work and that somebody has to repair.",
+          "Ask directly: does the price include making good the plaster and the paint? Often the answer is no, and that is a reasonable answer. But it is a different total, and it needs a second trade booked.",
           "Debris is the same question. Broken tiles, old units, packaging and rubble do not remove themselves, and \"we will leave it in the compound\" is a real quote that people accept without hearing.",
         ],
       },
@@ -262,7 +262,7 @@ export const GUIDES: Guide[] = [
         heading: "What happens if it is not right",
         paragraphs: [
           "Ask before work starts, when it is an easy question. Does the provider come back? For how long? Does that cover the workmanship, the parts, or both?",
-          "For anything with a part in it — an appliance repair, a phone screen, a car component — ask specifically about warranty on the part as distinct from the labour. They are frequently different lengths.",
+          "For anything with a part in it (an appliance repair, a phone screen, a car component) ask specifically about warranty on the part as distinct from the labour. They are frequently different lengths.",
         ],
       },
       {

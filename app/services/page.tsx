@@ -27,7 +27,7 @@ import { breadcrumbLd, type Crumb } from "@/lib/jsonld";
  */
 
 export const metadata = pageMetadata({
-  title: "Services on Help24 — Find Local Providers Across Kenya",
+  title: "Services on Help24: Find Local Providers Across Kenya",
   description:
     "Every service Help24 covers, from plumbing and electrical to cleaning, moving, repairs and tutoring. Post a job free, compare offers from providers near you, and agree the price before work starts.",
   path: "/services",
@@ -93,14 +93,14 @@ export default function ServicesPage() {
           <p>
             Nothing quite right? Post it under{" "}
             <span className="font-medium text-text-primary">Other</span> and describe it in your
-            own words — providers see the description, not just the label.
+            own words. Providers see the description, not just the label.
           </p>
           <p>
             Looking for a particular place rather than a particular trade?{" "}
             <Link href="/areas" className="text-primary-bright hover:underline">
               See where Help24 works
-            </Link>{" "}
-            — {CITY_PAGES.length} cities have a page of their own, and the app carries every
+            </Link>:{" "}
+            {CITY_PAGES.length} cities have a page of their own, and the app carries every
             Kenyan city and all 47 county headquarters.
           </p>
         </div>

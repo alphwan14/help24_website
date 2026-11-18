@@ -83,11 +83,11 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
               {guide.standfirst}
             </p>
             <p className="mt-6 text-body-sm text-text-secondary">
-              By the {SITE.name} team ·{" "}
+              By the {SITE.name} team on{" "}
               <time dateTime={guide.published}>
                 {DATE_FORMAT.format(new Date(guide.published))}
-              </time>{" "}
-              · {guide.minutes} min read
+              </time>
+              , {guide.minutes} min read
             </p>
           </div>
         </div>

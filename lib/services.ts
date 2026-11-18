@@ -89,15 +89,15 @@ export const SERVICES: Service[] = [
     local: true,
     alsoCalled: ["fundi wa maji", "pipe fitter", "drainage fundi"],
     summary:
-      "Leaks, blocked drains, taps, toilets, water tanks and pipework — the jobs that cannot wait until the weekend.",
-    title: "Plumbers in Kenya — Find a Plumber Near You",
+      "Leaks, blocked drains, taps, toilets, water tanks and pipework: the jobs that cannot wait until the weekend.",
+    title: "Plumbers in Kenya: Find a Plumber Near You",
     description:
       `Post a plumbing job on Help24 and get offers from plumbers near you. Leaking taps, blocked drains, burst pipes and toilets. Agree the price first and pay by ${PAYMENTS.methods}.`,
     h1: "Find a plumber near you",
     intro: [
-      "Plumbing is the category people reach for in a hurry. A kitchen sink that will not drain, a toilet cistern running all night, a burst pipe behind a wall — none of these improve with waiting, and all of them get more expensive the longer they run.",
+      "Plumbing is the category people reach for in a hurry. A kitchen sink that will not drain, a toilet cistern running all night, a burst pipe behind a wall: none of these improve with waiting, and all of them get more expensive the longer they run.",
       `On Help24 you describe the problem, say where you are, and plumbers nearby send you their own price. Nobody is assigned to you and nobody starts before you have picked an offer and agreed a number. You pay through ${PAYMENTS.methods}, Help24 holds the money, and it is released when you say the job is done.`,
-      "Most plumbing posts are small: a tap, a trap, a cistern, a shower mixer. Those are worth posting precisely because they are small — they are the ones people put off for months because finding somebody for a one-hour job is more effort than the job itself.",
+      "Most plumbing posts are small: a tap, a trap, a cistern, a shower mixer. Those are worth posting precisely because they are small. They are the ones people put off for months because finding somebody for a one-hour job is more effort than the job itself.",
     ],
     tasks: [
       "Leaking taps, mixers and shower heads",
@@ -113,13 +113,13 @@ export const SERVICES: Service[] = [
     detailsToInclude: [
       "Where the water is coming from, and whether it is still running now",
       "Whether you have been able to shut the water off at the mains",
-      "A photo of the fitting or the wet patch — this is the single biggest thing that improves the offers you get",
+      "A photo of the fitting or the wet patch. This is the single biggest thing that improves the offers you get",
       "Whether you are on mains supply, a borehole, a tank, or a mix",
       "Whether the property is a house, a flat, or a rental you do not own",
     ],
     priceFactors: [
       "Whether it is a repair, a replacement, or new pipework",
-      "Whether parts are needed and who is buying them — say if you already have the tap or the cistern",
+      "Whether parts are needed and who is buying them, and say if you already have the tap or the cistern",
       "How accessible the pipework is: exposed under a sink, or chased into a wall or slab",
       "Whether it is urgent enough to need someone the same evening",
       "How far the plumber has to travel to reach you",
@@ -128,7 +128,7 @@ export const SERVICES: Service[] = [
       "Ask what they think is wrong before they start, and whether the quote covers parts",
       "For anything involving digging up a slab or re-routing pipework, ask who makes good the tiling or plaster afterwards",
       NITA,
-      "Agree the price on Help24 before work begins — that is the number the escrow holds, and it is the number that protects you if the job changes halfway",
+      "Agree the price on Help24 before work begins. That is the number the escrow holds, and it is the number that protects you if the job changes halfway",
     ],
     related: ["masonry", "appliance-repair", "general-labour", "construction"],
   },
@@ -143,12 +143,12 @@ export const SERVICES: Service[] = [
     alsoCalled: ["fundi wa stima", "electrical fundi", "wiring fundi"],
     summary:
       "Sockets, lights, wiring, consumer units and the faults that trip your whole house.",
-    title: "Electricians in Kenya — Find an Electrician Near You",
+    title: "Electricians in Kenya: Find an Electrician Near You",
     description:
       `Post an electrical job on Help24 and get offers from electricians near you. Faulty sockets, lighting, wiring and tripping breakers. Agree the price first and pay by ${PAYMENTS.methods}.`,
     h1: "Find an electrician near you",
     intro: [
-      "Electrical work is the category where the difference between a good fundi and a cheap one shows up later — in a breaker that keeps tripping, a socket that runs warm, or a joint in a ceiling void that nobody can find.",
+      "Electrical work is the category where the difference between a good fundi and a cheap one shows up later: in a breaker that keeps tripping, a socket that runs warm, or a joint in a ceiling void that nobody can find.",
       "Post what is happening and electricians near you send their own quotes. Describe the symptom rather than the fix you think you need: \"the kitchen sockets die when the kettle goes on\" tells an electrician far more than \"I need a new socket\", and gets you a quote for the actual problem.",
       "Kenya licenses electrical workers and electrical contractors through EPRA, in classes that correspond to the scale of work they may legally carry out. For changing a socket this is not the thing to agonise over; for a rewire, a new consumer unit, or anything touching the meter or the supply side, it matters a great deal.",
     ],
@@ -166,12 +166,12 @@ export const SERVICES: Service[] = [
     detailsToInclude: [
       "What exactly stops working, and what else is on at the time",
       "Whether the main breaker trips or only one circuit",
-      "A photo of the consumer unit with the cover on — the layout tells an electrician a lot before they arrive",
+      "A photo of the consumer unit with the cover on. The layout tells an electrician a lot before they arrive",
       "The age of the building, if you know it, and whether it has been rewired",
       "Whether you rent, and whether the landlord needs to approve the work",
     ],
     priceFactors: [
-      "Whether it is a fault to be traced or a fitting to be replaced — tracing is the part that takes time",
+      "Whether it is a fault to be traced or a fitting to be replaced: tracing is the part that takes time",
       "How much of the work involves chasing walls and making good afterwards",
       "The number of points, circuits or fittings involved",
       "Whether cable, conduit and fittings are on your account or theirs",
@@ -197,7 +197,7 @@ export const SERVICES: Service[] = [
     alsoCalled: ["fundi wa mawe", "bricklayer", "plasterer"],
     summary:
       "Blockwork, plastering, screeds, paving, boundary walls and the repairs that follow a leak.",
-    title: "Masons in Kenya — Blockwork, Plastering and Paving",
+    title: "Masons in Kenya: Blockwork, Plastering and Paving",
     description:
       "Post a masonry job on Help24 and get offers from masons near you. Boundary walls, plastering, screeds, paving, foundations and repairs. Agree the price before work starts and pay securely.",
     h1: "Find a mason near you",
@@ -218,11 +218,11 @@ export const SERVICES: Service[] = [
       "Septic tanks, soak pits and manholes",
     ],
     detailsToInclude: [
-      "Rough measurements — wall length and height, or floor area",
+      "Rough measurements: wall length and height, or floor area",
       "Photos of the area, ideally from far enough back to show the whole wall",
       "Whether materials are on your account or theirs",
       "Whether there is water and power on site",
-      "How the site is reached — a lorry-accessible plot and a hand-carry plot are different jobs",
+      "How the site is reached. A lorry-accessible plot and a hand-carry plot are different jobs",
     ],
     priceFactors: [
       "Area to be covered, and the height it has to be worked at",
@@ -233,7 +233,7 @@ export const SERVICES: Service[] = [
     ],
     checks: [
       "Agree in writing who buys materials, and whether the price you see includes them",
-      "For any structural work — removing a wall, cutting an opening in a load-bearing wall, adding a floor — get a qualified engineer's opinion, not a quote",
+      "For any structural work (removing a wall, cutting an opening in a load-bearing wall, adding a floor), get a qualified engineer's opinion, not a quote",
       "Contractors taking on building works in Kenya are required to be registered with the NCA; ask for the registration for anything at that scale",
       NITA,
     ],
@@ -250,13 +250,13 @@ export const SERVICES: Service[] = [
     alsoCalled: ["fundi wa mbao", "joiner", "furniture fundi"],
     summary:
       "Doors, wardrobes, kitchen units, shelving, furniture repairs and fitted joinery.",
-    title: "Carpenters in Kenya — Doors, Wardrobes and Fitted Joinery",
+    title: "Carpenters in Kenya: Doors, Wardrobes and Fitted Joinery",
     description:
       "Post a carpentry job on Help24 and get offers from carpenters near you. Doors, wardrobes, kitchen units, shelving and furniture repair. Agree the price before work starts.",
     h1: "Find a carpenter near you",
     intro: [
-      "Carpentry on Help24 runs from a door that will not close to a full fitted kitchen. The small repairs are the ones most worth posting: a sagging hinge, a swollen door, a drawer that has dropped, a wobbly table — all an hour's work for somebody with the right tools and a whole weekend for somebody without them.",
-      "For fitted work — wardrobes, kitchen units, shelving, a TV wall — the useful thing to post is the space, not the product. Give the width, height and depth available, and say what has to fit inside it.",
+      "Carpentry on Help24 runs from a door that will not close to a full fitted kitchen. The small repairs are the ones most worth posting: a sagging hinge, a swollen door, a drawer that has dropped, a wobbly table: all an hour's work for somebody with the right tools and a whole weekend for somebody without them.",
+      "For fitted work (wardrobes, kitchen units, shelving, a TV wall), the useful thing to post is the space, not the product. Give the width, height and depth available, and say what has to fit inside it.",
       "Finish is where carpentry quotes separate. Melamine board, blockboard, MDF and solid mahogany are four very different prices for the same drawing, so say what you want or ask the carpenter to quote options.",
     ],
     tasks: [
@@ -264,7 +264,7 @@ export const SERVICES: Service[] = [
       "Fitted wardrobes and built-in storage",
       "Kitchen cabinets, worktops and open shelving",
       "Beds, tables, desks and benches made to a size",
-      "Repairing furniture — joints, drawers, legs, hinges",
+      "Repairing furniture: joints, drawers, legs, hinges",
       "Skirting, architrave, cornices and trims",
       "Ceilings in gypsum, timber or PVC",
       "Window frames, burglar-proofing frames and grille surrounds",
@@ -281,13 +281,13 @@ export const SERVICES: Service[] = [
       "Material and finish, which usually dominates the quote",
       "Whether it is made on site or built in a workshop and delivered",
       "How square and true the existing walls and floor are",
-      "Ironmongery — hinges, runners, handles and locks add up quickly",
+      "Ironmongery: hinges, runners, handles and locks add up quickly",
       "Delivery and the number of people needed to carry it in",
     ],
     checks: [
       "Ask to see photographs of work they have finished, not work in progress",
       "For fitted joinery, agree whether the quote is for supply and fit or fit only",
-      "Confirm who measures — and that whoever measures is responsible if it does not fit",
+      "Confirm who measures, and that whoever measures is responsible if it does not fit",
       NITA,
     ],
     related: ["painting", "interior-design", "welding", "masonry"],
@@ -303,12 +303,12 @@ export const SERVICES: Service[] = [
     alsoCalled: ["fundi wa rangi", "decorator", "spray painter"],
     summary:
       "Interior and exterior painting, preparation, filling, and the repaint between tenancies.",
-    title: "Painters in Kenya — Interior and Exterior Painting",
+    title: "Painters in Kenya: Interior and Exterior Painting",
     description:
       "Post a painting job on Help24 and get offers from painters near you. Interior rooms, exterior walls, preparation and repaints between tenancies. Agree the price before work starts.",
     h1: "Find a painter near you",
     intro: [
-      "Painting is mostly preparation. The visible part — rolling colour onto a wall — is the last and quickest stage, and a quote that seems cheap is usually one that has skipped the filling, sanding and priming that makes the finish last.",
+      "Painting is mostly preparation. The visible part, rolling colour onto a wall, is the last and quickest stage, and a quote that seems cheap is usually one that has skipped the filling, sanding and priming that makes the finish last.",
       "When you post, say the number of rooms or the rough wall area, whether the surface is bare plaster, previously painted, or flaking, and whether you want the ceilings done too. Ceilings are frequently left out of a quote and then argued about afterwards.",
       "Say whether paint is on your account or the painter's. Both are normal. What is not normal is finding out on the day.",
     ],
@@ -326,7 +326,7 @@ export const SERVICES: Service[] = [
     detailsToInclude: [
       "Number of rooms, or rough wall area",
       "Whether ceilings, doors and skirting are included",
-      "The current state of the surface — bare, sound, flaking, or damp",
+      "The current state of the surface: bare, sound, flaking, or damp",
       "Photos of the worst area, not the best",
       "Whether the space will be empty or furnished and occupied",
     ],
@@ -334,11 +334,11 @@ export const SERVICES: Service[] = [
       "Area, and how many coats the colour change needs",
       "How much preparation the surface needs before anything is painted",
       "Whether paint is on your account or included in theirs",
-      "Working height — a stairwell or a two-storey exterior needs scaffolding",
+      "Working height: a stairwell or a two-storey exterior needs scaffolding",
       "Whether furniture has to be moved and covered",
     ],
     checks: [
-      "Ask what preparation is included, specifically — filling, sanding, priming",
+      "Ask what preparation is included, specifically filling, sanding and priming",
       "Agree the exact paint: brand, type, finish, and how many coats",
       "If there is damp, fix the source before painting, or you will pay twice",
       "Ask who covers floors and furniture and who cleans up",
@@ -356,13 +356,13 @@ export const SERVICES: Service[] = [
     alsoCalled: ["fundi wa chuma", "metal fabricator", "grill fundi"],
     summary:
       "Gates, grilles, railings, staircases, water tank stands and steel repairs.",
-    title: "Welders in Kenya — Gates, Grilles and Metal Fabrication",
+    title: "Welders in Kenya: Gates, Grilles and Metal Fabrication",
     description:
       "Post a welding or metal fabrication job on Help24 and get offers from welders near you. Gates, window grilles, railings, tank stands and repairs. Agree the price before work starts.",
     h1: "Find a welder near you",
     intro: [
       "Welding covers the steel around a Kenyan home: window grilles, a gate that has dropped on its hinges, a staircase railing, a stand for a water tank, a carport frame.",
-      "Fabrication work is quoted from sizes, so measure the opening before you post — width and height of the window, gate or gap. A photo taken square-on, with something for scale, does most of the rest.",
+      "Fabrication work is quoted from sizes, so measure the opening before you post: width and height of the window, gate or gap. A photo taken square-on, with something for scale, does most of the rest.",
       "Ask about the finish as well as the steel. Bare metal primed and painted is one price; galvanised or powder-coated is another and lasts considerably longer outdoors.",
     ],
     tasks: [
@@ -385,14 +385,14 @@ export const SERVICES: Service[] = [
     ],
     priceFactors: [
       "Size, and the section and gauge of steel it needs",
-      "Design — plain bars against a pattern with scrollwork or laser-cut panels",
+      "Design: plain bars against a pattern with scrollwork or laser-cut panels",
       "Finish, which is often the difference between a five-year and a fifteen-year life",
       "Whether there is power on site for the welder",
       "Delivery, and getting something heavy up stairs",
     ],
     checks: [
       "Confirm whether the price includes fitting, or only fabrication",
-      "For anything that people lean on — a balcony rail, a staircase — ask how it is fixed into the wall, not just how it is welded",
+      "For anything that people lean on (a balcony rail, a staircase), ask how it is fixed into the wall, not just how it is welded",
       "Agree the finish in writing; \"painted\" and \"powder-coated\" are not the same promise",
       NITA,
     ],
@@ -411,7 +411,7 @@ export const SERVICES: Service[] = [
     alsoCalled: ["deep cleaning", "mama fua", "domestic cleaning", "house help"],
     summary:
       "Deep cleans, move-out cleans, regular visits, sofas, carpets and post-construction clean-ups.",
-    title: "House Cleaning Services in Kenya — Hire a Cleaner",
+    title: "House Cleaning Services in Kenya: Hire a Cleaner",
     description:
       "Post a cleaning job on Help24 and get offers from cleaners near you. Deep cleans, move-in and move-out cleans, sofa and carpet cleaning, and regular visits. Agree the price before work starts.",
     h1: "Hire a cleaner near you",
@@ -441,13 +441,13 @@ export const SERVICES: Service[] = [
     priceFactors: [
       "Size of the property and the number of bathrooms",
       "How long since it was last cleaned properly",
-      "One-off deep clean against a regular visit — regular work is usually cheaper per visit",
+      "One-off deep clean against a regular visit: regular work is usually cheaper per visit",
       "Whether products and equipment are included",
       "Extras like sofas, carpets, curtains and windows",
     ],
     checks: [
       "Agree exactly what is included: a deep clean that excludes the oven and the windows should say so",
-      "Be clear about hours — some cleaners quote a job, others quote a day",
+      "Be clear about hours: some cleaners quote a job, others quote a day",
       "For somebody who will come regularly, meet them on the first visit and check identification",
       "For a move-out clean, agree what standard the landlord is expecting before, not after",
     ],
@@ -470,7 +470,7 @@ export const SERVICES: Service[] = [
     h1: "Find a laundry service near you",
     intro: [
       "Laundry on Help24 covers two different things: somebody who comes to you and works through the backlog, and a service that collects, washes and returns.",
-      "Say which you want. It changes who answers, and it changes the price — collection and delivery are real costs and are usually quoted separately.",
+      "Say which you want. It changes who answers, and it changes the price: collection and delivery are real costs and are usually quoted separately.",
       "Bulky items are the ones worth naming specifically. Duvets, blankets, curtains and rugs do not fit a domestic machine, and a service with the capacity for them is not the same service as the person who irons shirts.",
     ],
     tasks: [
@@ -484,7 +484,7 @@ export const SERVICES: Service[] = [
       "Uniforms and workwear in bulk",
     ],
     detailsToInclude: [
-      "Roughly how much there is — loads, baskets, or number of items",
+      "Roughly how much there is: loads, baskets, or number of items",
       "Whether you want somebody at your place or a collection service",
       "Whether ironing is included",
       "Any bulky items: duvets, curtains, rugs",
@@ -498,7 +498,7 @@ export const SERVICES: Service[] = [
       "How quickly you need it back",
     ],
     checks: [
-      "Agree how the price is counted — per kilo, per load and per item give very different totals",
+      "Agree how the price is counted: per kilo, per load and per item give very different totals",
       "Point out anything delicate or likely to run before it goes in",
       "For a collection service, agree the return day in writing",
     ],
@@ -515,7 +515,7 @@ export const SERVICES: Service[] = [
     alsoCalled: ["shamba boy", "landscaper", "lawn care", "fundi wa bustani"],
     summary:
       "Lawns, hedges, tree cutting, clearing an overgrown plot and regular garden upkeep.",
-    title: "Gardeners in Kenya — Lawn, Hedge and Garden Care",
+    title: "Gardeners in Kenya: Lawn, Hedge and Garden Care",
     description:
       "Post a gardening job on Help24 and get offers from gardeners near you. Lawn mowing, hedge trimming, tree cutting, clearing overgrown plots and regular upkeep.",
     h1: "Find a gardener near you",
@@ -538,7 +538,7 @@ export const SERVICES: Service[] = [
     detailsToInclude: [
       "Rough plot size, and how much of it is lawn",
       "How long it has been since it was last cut",
-      "Photos — overgrowth is very hard to judge from a description",
+      "Photos: overgrowth is very hard to judge from a description",
       "Whether cuttings have to be taken away",
       "Whether there is a water point and power on site",
     ],
@@ -569,7 +569,7 @@ export const SERVICES: Service[] = [
     alsoCalled: ["watchman", "askari", "night guard", "site security"],
     summary:
       "Day and night guarding for homes, sites, shops and events.",
-    title: "Security Guards in Kenya — Hire a Guard",
+    title: "Security Guards in Kenya: Hire a Guard",
     description:
       "Post a security job on Help24 and get offers from guards near you. Day and night cover for homes, construction sites, shops and events. Agree the terms before anyone starts.",
     h1: "Hire a security guard",
@@ -620,7 +620,7 @@ export const SERVICES: Service[] = [
     alsoCalled: ["personal driver", "chauffeur", "dereva", "standby driver"],
     summary:
       "Personal drivers, airport runs, long-distance trips and standby cover.",
-    title: "Drivers in Kenya — Hire a Driver",
+    title: "Drivers in Kenya: Hire a Driver",
     description:
       "Post a driving job on Help24 and get offers from drivers near you. Airport runs, long-distance trips, personal drivers and standby cover. Agree the terms before the trip.",
     h1: "Hire a driver",
@@ -640,7 +640,7 @@ export const SERVICES: Service[] = [
       "Moving a vehicle from one town to another",
     ],
     detailsToInclude: [
-      "Whose vehicle, and what type it is — saloon, SUV, pickup, manual or automatic",
+      "Whose vehicle, and what type it is: saloon, SUV, pickup, manual or automatic",
       "Pick-up point, destination and times",
       "Whether it is one trip, a full day, or ongoing",
       "Who pays fuel, tolls, parking and any overnight stay",
@@ -672,14 +672,14 @@ export const SERVICES: Service[] = [
     alsoCalled: ["boda rider", "courier", "same day delivery", "dispatch rider"],
     summary:
       "Same-day deliveries, parcel runs, collections and regular dispatch for a small business.",
-    title: "Delivery Riders in Kenya — Same-Day Delivery",
+    title: "Delivery Riders in Kenya: Same-Day Delivery",
     description:
       "Post a delivery job on Help24 and get offers from riders near you. Same-day parcels, collections, document runs and regular dispatch for small businesses.",
     h1: "Find a delivery rider near you",
     intro: [
       "Delivery posts are usually urgent and usually simple: something needs to get from one side of town to the other today.",
       "Say what the item is, not just where it is going. Size and fragility decide whether it goes on a motorcycle at all, and a rider who arrives to find a 20kg box has wasted both your afternoons.",
-      "For a small business, the more valuable post is the standing one — a rider available on certain days each week. That relationship is worth building with somebody who has already done a single run for you well.",
+      "For a small business, the more valuable post is the standing one: a rider available on certain days each week. That relationship is worth building with somebody who has already done a single run for you well.",
     ],
     tasks: [
       "Same-day parcel delivery across town",
@@ -724,13 +724,13 @@ export const SERVICES: Service[] = [
     alsoCalled: ["fundi wa gari", "car repair", "auto electrician", "mobile mechanic"],
     summary:
       "Diagnostics, servicing, brakes, suspension, batteries and the car that will not start.",
-    title: "Mechanics in Kenya — Car Repair and Servicing",
+    title: "Mechanics in Kenya: Car Repair and Servicing",
     description:
       "Post a car problem on Help24 and get offers from mechanics near you. Diagnostics, servicing, brakes, suspension, batteries and breakdowns. Agree the price before work starts.",
     h1: "Find a mechanic near you",
     intro: [
       "Car posts on Help24 come in two shapes: something has failed and you need it looked at, or a service is due and you want a price.",
-      "For a fault, describe what the car is doing rather than what you think is broken. When it happens, what it sounds like, whether a warning light is on, whether it is worse cold or hot — those details are what a good mechanic diagnoses from, and they narrow a quote enormously.",
+      "For a fault, describe what the car is doing rather than what you think is broken. When it happens, what it sounds like, whether a warning light is on, whether it is worse cold or hot: those details are what a good mechanic diagnoses from, and they narrow a quote enormously.",
       "Say whether the car can be driven to a garage or whether somebody has to come to it. Mobile mechanics and workshop mechanics are different answers, and a car that will not start needs the first one.",
     ],
     tasks: [
@@ -750,7 +750,7 @@ export const SERVICES: Service[] = [
       "What the car is doing, when it does it, and any noise it makes",
       "Any warning lights that are on",
       "Whether the car can be driven, or is stuck where it is",
-      "Where the car is — and whether there is room to work on it there",
+      "Where the car is, and whether there is room to work on it there",
     ],
     priceFactors: [
       "Diagnosis time, which for an intermittent fault can exceed the repair",
@@ -761,7 +761,7 @@ export const SERVICES: Service[] = [
     ],
     checks: [
       "Ask for the diagnosis and the quote before any parts are bought",
-      "Say clearly whether you want genuine or aftermarket parts — the price gap is large",
+      "Say clearly whether you want genuine or aftermarket parts. The price gap is large",
       "Ask for the old parts back; it is the simplest way to confirm what was replaced",
       "For a pre-purchase inspection, use a mechanic with no connection to the seller",
     ],
@@ -783,9 +783,9 @@ export const SERVICES: Service[] = [
       "Post a car wash job on Help24 and get offers from mobile car wash and valeting services near you. Exterior washes, interior cleaning, detailing and fleet work.",
     h1: "Find a car wash near you",
     intro: [
-      "The car wash posts that work best on Help24 are the mobile ones — somebody who comes to your compound or your office car park while the car is parked anyway.",
+      "The car wash posts that work best on Help24 are the mobile ones: somebody who comes to your compound or your office car park while the car is parked anyway.",
       "Interior work is where the price varies most. A wash is a wash; shampooing seats, cleaning a headliner, or getting a smell out of a car are separate jobs and should be asked for by name.",
-      "For a fleet — a few company vehicles, or a matatu — say how many and where they will be. That is a standing arrangement, and it is quoted differently from a single car.",
+      "For a fleet of company vehicles, or a matatu, say how many and where they will be. That is a standing arrangement, and it is quoted differently from a single car.",
     ],
     tasks: [
       "Mobile exterior wash at home or the office",
@@ -831,19 +831,19 @@ export const SERVICES: Service[] = [
     alsoCalled: ["fridge repair", "washing machine repair", "cooker repair", "fundi wa friji"],
     summary:
       "Fridges, washing machines, cookers, microwaves, water heaters and the appliance that just stopped.",
-    title: "Appliance Repair in Kenya — Fridges, Washers and Cookers",
+    title: "Appliance Repair in Kenya: Fridges, Washers and Cookers",
     description:
       "Post an appliance repair on Help24 and get offers from technicians near you. Fridges, washing machines, cookers, microwaves and water heaters. Agree the price before work starts.",
     h1: "Find an appliance technician near you",
     intro: [
       "Appliance repair is worth posting before you assume something is finished. A fridge that has stopped cooling is frequently a relay, a fan or a thermostat rather than a compressor, and the difference between those two diagnoses is the difference between a repair and a replacement.",
       "Put the brand and model in the post. It is usually on a sticker inside the door, behind the drawer, or on the back panel. Technicians quote far more accurately when they know whether the part is one they can get today.",
-      "Ask how a call-out fee is handled. Many technicians charge to come and diagnose, and most will set that against the repair if you go ahead — but that is a question for before they arrive, not after.",
+      "Ask how a call-out fee is handled. Many technicians charge to come and diagnose, and most will set that against the repair if you go ahead. But that is a question for before they arrive, not after.",
     ],
     tasks: [
       "Fridges and freezers that have stopped cooling, or are icing up",
       "Washing machines that will not drain, spin, fill or finish a cycle",
-      "Cookers, ovens and hobs — electric and gas",
+      "Cookers, ovens and hobs: electric and gas",
       "Microwaves",
       "Water heaters and instant showers",
       "Dishwashers and tumble dryers",
@@ -904,7 +904,7 @@ export const SERVICES: Service[] = [
       "Ducted and multi-room systems",
     ],
     detailsToInclude: [
-      "Type of unit — split, window or portable — and the brand",
+      "Type of unit (split, window or portable) and the brand",
       "Roughly how old it is and when it was last serviced",
       "Whether it runs at all, and whether the outdoor unit is turning",
       "Whether it is cooling weakly or not at all",
@@ -919,7 +919,7 @@ export const SERVICES: Service[] = [
     ],
     checks: [
       "If you are told it needs gas, ask where the leak is",
-      "Ask what a service includes — filters, indoor coil, outdoor coil, drain line",
+      "Ask what a service includes: filters, indoor coil, outdoor coil, drain line",
       "For installation, confirm who does the electrical connection and the wall core drilling",
       "Ask about warranty on both the unit and the installation",
     ],
@@ -936,14 +936,14 @@ export const SERVICES: Service[] = [
     alsoCalled: ["screen replacement", "mobile repair", "battery replacement", "fundi wa simu"],
     summary:
       "Cracked screens, batteries, charging ports, water damage and software problems.",
-    title: "Phone Repair in Kenya — Screens, Batteries and Charging Ports",
+    title: "Phone Repair in Kenya: Screens, Batteries and Charging Ports",
     description:
       "Post a phone repair on Help24 and get offers from technicians near you. Cracked screens, batteries, charging ports, water damage and software faults.",
     h1: "Find a phone technician near you",
     intro: [
-      "Screens and batteries are the bulk of this category, and both are jobs where the part matters more than the labour. An original screen, a good aftermarket one and a cheap copy are three different prices and three different results — brightness, touch response and how long it survives the next drop.",
+      "Screens and batteries are the bulk of this category, and both are jobs where the part matters more than the labour. An original screen, a good aftermarket one and a cheap copy are three different prices and three different results: brightness, touch response and how long it survives the next drop.",
       "Ask which is being quoted. A technician who tells you plainly that they are fitting an aftermarket screen and what that means is the one to use.",
-      "For water damage, time is the thing. Do not charge it, do not switch it on repeatedly, and get it to somebody quickly — corrosion does the real damage in the days afterwards, not in the moment it went in.",
+      "For water damage, time is the thing. Do not charge it, do not switch it on repeatedly, and get it to somebody quickly: corrosion does the real damage in the days afterwards, not in the moment it went in.",
     ],
     tasks: [
       "Cracked and broken screen replacement",
@@ -963,7 +963,7 @@ export const SERVICES: Service[] = [
       "Whether there is data on it you need kept",
     ],
     priceFactors: [
-      "The model — parts for current flagships cost considerably more",
+      "The model: parts for current flagships cost considerably more",
       "Original against aftermarket parts",
       "Whether the fault is on the screen alone or the assembly beneath it",
       "Water damage, which is diagnosis-heavy and never certain",
@@ -995,7 +995,7 @@ export const SERVICES: Service[] = [
     intro: [
       "Most computer posts are one of four things: it is slow, it will not start, something is physically broken, or something has to be set up.",
       "Say which, and say what changed just before. A laptop that has been slow for a year and a laptop that became slow last Tuesday are usually different problems with different fixes.",
-      "If there is data on the machine you cannot lose, put that in the first line. It changes the order a technician works in — and a repair that would have been routine becomes a recovery job that has to be handled carefully first.",
+      "If there is data on the machine you cannot lose, put that in the first line. It changes the order a technician works in, and a repair that would have been routine becomes a recovery job that has to be handled carefully first.",
     ],
     tasks: [
       "Slow machines, and working out whether it is worth upgrading",
@@ -1023,7 +1023,7 @@ export const SERVICES: Service[] = [
       "Software reinstall and setting everything up again afterwards",
     ],
     checks: [
-      "Back up first if the machine still starts — do not assume a repair preserves anything",
+      "Back up first if the machine still starts: do not assume a repair preserves anything",
       "For data recovery, ask what happens to the price if nothing is recovered",
       "Ask about warranty on replacement parts",
       "Remove or note anything confidential before handing the machine over",
@@ -1043,7 +1043,7 @@ export const SERVICES: Service[] = [
     alsoCalled: ["logo design", "branding", "flyer design", "artwork"],
     summary:
       "Logos, flyers, packaging, social media artwork and print-ready files.",
-    title: "Graphic Designers in Kenya — Logos, Flyers and Branding",
+    title: "Graphic Designers in Kenya: Logos, Flyers and Branding",
     description:
       "Post a design job on Help24 and get offers from graphic designers near you. Logos, flyers, packaging, social media artwork and print-ready files.",
     h1: "Find a graphic designer",
@@ -1081,7 +1081,7 @@ export const SERVICES: Service[] = [
       "Agree revisions and what counts as one before you start",
       "Agree in writing that the source files and the rights come to you at the end",
       "Ask for a portfolio of finished, published work",
-      "For a logo, insist on vector files — not just a PNG",
+      "For a logo, insist on vector files, not just a PNG",
     ],
     related: ["photography", "videography", "software-development", "event-planning"],
   },
@@ -1096,13 +1096,13 @@ export const SERVICES: Service[] = [
     alsoCalled: ["web design", "app development", "website", "programmer"],
     summary:
       "Websites, web apps, mobile apps, integrations and fixing what somebody else built.",
-    title: "Software Developers in Kenya — Websites and Apps",
+    title: "Software Developers in Kenya: Websites and Apps",
     description:
       "Post a development job on Help24 and get offers from developers near you. Websites, web and mobile apps, integrations, M-Pesa payments and maintenance.",
     h1: "Find a developer",
     intro: [
       "Software posts need more detail than any other category, because the same sentence can describe a week of work or a year of it. \"I need an app\" is not a brief.",
-      "Describe what the thing has to do, who uses it, and what already exists. If somebody has built part of it already, say so — inheriting a half-finished codebase is a real factor in a quote and developers will price the risk if you do not explain it.",
+      "Describe what the thing has to do, who uses it, and what already exists. If somebody has built part of it already, say so: inheriting a half-finished codebase is a real factor in a quote and developers will price the risk if you do not explain it.",
       "For anything taking payments in Kenya, say so explicitly. M-Pesa integration through Daraja is its own piece of work with its own approval process, and it is not something to leave as a detail at the end.",
     ],
     tasks: [
@@ -1121,7 +1121,7 @@ export const SERVICES: Service[] = [
       "Who uses it and roughly how many people",
       "What already exists, and who built it",
       "Whether it needs to take payments, and how",
-      "Your budget range and your deadline — both of them",
+      "Your budget range and your deadline, both of them",
     ],
     priceFactors: [
       "Scope, which is almost entirely within your control at the brief stage",
@@ -1134,7 +1134,7 @@ export const SERVICES: Service[] = [
       "Agree that the source code and all accounts belong to you, in writing, before starting",
       "Break the work into stages with something to look at at the end of each",
       "Ask for links to things they have actually shipped",
-      "Agree who holds the domain and hosting accounts — it should be you",
+      "Agree who holds the domain and hosting accounts. It should be you",
     ],
     related: ["graphic-design", "computer-repair", "videography", "photography"],
   },
@@ -1149,7 +1149,7 @@ export const SERVICES: Service[] = [
     alsoCalled: ["event photographer", "wedding photographer", "product photography", "portraits"],
     summary:
       "Events, weddings, portraits, products and property photography.",
-    title: "Photographers in Kenya — Events, Portraits and Products",
+    title: "Photographers in Kenya: Events, Portraits and Products",
     description:
       "Post a photography job on Help24 and get offers from photographers near you. Weddings, events, portraits, product and property photography.",
     h1: "Find a photographer near you",
@@ -1202,14 +1202,14 @@ export const SERVICES: Service[] = [
     alsoCalled: ["video production", "wedding video", "content creation", "video editing"],
     summary:
       "Event coverage, adverts, social content, corporate video and editing.",
-    title: "Videographers in Kenya — Events, Adverts and Content",
+    title: "Videographers in Kenya: Events, Adverts and Content",
     description:
       "Post a video job on Help24 and get offers from videographers near you. Event coverage, adverts, social media content, corporate video and editing.",
     h1: "Find a videographer near you",
     intro: [
       "Filming is the short part of a video job. Editing is the long one, and it is where the difference between quotes usually lives.",
       "Say what the finished thing should be: how long, where it will be posted, whether it needs subtitles, graphics, music, or a voiceover. A 60-second advert and 20 minutes of ceremony coverage are not comparable jobs even if both took a day to shoot.",
-      "If you only need editing — you have the footage already — say so in the first line. It is a completely different service and different people answer.",
+      "If you only need editing (you have the footage already), say so in the first line. It is a completely different service and different people answer.",
     ],
     tasks: [
       "Wedding and ceremony films",
@@ -1257,7 +1257,7 @@ export const SERVICES: Service[] = [
     alsoCalled: ["wedding planner", "event coordinator", "decor", "MC"],
     summary:
       "Weddings, parties, corporate functions, decor, coordination and suppliers.",
-    title: "Event Planners in Kenya — Weddings and Functions",
+    title: "Event Planners in Kenya: Weddings and Functions",
     description:
       "Post an event on Help24 and get offers from planners near you. Weddings, parties, corporate functions, decor, coordination and supplier management.",
     h1: "Find an event planner",
@@ -1278,7 +1278,7 @@ export const SERVICES: Service[] = [
       "Sound, lighting and MC services",
     ],
     detailsToInclude: [
-      "Date, guest count and venue — or that the venue is not booked yet",
+      "Date, guest count and venue, or that the venue is not booked yet",
       "Whether you need full planning, partial planning, or day-of coordination",
       "Your budget range, which planners need in order to be useful",
       "What is already booked",
@@ -1295,7 +1295,7 @@ export const SERVICES: Service[] = [
       "Be clear about which costs are the planner's fee and which are passed-through supplier costs",
       "Ask for references from two events in the last year",
       "Agree what happens if the date moves",
-      "Keep deposits to suppliers documented — all of them",
+      "Keep deposits to suppliers documented, all of them",
     ],
     related: ["catering", "photography", "videography", "security-guard"],
   },
@@ -1310,7 +1310,7 @@ export const SERVICES: Service[] = [
     alsoCalled: ["outside catering", "event food", "private chef", "bites"],
     summary:
       "Outside catering, private chefs, event menus, service staff and equipment.",
-    title: "Catering Services in Kenya — Outside Catering and Private Chefs",
+    title: "Catering Services in Kenya: Outside Catering and Private Chefs",
     description:
       "Post a catering job on Help24 and get offers from caterers near you. Outside catering, event menus, private chefs, service staff and equipment.",
     h1: "Find a caterer near you",
@@ -1365,7 +1365,7 @@ export const SERVICES: Service[] = [
     alsoCalled: ["home tuition", "private teacher", "CBC tutor", "exam prep"],
     summary:
       "Home and online tuition across CBC, 8-4-4, IGCSE, university subjects and skills.",
-    title: "Private Tutors in Kenya — Home and Online Tuition",
+    title: "Private Tutors in Kenya: Home and Online Tuition",
     description:
       "Post a tutoring request on Help24 and get offers from tutors near you. CBC, 8-4-4, IGCSE, university subjects, languages and exam preparation.",
     h1: "Find a tutor near you",
@@ -1393,7 +1393,7 @@ export const SERVICES: Service[] = [
       "Whether there is an exam date to work towards",
     ],
     priceFactors: [
-      "Level — university and exam-year tuition costs more than primary support",
+      "A-Level, university and exam-year tuition costs more than primary support",
       "Session length and how many a week",
       "Travel to your home, against online",
       "One-to-one against a small group",
@@ -1402,7 +1402,7 @@ export const SERVICES: Service[] = [
     checks: [
       "Ask about qualifications and experience with that specific curriculum",
       "For a tutor coming to your home to teach a child, check identification and be present for the first sessions",
-      "Agree a trial period — a few sessions before committing to a term",
+      "Agree a trial period: a few sessions before committing to a term",
       "Ask how they will report progress to you",
     ],
     related: ["babysitting", "caregiving", "computer-repair", "software-development"],
@@ -1424,7 +1424,7 @@ export const SERVICES: Service[] = [
     h1: "Find a babysitter near you",
     intro: [
       "This is the category where the checks matter more than the price, and it is worth saying so plainly: you are inviting somebody into your home to look after your children.",
-      "Meet them before the first booking. Ask for identification, take a copy, and ask for references from families they have actually worked for — then call those families. A good sitter expects all of this and will not be offended by it.",
+      "Meet them before the first booking. Ask for identification, take a copy, and ask for references from families they have actually worked for. Then call those families. A good sitter expects all of this and will not be offended by it.",
       "In the post, give ages and numbers of children, the hours, and anything a sitter genuinely needs to know: allergies, medication, a routine that matters, or a child who does not settle easily.",
     ],
     tasks: [
@@ -1441,14 +1441,14 @@ export const SERVICES: Service[] = [
       "Ages and number of children",
       "Exact days and hours, and whether it is one-off or ongoing",
       "Allergies, medication and anything about the routine that matters",
-      "What you expect beyond supervision — meals, homework, bath, bedtime",
+      "What you expect beyond supervision: meals, homework, bath, bedtime",
       "Whether your home has pets",
     ],
     priceFactors: [
       "Hours, and whether they are evening or overnight",
       "Number and ages of the children",
       "One-off against regular work",
-      "Anything beyond supervision — cooking, school runs, housework",
+      "Anything beyond supervision: cooking, school runs, housework",
       "How far they travel, particularly late at night",
     ],
     checks: [
@@ -1471,7 +1471,7 @@ export const SERVICES: Service[] = [
     alsoCalled: ["home nurse", "elderly care", "patient care", "home based care"],
     summary:
       "Home care for elderly relatives, recovery after hospital, and support for people living with illness.",
-    title: "Home Caregivers in Kenya — Elderly and Patient Care",
+    title: "Home Caregivers in Kenya: Elderly and Patient Care",
     description:
       "Post a caregiving request on Help24 and get offers from caregivers near you. Elderly care, post-hospital recovery, live-in support and respite cover.",
     h1: "Find a caregiver near you",
@@ -1494,7 +1494,7 @@ export const SERVICES: Service[] = [
     detailsToInclude: [
       "What help is needed, day to day, in practical terms",
       "Any medical or nursing tasks involved",
-      "Mobility — can the person walk, transfer, or neither",
+      "Mobility: can the person walk, transfer, or neither",
       "Hours, days, and whether it is live-in",
       "Any language the caregiver needs to speak with the person being cared for",
     ],
@@ -1527,13 +1527,13 @@ export const SERVICES: Service[] = [
     alsoCalled: ["house moving", "relocation", "pickup hire", "removals"],
     summary:
       "House and office moves, single items, packing, loading and pickup or lorry hire.",
-    title: "Movers in Kenya — House and Office Moving Services",
+    title: "Movers in Kenya: House and Office Moving Services",
     description:
       "Post a moving job on Help24 and get offers from movers near you. House and office moves, single heavy items, packing, loading and vehicle hire.",
     h1: "Find movers near you",
     intro: [
       "Moving quotes turn on three things: how much there is, how far it is going, and how many stairs are at each end. Movers ask about stairs because it is often the largest single factor in how long a move takes.",
-      "List the big items — beds, sofas, fridge, cooker, washing machine, wardrobe — and roughly how many boxes. A three-bedroom house with barely any furniture and a one-bedroom flat packed to the ceiling can be the same load.",
+      "List the big items: beds, sofas, fridge, cooker, washing machine, wardrobe, and roughly how many boxes. A three-bedroom house with barely any furniture and a one-bedroom flat packed to the ceiling can be the same load.",
       "Say whether you want packing included. Packing is usually a separate service, and it is the one people underestimate most.",
     ],
     tasks: [
@@ -1580,7 +1580,7 @@ export const SERVICES: Service[] = [
     alsoCalled: ["home styling", "space planning", "fit out", "decor"],
     summary:
       "Space planning, finishes, furniture layout and managing a fit-out from drawing to done.",
-    title: "Interior Designers in Kenya — Homes and Offices",
+    title: "Interior Designers in Kenya: Homes and Offices",
     description:
       "Post an interior design job on Help24 and get offers from designers near you. Space planning, finishes, furniture, curtains and complete fit-outs.",
     h1: "Find an interior designer",
@@ -1605,7 +1605,7 @@ export const SERVICES: Service[] = [
       "Photos of the space as it is now",
       "Your budget range for the whole project",
       "Whether you want design only, or design and management",
-      "What must stay — furniture you are keeping, or a fitting you cannot change",
+      "What must stay: furniture you are keeping, or a fitting you cannot change",
     ],
     priceFactors: [
       "Design only against design and project management",
@@ -1633,14 +1633,14 @@ export const SERVICES: Service[] = [
     alsoCalled: ["builder", "renovation", "extension", "fundi wa ujenzi"],
     summary:
       "Extensions, renovations, roofing, new builds and the trades that have to be run together.",
-    title: "Building Contractors in Kenya — Renovations and Extensions",
+    title: "Building Contractors in Kenya: Renovations and Extensions",
     description:
       "Post a building job on Help24 and get offers from contractors near you. Renovations, extensions, roofing, and projects that need several trades coordinated.",
     h1: "Find a building contractor",
     intro: [
-      "Construction is the category where the stakes are highest and the checks matter most. A bathroom renovation runs several trades in sequence, and the value a contractor adds over hiring each fundi yourself is the sequencing — and the accountability when one stage is wrong.",
+      "Construction is the category where the stakes are highest and the checks matter most. A bathroom renovation runs several trades in sequence, and the value a contractor adds over hiring each fundi yourself is the sequencing, and the accountability when one stage is wrong.",
       "Contractors undertaking construction works in Kenya are required to register with the National Construction Authority, in classes tied to the value of work they may undertake. For anything structural, ask for the NCA registration and check the class covers your project.",
-      "Get the scope written down before anybody starts. Not a price — a scope: what is included, what is excluded, what happens to the debris, and who buys materials. Nearly every construction dispute traces back to that document not existing.",
+      "Get the scope written down before anybody starts. Not a price. A scope: what is included, what is excluded, what happens to the debris, and who buys materials. Nearly every construction dispute traces back to that document not existing.",
     ],
     tasks: [
       "Home extensions and additional rooms",
@@ -1670,7 +1670,7 @@ export const SERVICES: Service[] = [
     ],
     checks: [
       "Ask for the NCA registration number and confirm the class covers the value of your project",
-      "For structural work, get a qualified engineer's design — not a contractor's opinion",
+      "For structural work, get a qualified engineer's design, not a contractor's opinion",
       "Confirm what county approvals your project needs before it starts",
       "Agree a written scope and a payment schedule tied to stages, never a large payment up front",
       "Agree who removes debris, and whether that is in the price",
@@ -1688,7 +1688,7 @@ export const SERVICES: Service[] = [
     alsoCalled: ["casual labour", "manual work", "mkono", "helper"],
     summary:
       "Loading, digging, clearing, carrying and the jobs that need hands rather than a trade.",
-    title: "Casual Labour in Kenya — Hire Help by the Day",
+    title: "Casual Labour in Kenya: Hire Help by the Day",
     description:
       "Post a labouring job on Help24 and get offers from workers near you. Loading, digging, clearing, carrying and general manual work, by the day or the job.",
     h1: "Find casual labour near you",
@@ -1724,7 +1724,7 @@ export const SERVICES: Service[] = [
     ],
     checks: [
       "Agree the hours a day covers before the day starts",
-      "Provide water and somewhere to rest — and expect to",
+      "Provide water and somewhere to rest, and expect to",
       "Make sure anybody digging or breaking concrete has proper footwear and gloves",
       "Agree what happens if the work runs past the day",
     ],

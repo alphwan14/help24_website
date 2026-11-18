@@ -51,7 +51,7 @@ export function pageMetadata({
 }): Metadata {
   const url = canonical(path);
   // Do not brand a title that is already branded. See the note above.
-  const ogTitle = title.includes(SITE.name) ? title : `${title} · ${SITE.name}`;
+  const ogTitle = title.includes(SITE.name) ? title : `${title} | ${SITE.name}`;
   return {
     title,
     description,

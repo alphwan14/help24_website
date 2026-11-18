@@ -387,7 +387,7 @@ test("metadata carries a share image and does not double-brand", () => {
     description: "x".repeat(80),
     path: "/services/plumbing",
   }) as any;
-  assert.equal(plain.openGraph.title, `Plumbers in Kenya · ${SITE.name}`);
+  assert.equal(plain.openGraph.title, `Plumbers in Kenya | ${SITE.name}`);
   // Next replaces a parent's openGraph object rather than merging into it, so
   // omitting images here strips the share card from every page that calls this.
   assert.ok(plain.openGraph.images?.[0]?.url, "no og:image");

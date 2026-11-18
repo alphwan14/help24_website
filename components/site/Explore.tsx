@@ -48,7 +48,7 @@ export function Explore() {
         </h2>
         <p className="mt-4 max-w-prose text-body-lg leading-relaxed text-text-secondary">
           Each of these has a page explaining what the job involves, what to put in your request,
-          and what moves the price — before you download anything.
+          and what moves the price, before you download anything.
         </p>
 
         <ul className="mt-10 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
@@ -106,8 +106,8 @@ export function Explore() {
               , or read the{" "}
               <Link href="/guides" className="text-primary-bright hover:underline">
                 guides on hiring in Kenya
-              </Link>{" "}
-              — writing a request that gets good offers, checking a fundi&apos;s credentials,
+              </Link>:{" "}
+              writing a request that gets good offers, checking a fundi&apos;s credentials,
               and what to agree before work starts.
             </p>
           </div>

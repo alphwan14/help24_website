@@ -119,7 +119,7 @@ export default function ServiceNeighbourhoodPage({ params }: { params: Params })
           <div className="flex max-w-3xl flex-col items-start text-left">
             <span className="mb-4 inline-flex items-center gap-2 rounded-badge bg-primary/10 px-3 py-1.5 text-label-md font-medium text-primary-bright">
               <CategoryIcon name={service.icon} size={14} />
-              {service.category} · {city.name}
+              {service.category} in {city.name}
             </span>
             <h1 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl lg:text-5xl">
               {copy.h1}

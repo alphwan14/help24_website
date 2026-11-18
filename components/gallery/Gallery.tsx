@@ -95,7 +95,7 @@ export function Gallery() {
                 style={{ borderRadius: Math.min(px, 32) }}
               />
               <p className="mt-2 text-label-md text-text-secondary">
-                {name} · {px}px
+                {name}, {px}px
               </p>
             </div>
           ))}
@@ -117,7 +117,7 @@ export function Gallery() {
         </div>
       </Block>
 
-      <Block title="Badge — post type" note="15% fill, 50% border, 11px semibold.">
+      <Block title="Badge: post type" note="15% fill, 50% border, 11px semibold.">
         <div className="flex flex-wrap gap-2">
           {POST_TYPES.map((t) => (
             <PostTypeBadge key={t.key} type={t.key} />
@@ -125,7 +125,7 @@ export function Gallery() {
         </div>
       </Block>
 
-      <Block title="Badge — urgency" note="12% fill, no border, 10.5px semibold. Requests only.">
+      <Block title="Badge: urgency" note="12% fill, no border, 10.5px semibold. Requests only.">
         <div className="flex flex-wrap gap-2">
           {URGENCY.map((u) => (
             <UrgencyBadge key={u.key} value={u.key} />
@@ -133,7 +133,7 @@ export function Gallery() {
         </div>
       </Block>
 
-      <Block title="Badge — tag variants" note="The chips a card composes from category answers and state.">
+      <Block title="Badge: tag variants" note="The chips a card composes from category answers and state.">
         <div className="flex flex-wrap gap-2">
           <Badge token="primary">Today</Badge>
           <Badge token="primary" icon="people">
@@ -152,7 +152,7 @@ export function Gallery() {
         </div>
       </Block>
 
-      <Block title="CategoryChip — all 32" note="The full Category.all list, in the app's order.">
+      <Block title="CategoryChip: all 32" note="The full Category.all list, in the app's order.">
         <div className="flex flex-wrap gap-2">
           {CATEGORIES.map((c) => (
             <CategoryChip key={c.name} name={c.name} />
@@ -160,7 +160,7 @@ export function Gallery() {
         </div>
       </Block>
 
-      <Block title="CategoryChip — selectable" note="The composer's variant. Uses primary-bright so the label clears AA.">
+      <Block title="CategoryChip: selectable" note="The composer's variant. Uses primary-bright so the label clears AA.">
         <div className="flex flex-wrap gap-2">
           <CategoryChip name="Plumbing" selectable selected />
           <CategoryChip name="Electrical" selectable />
@@ -200,7 +200,7 @@ export function Gallery() {
       </Block>
 
       <Block
-        title="PostCard — Request"
+        title="PostCard: Request"
         note="Visitor sees Offer Service. The author sees Applications (n). Click the title to expand in place."
       >
         <div className="grid gap-4 lg:grid-cols-2">
@@ -221,7 +221,7 @@ export function Gallery() {
         </div>
       </Block>
 
-      <Block title="PostCard — Offer" note="No urgency chip on an offer; availability and M-Pesa instead.">
+      <Block title="PostCard: Offer" note="No urgency chip on an offer; availability and M-Pesa instead.">
         <div className="grid gap-4 lg:grid-cols-2">
           <div>
             <p className="mb-2 text-label-md uppercase tracking-wider text-text-secondary">visitor</p>
@@ -235,7 +235,7 @@ export function Gallery() {
       </Block>
 
       <Block
-        title="PostCard — no budget"
+        title="PostCard: no budget"
         note={`cardMoneyLabel returns "${cardMoneyLabel("request", 0)}" when a request has no price.`}
       >
         <div className="max-w-md">

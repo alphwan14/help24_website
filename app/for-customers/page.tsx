@@ -7,7 +7,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "For Customers",
   description:
-    `Find trusted local service providers on Help24. Compare offers, agree a price and pay securely with ${PAYMENTS.methods} — protected until the job is done.`,
+    `Find trusted local service providers on Help24. Compare offers, agree a price and pay securely with ${PAYMENTS.methods}, protected until the job is done.`,
   path: "/for-customers",
 });
 
@@ -15,7 +15,7 @@ const reasons = [
   {
     icon: "search",
     title: "The right help, fast",
-    body: "Post a task and receive offers from providers near you — often within minutes.",
+    body: "Post a task and receive offers from providers near you, often within minutes.",
   },
   {
     icon: "badge",
@@ -65,7 +65,7 @@ export default function ForCustomersPage() {
       <PageHero
         eyebrow="For customers"
         title="Get anything done, without the hassle"
-        description="From a leaking tap to a big move, Help24 connects you with trusted local providers — and keeps your money safe until the job is done."
+        description="From a leaking tap to a big move, Help24 connects you with trusted local providers, and keeps your money safe until the job is done."
       />
 
       <ContentSection title="Why customers choose Help24">

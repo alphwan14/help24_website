@@ -49,13 +49,13 @@ type Stop = {
 const STOPS: Stop[] = [
   {
     title: "Price agreed",
-    copy: `You accept an offer at ${kes(AMOUNT)}. That is the number — it does not move once the provider has seen the job.`,
+    copy: `You accept an offer at ${kes(AMOUNT)}. That is the number. It does not move once the provider has seen the job.`,
     at: 6,
     badge: { token: "text-secondary", label: "Agreed" },
   },
   {
     title: "Held by Help24",
-    copy: `You pay by ${PAYMENTS.methods} and Help24 holds it. The provider can see the money is there, which is why they will travel — but they cannot touch it.`,
+    copy: `You pay by ${PAYMENTS.methods} and Help24 holds it. The provider can see the money is there, which is why they will travel. But they cannot touch it.`,
     at: 50,
     badge: { token: "warning", label: COPY.paymentProtected, icon: "lock" },
   },

@@ -200,7 +200,7 @@ export function StoryDemo({ className = "" }: { className?: string }) {
           </Layer>
           <Layer show={step === OFFERS && answerable}>
             <Status tone="accent" icon="people">
-              {scenario.offers.length} offers · from{" "}
+              {scenario.offers.length} offers, from{" "}
               {kes(Math.min(...scenario.offers.map((o) => o.price)))}
             </Status>
           </Layer>
@@ -489,9 +489,9 @@ function OfferRow({ offer, picked = false }: { offer: DemoOffer; picked?: boolea
               {offer.rating.toFixed(1)}
             </span>
           )}
-          <span aria-hidden>·</span>
+          <span aria-hidden className="h-3 w-px shrink-0 bg-border" />
           {offer.distance}
-          <span aria-hidden>·</span>
+          <span aria-hidden className="h-3 w-px shrink-0 bg-border" />
           {offer.available}
         </p>
       </div>

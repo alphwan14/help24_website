@@ -129,7 +129,7 @@ function Thread() {
             {m.unanswered ? (
               <span className="mt-2 flex items-center gap-1.5 text-label-md text-text-secondary">
                 <Glyph name="check" size={12} />
-                Delivered — no reply
+                Delivered: no reply
               </span>
             ) : null}
           </div>

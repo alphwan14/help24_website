@@ -186,7 +186,7 @@ export function Situations() {
                   <p className="flex items-center gap-2 text-body font-semibold text-primary-bright sm:text-body-lg">
                     <Glyph name="people" size={16} className="shrink-0" />
                     {offers.length} {offers.length === 1 ? "provider" : "providers"} nearby
-                    {from > 0 ? ` · from ${kes(from)}` : ""}
+                    {from > 0 ? `, from ${kes(from)}` : ""}
                   </p>
 
                   <ul className="mt-4 space-y-2.5">
@@ -211,7 +211,7 @@ export function Situations() {
                                   {o.rating.toFixed(1)}
                                 </span>
                               )}
-                              <span aria-hidden>·</span>
+                              <span aria-hidden className="h-3 w-px shrink-0 bg-border" />
                               {o.profession}
                             </span>
                           </span>
@@ -246,7 +246,7 @@ export function Situations() {
         */}
         <div className="mt-16 flex flex-col gap-4 border-t border-border pt-8 sm:mt-20 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
           <p className="text-body-lg font-medium text-text-primary">
-            {HEADLINE_CATEGORIES.join(" · ")}
+            {HEADLINE_CATEGORIES.join(", ")}
             <span className="text-text-secondary"> and {CATEGORIES.length - 6} more</span>
           </p>
           <Link

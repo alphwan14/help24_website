@@ -140,7 +140,7 @@ export function TaskComposer() {
             Write a job in three steps
           </h2>
           <p className="mt-3 max-w-prose text-body sm:text-body-lg text-text-secondary">
-            The same three questions the app asks. Nothing is sent anywhere — this builds a card and
+            The same three questions the app asks. Nothing is sent anywhere. This builds a card and
             puts it on the board above.
           </p>
         </div>
@@ -298,8 +298,8 @@ export function TaskComposer() {
                 Your task is ready. Get the app to publish it.
               </p>
               <p className="mt-2 text-body-sm text-text-secondary">
-                It is sitting at the top of the board above. Publishing it for real — and receiving
-                offers on it — happens in the app.
+                It is sitting at the top of the board above. Publishing it for real, and receiving
+                offers on it, happens in the app.
               </p>
               <Link
                 href="/download"

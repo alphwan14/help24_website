@@ -38,9 +38,9 @@ export function OfficialDownloadNotice() {
             Help24 is published from one place and nowhere else. If you were
             sent an APK from any other site, mirror or chat forward,{" "}
             <strong className="font-semibold text-text-primary">
-              do not install it
+              do not install it.
             </strong>{" "}
-            — download it here instead.
+            Download it here instead.
           </p>
 
           <ul className="mt-4 flex flex-col gap-2">
@@ -58,7 +58,7 @@ export function OfficialDownloadNotice() {
                     {source.label}
                   </a>
                   <span className="ml-2 text-text-secondary">
-                    — {source.detail}
+                    {source.detail}
                   </span>
                 </span>
               </li>

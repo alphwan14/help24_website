@@ -22,7 +22,7 @@ export function VersionCard() {
             Help24 for Android
           </h3>
           <p className="text-body-sm text-text-secondary">
-            Latest release · v{ANDROID_RELEASE.version}
+            Latest release: v{ANDROID_RELEASE.version}
           </p>
         </div>
       </div>
@@ -83,7 +83,7 @@ export function ChecksumRow() {
         <code className="font-mono text-text-secondary">
           sha256sum app-release.apk
         </code>{" "}
-        after downloading — if the value matches, the file arrived exactly as we
+        after downloading. If the value matches, the file arrived exactly as we
         published it.
       </p>
     </div>

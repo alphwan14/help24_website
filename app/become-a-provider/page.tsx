@@ -58,7 +58,7 @@ export default function BecomeAProviderPage() {
       <PageHero
         eyebrow="Become a provider"
         title="Turn your skills into a growing business"
-        description="Set up your provider profile before Help24 opens, so your listing is live from day one. Free to join — you only succeed when your customers do."
+        description="Set up your provider profile before Help24 opens, so your listing is live from day one. Free to join. You only succeed when your customers do."
       >
         <div className="flex flex-col items-center gap-3">
           <StoreButtons className="justify-center" />

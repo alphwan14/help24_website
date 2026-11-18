@@ -64,11 +64,11 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
     items: [
       {
         q: "How do I pay on Help24?",
-        a: `Help24 supports ${PAYMENTS.methods}. Once you agree a price with a provider, you can pay securely through the app — there is no need to handle cash.`,
+        a: `Help24 supports ${PAYMENTS.methods}. Once you agree a price with a provider, you can pay securely through the app. There is no need to handle cash.`,
       },
       {
         q: "Is it safe to pay through the app?",
-        a: "Yes. Paying in-app lets Help24 protect your money with payment protection (escrow) and keeps a record of the transaction. Never send money outside the app for a job arranged on Help24 — you lose that protection.",
+        a: "Yes. Paying in-app lets Help24 protect your money with payment protection (escrow) and keeps a record of the transaction. Never send money outside the app for a job arranged on Help24. You lose that protection.",
       },
       {
         q: `Where do I set my ${PAYMENTS.methods} number?`,
@@ -209,7 +209,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         q: "How do I report a suspicious user or post?",
-        a: "Use the report option on the post or user. Our team reviews reports and takes action — including removing content or suspending accounts — to keep the community safe.",
+        a: "Use the report option on the post or user. Our team reviews reports and takes action, including removing content or suspending accounts, to keep the community safe.",
       },
       {
         q: "How do I share my location safely?",
@@ -226,7 +226,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
     items: [
       {
         q: "What should I do first if there is a problem?",
-        a: "Try to resolve it directly with the other person in chat — most issues are simple misunderstandings. Keep everything in the app so there is a clear record.",
+        a: "Try to resolve it directly with the other person in chat. Most issues are simple misunderstandings. Keep everything in the app so there is a clear record.",
       },
       {
         q: "How do I open a dispute?",

@@ -32,7 +32,7 @@ export function DownloadButton({
         aria-disabled="true"
       >
         <Icon name={platform.icon} className="h-5 w-5" />
-        {platform.name} — coming soon
+        {platform.name}: coming soon
       </span>
     );
   }

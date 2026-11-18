@@ -7,7 +7,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Help Centre",
   description:
-    "Answers to common questions about Help24 — payments, escrow, jobs, accounts, safety and more. Search or browse by topic.",
+    "Answers to common questions about Help24: payments, escrow, jobs, accounts, safety and more. Search or browse by topic.",
   path: "/help",
 });
 

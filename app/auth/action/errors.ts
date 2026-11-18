@@ -55,7 +55,7 @@ const BY_CODE: Record<string, ActionFailure> = {
     message:
       "Links are short-lived for your security, and this one has passed its " +
       "window. Nothing on your account has changed.",
-    next: "Ask for a new link from the Help24 app — it only takes a moment.",
+    next: "Ask for a new link from the Help24 app. It only takes a moment.",
   },
   "auth/user-disabled": {
     title: "Account unavailable",

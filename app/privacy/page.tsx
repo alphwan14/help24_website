@@ -30,19 +30,19 @@ const sections: LegalSection[] = [
         </p>
         <ul>
           <li>
-            <strong>Account details</strong> — your name, email or phone number,
+            <strong>Account details:</strong> your name, email or phone number,
             and profile photo.
           </li>
           <li>
-            <strong>Content you post</strong> — requests, offers, jobs, messages
+            <strong>Content you post:</strong> requests, offers, jobs, messages
             and any images you upload.
           </li>
           <li>
-            <strong>Payment information</strong> — the mobile-money number you use
+            <strong>Payment information:</strong> the mobile-money number you use
             for payments and payouts (handled securely).
           </li>
           <li>
-            <strong>Device &amp; usage data</strong> — information about your
+            <strong>Device &amp; usage data</strong> information about your
             device and how you use the app, to improve it and prevent abuse.
           </li>
         </ul>

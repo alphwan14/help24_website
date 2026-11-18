@@ -14,7 +14,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Safety & Escrow",
   description:
-    "How Help24 protects you — payment protection with escrow, verified reputations, in-app records and a responsive safety team.",
+    "How Help24 protects you: payment protection with escrow, verified reputations, in-app records and a responsive safety team.",
   path: "/safety",
 });
 
@@ -120,7 +120,7 @@ export default function SafetyPage() {
 
       <CtaBand
         title="Have a safety concern?"
-        description="Report it in the app or reach our team directly — we prioritise safety."
+        description="Report it in the app or reach our team directly. We prioritise safety."
         primary={{ href: "/support", label: "Contact Support" }}
         secondary={{ href: "/help#safety", label: "Safety help articles" }}
       />

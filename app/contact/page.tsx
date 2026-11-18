@@ -9,7 +9,7 @@ import { SITE, PAYMENTS } from "@/lib/site";
 export const metadata = pageMetadata({
   title: "Contact Us",
   description:
-    "Get in touch with Help24 — support, provider questions, partnerships and press. We aim to reply within 24 hours.",
+    "Get in touch with Help24: support, provider questions, partnerships and press. We aim to reply within 24 hours.",
   path: "/contact",
 });
 
@@ -40,7 +40,7 @@ export default function ContactPage() {
       <PageHero
         eyebrow="Contact"
         title="Get in touch"
-        description="We'd love to hear from you. Pick the option that fits, or email us directly — we read every message."
+        description="We'd love to hear from you. Pick the option that fits, or email us directly. We read every message."
       />
 
       <Section>
@@ -84,7 +84,7 @@ export default function ContactPage() {
             </p>
             <p>
               We are not a service company. Help24 does not employ plumbers, cleaners or
-              electricians and does not carry out work itself — the providers on the platform
+              electricians and does not carry out work itself. The providers on the platform
               are independent, and they set their own prices. If you are looking to have
               something done, the place to start is{" "}
               <Link href="/services" className="text-primary-bright hover:underline">

@@ -66,7 +66,7 @@ export function generateMetadata({
 
   const Workers = service.workers.charAt(0).toUpperCase() + service.workers.slice(1);
   return pageMetadata({
-    title: `${Workers} in ${city.name} — Find ${withArticle(titleCaseWorker(service.worker))} Near You`,
+    title: `${Workers} in ${city.name}: Find ${withArticle(titleCaseWorker(service.worker))} Near You`,
     description: `Post a ${service.category.toLowerCase()} job in ${city.name} on Help24 and get offers from ${service.workers} nearby. Agree the price before work starts and pay by ${PAYMENTS.methods}.`,
     path: `/services/${service.slug}/${city.id}`,
   });
@@ -128,7 +128,7 @@ export default function ServiceCityPage({
           <div className="flex max-w-3xl flex-col items-start text-left">
             <span className="mb-4 inline-flex items-center gap-2 rounded-badge bg-primary/10 px-3 py-1.5 text-label-md font-medium text-primary-bright">
               <CategoryIcon name={service.icon} size={14} />
-              {service.category} · {city.county} County
+              {service.category} in {city.county} County
             </span>
             <h1 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl lg:text-5xl">
               {Workers} in {city.name}

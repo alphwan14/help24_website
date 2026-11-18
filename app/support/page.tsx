@@ -137,7 +137,7 @@ export default function SupportPage() {
               <p className="mt-2 text-body text-text-secondary">
                 If you are in immediate danger or a crime is in progress, contact
                 your local emergency services first. For urgent safety concerns on
-                Help24 — such as threats, fraud or harassment — use the{" "}
+                Help24, such as threats, fraud or harassment, use the{" "}
                 <strong className="text-text-primary">Report</strong> option in the
                 app and email us at{" "}
                 <a

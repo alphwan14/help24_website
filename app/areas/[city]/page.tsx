@@ -47,7 +47,7 @@ export function generateMetadata({ params }: { params: { city: string } }) {
   const content = CITY_CONTENT[params.city];
   if (!city || !content) return {};
   return pageMetadata({
-    title: `Local Services in ${city.name} — Plumbers, Electricians, Cleaners`,
+    title: `Local Services in ${city.name}: Plumbers, Electricians, Cleaners`,
     description: content.description,
     path: `/areas/${city.id}`,
   });
@@ -87,7 +87,7 @@ export default function CityPage({ params }: { params: { city: string } }) {
           <div className="flex max-w-3xl flex-col items-start text-left">
             <span className="mb-4 inline-flex items-center gap-2 rounded-badge bg-primary/10 px-3 py-1.5 text-label-md font-medium text-primary-bright">
               {city.county} County
-              {isLaunchCity ? " · Launch city" : ""}
+              {isLaunchCity ? ", launch city" : ""}
             </span>
             <h1 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl lg:text-5xl">
               Local services in {city.name}
